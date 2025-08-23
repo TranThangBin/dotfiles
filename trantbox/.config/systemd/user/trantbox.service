@@ -1,0 +1,11 @@
+[Unit]
+Description=TranThangBin's distrobox containers
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/podman container start trantbox-desktop trantbox-games trantbox-services trantbox-dev
+ExecStop=/usr/bin/podman container stop trantbox-desktop trantbox-games trantbox-services trantbox-dev
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

@@ -1,6 +1,6 @@
 # .dotfiles
 
-![Desktop screenshot of the configuration](./images/desktop-screenshot.png)
+![Desktop screenshot of the configuration](./assets/desktop-screenshot.png)
 
 ## Prerequisite
 

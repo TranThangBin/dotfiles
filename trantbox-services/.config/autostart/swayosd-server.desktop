@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=SwayOSD
+GenericName=Sway On Screen Display
+Comment=A OSD window for common actions like volume and capslock.
+TryExec=/usr/bin/distrobox-enter
+Exec=/usr/bin/distrobox-enter --name trantbox-services-init -- /usr/bin/swayosd-server
+Terminal=false
+Type=Application
+Categories=System;Utility;
+StartupNotify=false
+OnlyShowIn=Hyprland;Sway
