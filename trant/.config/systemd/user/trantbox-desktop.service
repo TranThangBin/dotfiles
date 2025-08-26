@@ -1,0 +1,8 @@
+[Unit]
+Description=TranThangBin's desktop container
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/podman container start trantbox-desktop
+ExecStop=/usr/bin/podman container stop trantbox-desktop
+RemainAfterExit=yes

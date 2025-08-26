@@ -1,0 +1,8 @@
+[Unit]
+Description=TranThangBin's services container
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/podman container start trantbox-services
+ExecStop=/usr/bin/podman container stop trantbox-services
+RemainAfterExit=yes

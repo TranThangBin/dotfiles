@@ -1,0 +1,8 @@
+[Unit]
+Description=TranThangBin's games container
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/podman container start trantbox-games
+ExecStop=/usr/bin/podman container stop trantbox-games
+RemainAfterExit=yes

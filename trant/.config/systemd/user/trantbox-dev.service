@@ -1,0 +1,8 @@
+[Unit]
+Description=TranThangBin's dev container
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/podman container start trantbox-dev
+ExecStop=/usr/bin/podman container stop trantbox-dev
+RemainAfterExit=yes
