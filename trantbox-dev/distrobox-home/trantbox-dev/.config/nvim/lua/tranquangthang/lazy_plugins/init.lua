@@ -1,6 +1,6 @@
 local M = {
 	"tpope/vim-obsession",
-    "habamax/vim-godot",
+	"habamax/vim-godot",
 	"ThePrimeagen/vim-be-good",
 	{
 		"laytan/cloak.nvim",
@@ -153,7 +153,10 @@ table.insert(M, {
 table.insert(M, {
 	"stevearc/oil.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	opts = { default_file_explorer = false },
+	opts = {
+		default_file_explorer = false,
+		view_options = { show_hidden = true },
+	},
 	cmd = "Oil",
 	keys = {
 		{
