@@ -61,6 +61,7 @@ table.insert(M, {
 			gdscript = { "gdformat" },
 			html = { "prettierd" },
 			css = { "prettierd" },
+			json = { "prettierd" },
 			javascript = { "prettierd" },
 			typescript = { "prettierd" },
 			bash = { "shfmt" },
@@ -162,6 +163,9 @@ table.insert(M, {
 		{
 			"<leader>-",
 			function()
+				require("oil").setup({
+					view_options = { show_hidden = true },
+				})
 				local file_pattern =
 					vim.fn.escape(vim.fn.expand("%:t"), [[\/.*~]])
 				vim.cmd.Oil()

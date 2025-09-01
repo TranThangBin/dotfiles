@@ -1,11 +1,19 @@
 configuration {
-	modes: "window,drun,run,ssh,combi";
-/*	font: "mono 12";*/
+	modes: [
+        "drun",
+        "run",
+        "window",
+        "ssh",
+        "combi",
+        "emoji",
+        "power-menu:rofi-power-menu --choices=suspend/lockscreen/logout/reboot/shutdown"
+    ];
+  	font: "FiraCode Nerd Font Mono 14";
 /*	location: 0;*/
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
-/*	show-icons: false;*/
+  	show-icons: true;
 /*	preview-cmd: ;*/
 /*	on-selection-changed: ;*/
 /*	on-mode-changed: ;*/
@@ -16,9 +24,9 @@ configuration {
 /*	terminal: "rofi-sensible-terminal";*/
 /*	ssh-client: "ssh";*/
 /*	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";*/
-/*	run-command: "{cmd}";*/
+  	run-command: "uwsm-app -- {cmd}";
 /*	run-list-command: "";*/
-/*	run-shell-command: "{terminal} -e {cmd}";*/
+  	run-shell-command: "uwsm-app -T -- {cmd}";
 /*	window-command: "wmctrl -i -R {window}";*/
 /*	window-match-fields: "all";*/
 /*	icon-theme: ;*/
@@ -166,3 +174,5 @@ configuration {
       sorting-method:    "name";
   }
 }
+
+@theme "catppuccin-mocha.rasi"

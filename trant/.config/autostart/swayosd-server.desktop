@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=SwayOSD
-GenericName=Sway On Screen Display
+GenericName=On Screen Display
 Comment=A OSD window for common actions like volume and capslock.
 TryExec=/usr/bin/swayosd-server
 Exec=/usr/bin/swayosd-server

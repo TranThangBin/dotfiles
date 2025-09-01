@@ -1,5 +1,6 @@
 [Unit]
 Description=TranThangBin's desktop container
+PartOf=trantbox.target
 
 [Service]
 Type=oneshot

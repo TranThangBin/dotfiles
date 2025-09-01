@@ -1,6 +1,7 @@
 return {
 	"lewis6991/gitsigns.nvim",
 	event = "BufEnter",
+	opts = { preview_config = { border = "rounded" } },
 	keys = function()
 		local gitsigns_actions = require("gitsigns.actions")
 

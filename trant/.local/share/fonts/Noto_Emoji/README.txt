@@ -7,16 +7,16 @@ Noto Emoji is a variable font with this axis:
   wght
 
 This means all the styles are contained in a single file:
-  Noto_Emoji/NotoEmoji-VariableFont_wght.ttf
+  NotoEmoji-VariableFont_wght.ttf
 
 If your app fully supports variable fonts, you can now pick intermediate styles
 that aren’t available as static fonts. Not all apps support variable fonts, and
 in those cases you can use the static font files for Noto Emoji:
-  Noto_Emoji/static/NotoEmoji-Light.ttf
-  Noto_Emoji/static/NotoEmoji-Regular.ttf
-  Noto_Emoji/static/NotoEmoji-Medium.ttf
-  Noto_Emoji/static/NotoEmoji-SemiBold.ttf
-  Noto_Emoji/static/NotoEmoji-Bold.ttf
+  static/NotoEmoji-Light.ttf
+  static/NotoEmoji-Regular.ttf
+  static/NotoEmoji-Medium.ttf
+  static/NotoEmoji-SemiBold.ttf
+  static/NotoEmoji-Bold.ttf
 
 Get started
 -----------
