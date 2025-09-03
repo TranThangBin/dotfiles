@@ -1,9 +1,10 @@
 [Unit]
 Description=TranThangBin's games container
-PartOf=trantbox.target
+ConditionPathExists=/usr/bin/podman
+ConditionPathExists=/usr/bin/distrobox
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/podman container start trantbox-games
-ExecStop=/usr/bin/podman container stop trantbox-games
+ExecCondition=/usr/bin/podman container exists trantbox-games
+ExecStart=/usr/bin/distrobox enter trantbox-games
 RemainAfterExit=yes

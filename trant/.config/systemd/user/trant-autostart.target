@@ -1,0 +1,7 @@
+[Unit]
+Description=XDG Autostart for session of TranThangBin's Hyprland
+Wants=hypridle.service hyprpolkitagent.service fumon.service
+StopWhenUnneeded=yes
+
+[Install]
+WantedBy=wayland-session-xdg-autostart@hyprland.desktop.target

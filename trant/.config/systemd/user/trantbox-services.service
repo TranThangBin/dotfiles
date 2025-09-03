@@ -1,9 +1,10 @@
 [Unit]
 Description=TranThangBin's services container
-PartOf=trantbox.target
+ConditionPathExists=/usr/bin/podman
+ConditionPathExists=/usr/bin/distrobox
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/podman container start trantbox-services
-ExecStop=/usr/bin/podman container stop trantbox-services
+ExecCondition=/usr/bin/podman container exists trantbox-services
+ExecStart=/usr/bin/distrobox enter trantbox-services
 RemainAfterExit=yes
