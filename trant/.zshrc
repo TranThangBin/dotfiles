@@ -1,5 +1,5 @@
-[[ -f  "$ZDOTDIR/.ohmyzsh" ]] && source "$ZDOTDIR/.ohmyzsh"
-[[ -f  "$ZDOTDIR/.alias"   ]] && source "$ZDOTDIR/.alias"
+[[ -f "$ZDOTDIR/.ohmyzsh" ]] && source "$ZDOTDIR/.ohmyzsh"
+[[ -f "$ZDOTDIR/.alias" ]] && source "$ZDOTDIR/.alias"
 
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
@@ -16,4 +16,6 @@ fi
 
 source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-[[ -z $TMUX ]] && fastfetch
+if [[ -z $TMUX ]]; then
+    fastfetch
+fi

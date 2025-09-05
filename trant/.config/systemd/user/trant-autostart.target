@@ -1,6 +1,6 @@
 [Unit]
 Description=XDG Autostart for session of TranThangBin's Hyprland
-Wants=hypridle.service hyprpolkitagent.service fumon.service
+Wants=hyprpaper.service hypridle.service hyprpolkitagent.service fumon.service psd.service
 StopWhenUnneeded=yes
 
 [Install]
