@@ -1,5 +1,6 @@
 [Unit]
 Description=TranThangBin's services container
+PartOf=graphical-session.target
 ConditionPathExists=/usr/bin/podman
 ConditionPathExists=/usr/bin/distrobox
 
@@ -7,4 +8,5 @@ ConditionPathExists=/usr/bin/distrobox
 Type=oneshot
 ExecCondition=/usr/bin/podman container exists trantbox-services
 ExecStart=/usr/bin/distrobox enter trantbox-services
+ExecStop=/usr/bin/distrobox stop --yes trantbox-services
 RemainAfterExit=yes
