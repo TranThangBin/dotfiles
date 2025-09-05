@@ -3,6 +3,7 @@ Description=TranThangBin's services container
 PartOf=graphical-session.target
 ConditionPathExists=/usr/bin/podman
 ConditionPathExists=/usr/bin/distrobox
+Conflicts=shutdown.target
 
 [Service]
 Type=oneshot
