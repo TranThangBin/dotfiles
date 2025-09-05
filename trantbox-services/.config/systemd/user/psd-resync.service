@@ -3,8 +3,12 @@ Description=Timed resync
 After=psd.service
 Wants=psd-resync.timer
 BindsTo=psd.service
+ConditionPathExists=/usr/bin/podman
+ConditionPathExists=/usr/bin/distrobox
 
 [Service]
 Type=oneshot
-ExecStart=distrobox-enter --name trantbox-services -- /usr/bin/profile-sync-daemon resync
+ExecCondition=/usr/bin/podman container exists trantbox-services
+ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- sh -c '[ -f "/usr/bin/profile-sync-daemon" ]'
+ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/profile-sync-daemon resync
 Environment=LAUNCHED_BY_SYSTEMD=1

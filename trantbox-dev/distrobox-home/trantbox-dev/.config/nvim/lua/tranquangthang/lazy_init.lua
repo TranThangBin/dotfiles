@@ -34,6 +34,7 @@ require("lazy").setup({
 		title_pos = "center",
 		pills = true,
 	},
+	rocks = { enabled = false },
 	install = { colorscheme = { "rose-pine-moon" } },
 	change_detection = { enabled = false },
 })
