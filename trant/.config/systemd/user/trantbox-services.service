@@ -1,13 +1,11 @@
 [Unit]
 Description=TranThangBin's services container
-PartOf=graphical-session.target
+PartOf=graphical-session.target tranbox.target
 ConditionPathExists=/usr/bin/podman
-ConditionPathExists=/usr/bin/distrobox
 Conflicts=shutdown.target
 
 [Service]
-Type=oneshot
+Type=simple
 ExecCondition=/usr/bin/podman container exists trantbox-services
-ExecStart=/usr/bin/distrobox enter trantbox-services
-ExecStop=/usr/bin/distrobox stop --yes trantbox-services
-RemainAfterExit=yes
+ExecStart=/usr/bin/podman container start trantbox-services --attach --sig-proxy
+ExecStop=/usr/bin/podman container stop trantbox-services
