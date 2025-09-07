@@ -1,6 +1,6 @@
 [Unit]
 Description=TranThangBin's desktop container
-PartOf=graphical-session.target tranbox.target
+PartOf=graphical-session.target
 ConditionPathExists=/usr/bin/podman
 Conflicts=shutdown.target
 

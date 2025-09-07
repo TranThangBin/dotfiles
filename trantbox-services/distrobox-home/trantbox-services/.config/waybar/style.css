@@ -1,5 +1,5 @@
-@import "./common.css";
-@import "./catppuccin-mocha.css";
+@import url("./common.css");
+@import url("./catppuccin-mocha.css");
 
 #waybar {
 	font-size: 18px;

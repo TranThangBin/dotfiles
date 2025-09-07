@@ -1,7 +1,0 @@
-[Unit]
-Description=TranThangBin's distrobox containers
-Wants=trantbox-desktop.service trantbox-services.service trantbox-games.service trantbox-dev.service
-StopWhenUnneeded=yes
-
-[Install]
-WantedBy=default.target
