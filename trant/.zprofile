@@ -1,23 +1,15 @@
-_login() {
-    if [ "$(tty)" != "/dev/tty1" ]; then
-        return 0
-    fi
-
+if [ "$(tty)" = "/dev/tty1" ]; then
     echo "What type of session would you like to enter"
     echo "- [X]11"
     echo "- [W]ayland"
-    echo "- [*] Others"
+    echo "- [*] tty"
     printf "> "
     read -rk 1 session
+    echo
 
     if [ "$session" = "X" ]; then
         exec startx
     elif [ "$session" = "W" ]; then
-        if uwsm check may-start && uwsm select; then
-            exec uwsm start default
-        fi
+        exec uwsm start default
     fi
-}
-
-_login
-unset -f _login
+fi

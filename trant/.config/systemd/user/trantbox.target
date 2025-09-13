@@ -1,0 +1,7 @@
+[Unit]
+Description=TranThangBin's distrobox containers
+Wants=trantbox@desktop.target
+Wants=trantbox@games.target
+Wants=trantbox@services.target
+Wants=trantbox@dev.target
+Wants=trantbox@utils.target

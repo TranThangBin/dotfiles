@@ -1,8 +1,6 @@
 [Unit]
 Description=Timed resync
-Requires=trantbox-services.service
 Wants=psd-resync.timer
-After=trantbox-services.service
 After=psd.service
 BindsTo=psd.service
 ConditionPathExists=/usr/bin/distrobox

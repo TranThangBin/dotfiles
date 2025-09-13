@@ -8,14 +8,10 @@ export HIST_IGNORE_PATTERN="clear|sudo *"
 bindkey '^ ' autosuggest-accept
 
 [[ -f "/usr/bin/fzf" ]] && eval "$(/usr/bin/fzf --zsh)"
-if [[ -f "/usr/bin/zoxide" ]]; then
-    eval "$(/usr/bin/zoxide init zsh)"
-else
-    eval "$(zoxide init zsh)"
-fi
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 if [[ -z $TMUX ]]; then
-    fastfetch
+    command -v fastfetch &>/dev/null && fastfetch
 fi

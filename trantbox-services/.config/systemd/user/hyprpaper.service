@@ -2,10 +2,10 @@
 Description=Fast, IPC-controlled wallpaper utility for Hyprland.
 Documentation=https://wiki.hyprland.org/Hypr-Ecosystem/hyprpaper/
 PartOf=graphical-session.target
+PartOf=trantbox@services.target
 Requires=graphical-session.target
-Requires=trantbox-services.service
+Requires=trantbox@services.target
 After=graphical-session.target
-After=trantbox-services.service
 ConditionEnvironment=WAYLAND_DISPLAY
 ConditionPathExists=/usr/bin/distrobox
 

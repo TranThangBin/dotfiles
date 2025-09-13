@@ -5,6 +5,7 @@ local lsp_group =
 
 local enable_servers = {
 	"ccls",
+	"clangd",
 	"html",
 	"cssls",
 	"emmet_language_server",

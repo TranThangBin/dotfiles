@@ -10,3 +10,6 @@
 [submodule "trantbox-dev/.local/share/distrobox/home/trantbox-dev/.tmux/plugins/tpm"]
 	path = trantbox-dev/.local/share/distrobox/home/trantbox-dev/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "trant/paru-bin"]
+	path = trant/paru-bin
+	url = https://aur.archlinux.org/paru-bin.git

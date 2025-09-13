@@ -1,3 +1,12 @@
+/**
+ *
+ * Author : Aditya Shakya (adi1090x)
+ * Github : @adi1090x
+ *
+ * Rofi Theme File
+ * Rofi Version: 1.7.3
+ **/
+
 configuration {
 	modes: [
         "drun",
@@ -8,7 +17,7 @@ configuration {
         "emoji",
         "power-menu:rofi-power-menu --choices=suspend/lockscreen/logout/reboot/shutdown"
     ];
-  	font: "FiraCode Nerd Font Mono 14";
+  	font: "FiraCode Nerd Font Mono 13";
 	location: 0;
 	yoffset: 0;
 	xoffset: 0;
@@ -176,4 +185,4 @@ configuration {
     }
 }
 
-@theme "catppuccin-mocha.rasi"
+@theme "launcher.rasi"

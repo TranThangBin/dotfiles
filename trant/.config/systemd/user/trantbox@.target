@@ -1,0 +1,4 @@
+[Unit]
+Description=TranThangBin's %i container
+Requires=podman-container@trantbox-%i.service
+BindsTo=podman-container@trantbox-%i.service
