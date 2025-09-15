@@ -3,10 +3,10 @@ Description=Profile-sync-daemon
 Documentation=man:psd(1) man:profile-sync-daemon(1)
 Documentation=https://wiki.archlinux.org/index.php/Profile-sync-daemon
 PartOf=trantbox@services.target
-Requires=trantbox@services.target
 Wants=psd-resync.service
 RequiresMountsFor=/home/
 After=winbindd.service
+After=trantbox@services.target
 ConditionPathExists=/usr/bin/distrobox
 
 [Service]

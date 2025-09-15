@@ -200,8 +200,8 @@
             "mpris"
         ],
         "modules-right": [
-            "disk#root",
-            "disk#home",
+            // "disk#root",
+            // "disk#home",
             "tray"
         ],
         "hyprland/workspaces": {

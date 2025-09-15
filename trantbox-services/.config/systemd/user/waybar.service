@@ -3,8 +3,8 @@ Description=Highly customizable Wayland bar for Sway and Wlroots based composito
 Documentation=https://github.com/Alexays/Waybar/wiki/
 PartOf=graphical-session.target
 PartOf=trantbox@services.target
-Requires=trantbox@services.target
 After=graphical-session.target
+After=trantbox@services.target
 Requisite=graphical-session.target
 ConditionPathExists=/usr/bin/distrobox
 

@@ -1,0 +1,16 @@
+[Unit]
+Description=An application to enable a blue-light filter on Hyprland.
+Documentation=https://wiki.hyprland.org/Hypr-Ecosystem/hyprsunset/
+PartOf=graphical-session.target
+PartOf=trantbox@services.target
+Requires=graphical-session.target
+After=graphical-session.target
+After=trantbox@services.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Type=simple
+ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/hyprsunset" ]'
+ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/hyprsunset
+Slice=session.slice
+Restart=on-failure

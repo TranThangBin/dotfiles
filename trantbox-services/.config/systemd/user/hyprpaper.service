@@ -4,8 +4,8 @@ Documentation=https://wiki.hyprland.org/Hypr-Ecosystem/hyprpaper/
 PartOf=graphical-session.target
 PartOf=trantbox@services.target
 Requires=graphical-session.target
-Requires=trantbox@services.target
 After=graphical-session.target
+After=trantbox@services.target
 ConditionEnvironment=WAYLAND_DISPLAY
 ConditionPathExists=/usr/bin/distrobox
 
