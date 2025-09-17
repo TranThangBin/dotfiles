@@ -1,15 +1,15 @@
-[submodule "trant/.oh-my-zsh"]
-	path = trant/.oh-my-zsh
+[submodule "stow/trant/.oh-my-zsh"]
+	path = stow/trant/.oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
-[submodule "trant/.zsh.d/custom/plugins/zsh-syntax-highlighting"]
-	path = trant/.zsh.d/custom/plugins/zsh-syntax-highlighting
+[submodule "stow/trant/.zsh.d/custom/plugins/zsh-syntax-highlighting"]
+	path = stow/trant/.zsh.d/custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "trant/.zsh.d/custom/plugins/zsh-autosuggestions"]
-	path = trant/.zsh.d/custom/plugins/zsh-autosuggestions
+[submodule "stow/trant/.zsh.d/custom/plugins/zsh-autosuggestions"]
+	path = stow/trant/.zsh.d/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "trantbox-dev/.local/share/distrobox/home/trantbox-dev/.tmux/plugins/tpm"]
-	path = trantbox-dev/.local/share/distrobox/home/trantbox-dev/.tmux/plugins/tpm
+[submodule "stow/trantbox-dev/.local/share/distrobox/home/trantbox-dev/.tmux/plugins/tpm"]
+	path = stow/trantbox-dev/.local/share/distrobox/home/trantbox-dev/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
-[submodule "trant/paru-bin"]
-	path = trant/paru-bin
+[submodule "stow/trant/paru-bin"]
+	path = stow/trant/paru-bin
 	url = https://aur.archlinux.org/paru-bin.git

@@ -1,6 +1,0 @@
-[Unit]
-Description=TranThangBin's %i container
-PartOf=trantbox.target
-Requires=podman-container@trantbox-%i.service
-BindsTo=podman-container@trantbox-%i.service
-After=podman-container@trantbox-%i.service

@@ -1,0 +1,6 @@
+[Unit]
+Description=TranThangBin's trantbox-%i container
+PartOf=trantbox.target
+Requires=distrobox-container@trantbox-%i.service
+BindsTo=distrobox-container@trantbox-%i.service
+After=distrobox-container@trantbox-%i.service

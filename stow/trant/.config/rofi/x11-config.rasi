@@ -1,0 +1,8 @@
+configuration {
+	terminal: "i3-sensible-terminal";
+  	run-command: "{cmd}";
+  	run-shell-command: "{terminal} -e {cmd}";
+	drun-url-launcher: "xdg-open";
+}
+
+@import "config.rasi"
