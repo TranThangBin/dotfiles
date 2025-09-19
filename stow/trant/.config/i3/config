@@ -1,4 +1,4 @@
-include ./keybind.conf
+include ./keybinds.conf
 include ./autostart.conf
 
 # i3 config file (v4)
