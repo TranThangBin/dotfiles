@@ -26,6 +26,8 @@ export XMODIFIERS=@im=fcitx
 export QT_IM_MODULE=fcitx
 export GTK_IM_MODULE=fcitx
 
+export TERMINAL=ghostty
+
 systemctl --user import-environment DISPLAY XAUTHORITY
 
 if command -v dbus-update-activation-environment &>/dev/null; then
