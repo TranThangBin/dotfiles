@@ -5,7 +5,7 @@ table.insert(M, {
 
 	dependencies = {
 		"L3MON4D3/LuaSnip",
-        "rafamadriz/friendly-snippets",
+		"rafamadriz/friendly-snippets",
 		"windwp/nvim-autopairs",
 		"onsails/lspkind.nvim",
 		"saadparwaiz1/cmp_luasnip",

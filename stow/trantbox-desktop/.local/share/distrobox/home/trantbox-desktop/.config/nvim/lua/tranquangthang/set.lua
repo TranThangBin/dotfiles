@@ -40,4 +40,3 @@ vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
 
 vim.filetype.add({ extension = { pl = "prolog" } })
-vim.fn.setenv("WAYLAND_DISPLAY", "")

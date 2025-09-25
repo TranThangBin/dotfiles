@@ -1,7 +1,7 @@
 # !/usr/bin/env bash
 
 if [ -z "${CONTAINER_ID}" ]; then
-    exec hyprctl "$@"
+    exec /usr/bin/hyprctl "$@"
 else
     exec distrobox-host-exec -- /usr/bin/env \
         HYPRLAND_INSTANCE_SIGNATURE=$HYPRLAND_INSTANCE_SIGNATURE hyprctl "$@"

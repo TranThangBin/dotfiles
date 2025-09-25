@@ -2,8 +2,6 @@
 Description=TranThangBin's distrobox containers
 PartOf=graphical-session.target
 Conflicts=shutdown.target
-Wants=trantbox@desktop.target trantbox@desktop-aur.target
-Wants=trantbox@games.target trantbox@games-aur.target
+Wants=trantbox@desktop.target
 Wants=trantbox@services.target
-Wants=trantbox@dev.target
 Wants=trantbox@utils.target

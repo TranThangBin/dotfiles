@@ -22,6 +22,7 @@ local enable_servers = {
 	"zls",
 	"lua_ls",
 	"roslyn_ls",
+	"omnisharp",
 	"nil_ls",
 	"ruff",
 	"pyright",

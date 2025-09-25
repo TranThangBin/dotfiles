@@ -7,6 +7,6 @@
 [submodule "stow/trant/.zsh.d/custom/plugins/zsh-autosuggestions"]
 	path = stow/trant/.zsh.d/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "stow/trantbox-dev/.local/share/distrobox/home/trantbox-dev/.tmux/plugins/tpm"]
-	path = stow/trantbox-dev/.local/share/distrobox/home/trantbox-dev/.tmux/plugins/tpm
+[submodule "stow/trantbox-desktop/.local/share/distrobox/home/trantbox-desktop/.tmux/plugins/tpm"]
+	path = stow/trantbox-desktop/.local/share/distrobox/home/trantbox-desktop/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
