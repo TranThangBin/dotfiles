@@ -54,25 +54,6 @@ table.insert(M, {
 })
 
 table.insert(M, {
-	"stevearc/conform.nvim",
-	opts = {
-		formatters_by_ft = {
-			lua = { "stylua" },
-			gdscript = { "gdformat" },
-			html = { "prettierd" },
-			css = { "prettierd" },
-			json = { "prettierd" },
-			javascript = { "prettierd" },
-			typescript = { "prettierd" },
-			bash = { "shfmt" },
-			nix = { "nixfmt" },
-			templ = { "templ" },
-			cs = { "csharpier" },
-		},
-	},
-})
-
-table.insert(M, {
 	"ThePrimeagen/harpoon",
 	branch = "harpoon2",
 	keys = function()

@@ -1,11 +1,11 @@
-[submodule "stow/trant/.oh-my-zsh"]
-	path = stow/trant/.oh-my-zsh
+[submodule "stow/trant/.oh-my-zsh.d"]
+	path = stow/trant/.oh-my-zsh.d
 	url = https://github.com/ohmyzsh/ohmyzsh.git
-[submodule "stow/trant/.zsh.d/custom/plugins/zsh-syntax-highlighting"]
-	path = stow/trant/.zsh.d/custom/plugins/zsh-syntax-highlighting
+[submodule "stow/trant/.zsh_custom/plugins/zsh-syntax-highlighting"]
+	path = stow/trant/.zsh_custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "stow/trant/.zsh.d/custom/plugins/zsh-autosuggestions"]
-	path = stow/trant/.zsh.d/custom/plugins/zsh-autosuggestions
+[submodule "stow/trant/.zsh_custom/plugins/zsh-autosuggestions"]
+	path = stow/trant/.zsh_custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "stow/trantbox-desktop/.local/share/distrobox/home/trantbox-desktop/.tmux/plugins/tpm"]
 	path = stow/trantbox-desktop/.local/share/distrobox/home/trantbox-desktop/.tmux/plugins/tpm

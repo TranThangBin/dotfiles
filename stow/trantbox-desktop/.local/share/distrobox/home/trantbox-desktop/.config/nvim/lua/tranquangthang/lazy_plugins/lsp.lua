@@ -3,93 +3,12 @@ local M = {}
 local lsp_group =
 	vim.api.nvim_create_augroup("tranquangthang/lsp", { clear = true })
 
-local enable_servers = {
-	"ccls",
-	"clangd",
-	"html",
-	"cssls",
-	"emmet_language_server",
-	"tailwindcss",
-	"ts_ls",
-	"gdscript",
-	"gopls",
-	"dockerls",
-	"docker_compose_language_service",
-	"bashls",
-	"templ",
-	"rust_analyzer",
-	"taplo",
-	"zls",
-	"lua_ls",
-	"roslyn_ls",
-	"omnisharp",
-	"nil_ls",
-	"ruff",
-	"pyright",
-	"jsonls",
-	"yamlls",
-}
-
-local keys_normal = {
-	["gd"] = function()
-		if not pcall(require("telescope.builtin").lsp_definitions) then
-			vim.lsp.buf.definition()
-		end
-	end,
-	["gr"] = function()
-		if not pcall(require("telescope.builtin").lsp_references) then
-			vim.lsp.buf.references()
-		end
-	end,
-	["<leader>ws"] = function()
-		if not pcall(require("telescope.builtin").lsp_workspace_symbols) then
-			vim.lsp.buf.workspace_symbol()
-		end
-	end,
-	["<leader>ds"] = function()
-		if not pcall(require("telescope.builtin").lsp_document_symbols) then
-			vim.lsp.buf.document_symbol()
-		end
-	end,
-	["<leader>ca"] = function()
-		vim.lsp.buf.code_action()
-	end,
-	["<leader>rn"] = function()
-		vim.lsp.buf.rename()
-	end,
-	["<C-s>"] = function()
-		vim.lsp.buf.signature_help({ border = "rounded" })
-	end,
-	["K"] = function()
-		vim.lsp.buf.hover({ border = "rounded" })
-	end,
-	["<leader>vd"] = function()
-		vim.diagnostic.open_float({ border = "rounded" })
-	end,
-	["]d"] = function()
-		vim.diagnostic.jump({ count = 1, float = true })
-	end,
-	["[d"] = function()
-		vim.diagnostic.jump({ count = -1, float = true })
-	end,
-	["<leader>f"] = function(bufnr)
-		local format_opts = {
-			lsp_format = "fallback",
-			bufnr = bufnr,
-			async = true,
-			stop_after_first = true,
-		}
-
-		if not pcall(require("conform").format, format_opts) then
-			vim.lsp.buf.format(format_opts)
-		end
-	end,
-}
-
-local keys_insert = { ["<C-s>"] = keys_normal["<C-s>"] }
-
 table.insert(M, {
 	"neovim/nvim-lspconfig",
+	dependencies = {
+		"mfussenegger/nvim-lint",
+		"stevearc/conform.nvim",
+	},
 	config = function()
 		vim.diagnostic.config({
 			virtual_text = true,
@@ -111,29 +30,150 @@ table.insert(M, {
 			},
 		})
 
-		vim.lsp.enable(enable_servers)
+		vim.lsp.enable({
+			"ccls",
+			"clangd",
+			"html",
+			"cssls",
+			"emmet_language_server",
+			"tailwindcss",
+			"ts_ls",
+			"gdscript",
+			"gopls",
+			"dockerls",
+			"docker_compose_language_service",
+			"bashls",
+			"templ",
+			"rust_analyzer",
+			"taplo",
+			"zls",
+			"lua_ls",
+			"roslyn_ls",
+			"omnisharp",
+			"nil_ls",
+			"ruff",
+			"pyright",
+			"jsonls",
+			"yamlls",
+		})
+
+		vim.api.nvim_create_autocmd("BufEnter", {
+			group = lsp_group,
+			callback = function(e)
+				vim.keymap.set("n", "<leader>f", function()
+					require("conform").format({
+						bufnr = e.buf,
+						async = true,
+						lsp_format = "fallback",
+						stop_after_first = true,
+					})
+
+					-- vim.api.nvim_buf_create_user_command()
+					--
+				end)
+			end,
+		})
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = lsp_group,
 			callback = function(e)
-				for key, exec in pairs(keys_normal) do
-					vim.keymap.set("n", key, function()
-						exec(e.buf)
-					end, { buffer = e.buf })
+				local map = function(mode, lhs, rhs, opts)
+					opts = opts or {}
+					opts.buffer = e.buf
+					vim.keymap.set(mode, lhs, rhs, opts)
 				end
 
-				for key, exec in pairs(keys_insert) do
-					vim.keymap.set("i", key, function()
-						exec()
-					end, { buffer = e.buf })
-				end
+				local has_telescope, telescope_builtin =
+					pcall(require, "telescope.builtin")
+
+				map("n", "gd", function()
+					if has_telescope then
+						telescope_builtin.lsp_definitions()
+					else
+						vim.lsp.buf.definition()
+					end
+				end)
+				map("n", "gr", function()
+					if has_telescope then
+						telescope_builtin.lsp_references()
+					else
+						vim.lsp.buf.references()
+					end
+				end)
+				map("n", "<leader>ws", function()
+					if has_telescope then
+						telescope_builtin.lsp_workspace_symbols()
+					else
+						vim.lsp.buf.workspace_symbol()
+					end
+				end)
+				map("n", "<leader>ds", function()
+					if has_telescope then
+						telescope_builtin.lsp_document_symbols()
+					else
+						vim.lsp.buf.document_symbol()
+					end
+				end)
+				map("n", "<leader>ca", function()
+					vim.lsp.buf.code_action()
+				end)
+				map("n", "<leader>rn", function()
+					vim.lsp.buf.rename()
+				end)
+				map("n", "K", function()
+					vim.lsp.buf.hover({ border = "rounded" })
+				end)
+				map("n", "<leader>vd", function()
+					vim.diagnostic.open_float({ border = "rounded" })
+				end)
+				map("n", "]d", function()
+					vim.diagnostic.jump({ count = 1, float = true })
+				end)
+				map("n", "[d", function()
+					vim.diagnostic.jump({ count = -1, float = true })
+				end)
+				map({ "n", "i" }, "<C-s>", function()
+					vim.lsp.buf.signature_help({ border = "rounded" })
+				end)
 			end,
 		})
 	end,
 })
 
 table.insert(M, {
+	"mfussenegger/nvim-lint",
+	config = function()
+		require("lint").linters_by_ft = {
+			lua = { "luacheck" },
+			sh = { "shellcheck" },
+			bash = { "shellcheck" },
+			zsh = { "shellcheck" },
+		}
+	end,
+})
+
+table.insert(M, {
+	"stevearc/conform.nvim",
+	opts = {
+		formatters_by_ft = {
+			lua = { "stylua" },
+			gdscript = { "gdformat" },
+			html = { "prettierd" },
+			css = { "prettierd" },
+			json = { "prettierd" },
+			javascript = { "prettierd" },
+			typescript = { "prettierd" },
+			bash = { "shfmt" },
+			nix = { "nixfmt" },
+			templ = { "templ" },
+			cs = { "csharpier" },
+		},
+	},
+})
+
+table.insert(M, {
 	"mason-org/mason.nvim",
+	dependencies = { "j-hui/fidget.nvim" },
 	opts = {
 		ui = {
 			border = "rounded",
@@ -145,20 +185,45 @@ table.insert(M, {
 		},
 	},
 	config = function(_, opts)
+		local fidget = require("fidget")
+
 		require("mason").setup(opts)
 
 		local registry = require("mason-registry")
 
 		local lsp_servers = { "lua-language-server" }
 		local formatters = { "stylua" }
+		local linters = { "luacheck" }
 
-		local pkgs = vim.deepcopy(lsp_servers)
+		local pkgs = {}
+		vim.list_extend(pkgs, lsp_servers)
 		vim.list_extend(pkgs, formatters)
+		vim.list_extend(pkgs, linters)
 
 		for _, pkg_name in ipairs(pkgs) do
 			local ok, pkg = pcall(registry.get_package, pkg_name)
 			if ok and not pkg:is_installed() then
-				pkg:install()
+				local handle = fidget.progress.handle.create({
+					title = "MasonInstall",
+					message = string.format(
+						pkg_name .. " is being installed..."
+					),
+					lsp_client = { name = "Mason" },
+					done = false,
+				})
+
+				pkg:install({}, function(success, _)
+					local msg = pkg_name .. " has been successfully installed!"
+
+					if not success then
+						msg = pkg_name .. " installation was unsuccessful!"
+					end
+
+					handle:report({
+						message = msg,
+						done = true,
+					})
+				end)
 			end
 		end
 	end,

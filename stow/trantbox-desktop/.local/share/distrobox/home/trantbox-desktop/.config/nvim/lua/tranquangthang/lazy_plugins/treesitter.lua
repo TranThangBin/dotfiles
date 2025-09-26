@@ -24,7 +24,7 @@ table.insert(M, {
 					require("fidget").notify(
 						"File larger than 100KB treesitter disabled for performance",
 						vim.log.levels.WARN,
-						{ group = "Treesitter" }
+						{ annote = "Treesitter", group = "Treesitter" }
 					)
 					return true
 				end

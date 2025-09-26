@@ -1,4 +1,4 @@
-[[ -f "$ZDOTDIR/.ohmyzsh" ]] && source "$ZDOTDIR/.ohmyzsh"
+[[ -f "$ZDOTDIR/.oh-my-zsh" ]] && source "$ZDOTDIR/.oh-my-zsh"
 [[ -f "$ZDOTDIR/.alias" ]] && source "$ZDOTDIR/.alias"
 
 setopt HIST_IGNORE_ALL_DUPS
