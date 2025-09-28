@@ -1,6 +1,0 @@
-export PATH=$HOME/bin:$PATH:$HOME/.local/bin
-export GBM_BACKEND=nvidia-drm
-export __GLX_VENDOR_LIBRARY_NAME=nvidia
-export LIBVA_DRIVER_NAME=nvidia
-export ELECTRON_OZONE_PLATFORM_HINT=auto
-export XDG_CONFIG_DIRS=$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS

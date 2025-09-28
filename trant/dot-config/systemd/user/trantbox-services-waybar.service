@@ -1,0 +1,18 @@
+[Unit]
+Description=Highly customizable Wayland bar for Sway and Wlroots based compositors
+Documentation=https://github.com/Alexays/Waybar/wiki/
+PartOf=graphical-session.target
+PartOf=distrobox-container@trantbox-services.service
+After=graphical-session.target
+Requisite=graphical-session.target
+ConditionPathExists=/usr/bin/distrobox
+
+Requires=distrobox-container@trantbox-services.service
+PartOf=distrobox-container@trantbox-services.service
+After=distrobox-container@trantbox-services.service
+
+[Service]
+ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- sh -c '[ -f "/usr/bin/waybar" ]'
+ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/waybar
+ExecReload=kill -SIGUSR2 $MAINPID
+Restart=on-failure
