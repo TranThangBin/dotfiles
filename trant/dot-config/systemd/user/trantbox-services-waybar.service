@@ -7,9 +7,7 @@ After=graphical-session.target
 Requisite=graphical-session.target
 ConditionPathExists=/usr/bin/distrobox
 
-Requires=distrobox-container@trantbox-services.service
 PartOf=distrobox-container@trantbox-services.service
-After=distrobox-container@trantbox-services.service
 
 [Service]
 ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- sh -c '[ -f "/usr/bin/waybar" ]'

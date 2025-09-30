@@ -2,7 +2,6 @@
 Description=Distrobox container - %i
 ConditionPathExists=/usr/bin/podman
 ConditionPathExists=/usr/bin/distrobox
-Conflicts=shutdown.target
 
 [Service]
 Type=oneshot

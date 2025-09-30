@@ -6,7 +6,7 @@ if status is-login
         echo "- [R]eboot"
         echo "- reboot to [F]irmware interface"
         echo "- [P]oweroff"
-        echo "- [*] enter tty"
+        echo "- [Enter] tty"
         read -p "set_color blue; echo -n 'Pick your option '; set_color green; echo -n '> '; set_color normal" -n 1 OPT
 
         switch "$OPT"
@@ -26,15 +26,5 @@ if status is-login
             case "*"
                 echo "Entering tty"
         end
-    end
-end
-
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-    if not set -q DISTROBOX_HOME
-	    set -x DISTROBOX_HOME $HOME/.local/share/distrobox/home
-    end
-    if not set -q DOTFILES_DIR
-	    set -x DOTFILES_DIR $HOME/dotfiles
     end
 end

@@ -1,7 +1,9 @@
 # !/usr/bin/env bash
 
-if [ -n "${WAYLAND_DISPLAY}" ] && command -v uwsm-app &>/dev/null; then
-    exec uwsm-app "$@"
+if [ -n "${CONTAINER_ID}" ]; then
+    exec distrobox-host-exec -- xdg-open "$@"
+elif [ -n "${WAYLAND_DISPLAY}" ] && command -v uwsm-app &>/dev/null; then
+    exec /usr/bin/uwsm-app "$@"
 else
     exec /usr/bin/xdg-open "$@"
 fi

@@ -1,7 +1,0 @@
-[Unit]
-Description=TranThangBin's distrobox containers
-Wants=distrobox-container@trantbox-desktop.service
-Wants=distrobox-container@trantbox-games.service
-Wants=distrobox-container@trantbox-dev.service
-Wants=distrobox-container@trantbox-services.service
-Wants=distrobox-container@trantbox-utils.service

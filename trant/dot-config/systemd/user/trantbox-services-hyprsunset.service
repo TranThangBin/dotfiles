@@ -6,9 +6,7 @@ Requires=graphical-session.target
 After=graphical-session.target
 ConditionEnvironment=WAYLAND_DISPLAY
 
-Requires=distrobox-container@trantbox-services.service
 PartOf=distrobox-container@trantbox-services.service
-After=distrobox-container@trantbox-services.service
 
 [Service]
 Type=simple
