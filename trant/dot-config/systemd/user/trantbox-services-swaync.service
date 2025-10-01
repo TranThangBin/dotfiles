@@ -9,6 +9,7 @@ ConditionEnvironment=WAYLAND_DISPLAY
 ConditionPathExists=/usr/bin/distrobox
 
 PartOf=distrobox-container@trantbox-services.service
+Conflicts=swaync.service
 
 [Service]
 Type=dbus

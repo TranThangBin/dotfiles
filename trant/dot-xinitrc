@@ -2,7 +2,7 @@
 
 wm=i3
 
-export PATH=$PATH:$HOME/.local/bin
+export PATH="$HOME/bin:$PATH:$HOME/.local/bin"
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_CONFIG_DIRS="$XDG_CONFIG_DIRS:$XDG_CONFIG_HOME:/etc/xdg"
@@ -20,13 +20,14 @@ export XDG_SESSION_TYPE=x11
 export XDG_BACKEND=x11
 export XDG_SESSION_CLASS=user
 
-export QT_QPA_PLATFORMTHEME=qt6ct
-
 export XMODIFIERS=@im=fcitx
 export QT_IM_MODULE=fcitx
 export GTK_IM_MODULE=fcitx
 
 export TERMINAL=ghostty
+
+export DISTROBOX_HOME=$HOME/.local/share/distrobox/home
+export DOTFILES_DIR=$HOME/dotfiles
 
 systemctl --user import-environment DISPLAY XAUTHORITY
 

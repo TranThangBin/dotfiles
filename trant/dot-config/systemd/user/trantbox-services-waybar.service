@@ -8,6 +8,7 @@ Requisite=graphical-session.target
 ConditionPathExists=/usr/bin/distrobox
 
 PartOf=distrobox-container@trantbox-services.service
+Conflicts=waybar.service
 
 [Service]
 ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- sh -c '[ -f "/usr/bin/waybar" ]'

@@ -7,6 +7,7 @@ After=graphical-session.target
 ConditionEnvironment=WAYLAND_DISPLAY
 
 PartOf=distrobox-container@trantbox-services.service
+Conflicts=hyprsunset.service
 
 [Service]
 Type=simple
