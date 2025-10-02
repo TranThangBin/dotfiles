@@ -5,10 +5,7 @@ local lsp_group =
 
 table.insert(M, {
 	"neovim/nvim-lspconfig",
-	dependencies = {
-		"mfussenegger/nvim-lint",
-		"stevearc/conform.nvim",
-	},
+    dependencies = "stevearc/conform.nvim",
 	config = function()
 		vim.diagnostic.config({
 			virtual_text = true,
@@ -43,7 +40,7 @@ table.insert(M, {
 			"dockerls",
 			"docker_compose_language_service",
 			"bashls",
-            "fish_lsp",
+			"fish_lsp",
 			"templ",
 			"rust_analyzer",
 			"taplo",
@@ -68,9 +65,6 @@ table.insert(M, {
 						lsp_format = "fallback",
 						stop_after_first = true,
 					})
-
-					-- vim.api.nvim_buf_create_user_command()
-					--
 				end)
 			end,
 		})
@@ -144,7 +138,8 @@ table.insert(M, {
 table.insert(M, {
 	"mfussenegger/nvim-lint",
 	config = function()
-		require("lint").linters_by_ft = {
+		local lint = require("lint")
+		lint.linters_by_ft = {
 			lua = { "luacheck" },
 			sh = { "shellcheck" },
 			bash = { "shellcheck" },
