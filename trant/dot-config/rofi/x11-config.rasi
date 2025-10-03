@@ -1,8 +1,7 @@
 configuration {
-	terminal: "i3-sensible-terminal";
+	terminal: "rofi-sensible-terminal";
   	run-command: "{cmd}";
   	run-shell-command: "{terminal} -e {cmd}";
-	drun-url-launcher: "xdg-open";
 }
 
 @import "config.rasi"

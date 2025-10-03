@@ -1,0 +1,13 @@
+# Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/services/easyeffects.nix
+[Unit]
+Description=Easyeffects daemon
+Requires=dbus.service
+After=graphical-session.target
+PartOf=graphical-session.target pipewire.service
+ConditionPathExists=/usr/bin/easyeffects
+
+[Service]
+ExecStart=/usr/bin/easyeffects --gapplication-service --load-preset LoudnessEqualizer
+ExecStop=/usr/bin/easyeffects --quit
+Restart=on-failure
+RestartSec=5

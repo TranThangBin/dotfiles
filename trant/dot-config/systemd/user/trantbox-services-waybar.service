@@ -7,7 +7,8 @@ After=graphical-session.target
 Requisite=graphical-session.target
 ConditionPathExists=/usr/bin/distrobox
 
-PartOf=distrobox-container@trantbox-services.service
+Requires=podman-container@trantbox-services.service
+PartOf=podman-container@trantbox-services.service
 Conflicts=waybar.service
 
 [Service]

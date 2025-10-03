@@ -1,12 +1,15 @@
 local M = {}
 
-local lsp_group =
-	vim.api.nvim_create_augroup("tranquangthang/lsp", { clear = true })
-
 table.insert(M, {
 	"neovim/nvim-lspconfig",
-    dependencies = "stevearc/conform.nvim",
+	dependencies = {
+		"nvim-telescope/telescope.nvim",
+		"stevearc/conform.nvim",
+	},
 	config = function()
+		local lsp_group =
+			vim.api.nvim_create_augroup("tranquangthang/lsp", { clear = true })
+
 		vim.diagnostic.config({
 			virtual_text = true,
 			severity_sort = true,
@@ -72,42 +75,25 @@ table.insert(M, {
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = lsp_group,
 			callback = function(e)
+				local telescope_builtin = require("telescope.builtin")
+
 				local map = function(mode, lhs, rhs, opts)
 					opts = opts or {}
 					opts.buffer = e.buf
 					vim.keymap.set(mode, lhs, rhs, opts)
 				end
 
-				local has_telescope, telescope_builtin =
-					pcall(require, "telescope.builtin")
-
 				map("n", "gd", function()
-					if has_telescope then
-						telescope_builtin.lsp_definitions()
-					else
-						vim.lsp.buf.definition()
-					end
+					telescope_builtin.lsp_definitions()
 				end)
 				map("n", "gr", function()
-					if has_telescope then
-						telescope_builtin.lsp_references()
-					else
-						vim.lsp.buf.references()
-					end
+					telescope_builtin.lsp_references()
 				end)
 				map("n", "<leader>ws", function()
-					if has_telescope then
-						telescope_builtin.lsp_workspace_symbols()
-					else
-						vim.lsp.buf.workspace_symbol()
-					end
+					telescope_builtin.lsp_workspace_symbols()
 				end)
 				map("n", "<leader>ds", function()
-					if has_telescope then
-						telescope_builtin.lsp_document_symbols()
-					else
-						vim.lsp.buf.document_symbol()
-					end
+					telescope_builtin.lsp_document_symbols()
 				end)
 				map("n", "<leader>ca", function()
 					vim.lsp.buf.code_action()
@@ -159,6 +145,7 @@ table.insert(M, {
 			json = { "prettierd" },
 			javascript = { "prettierd" },
 			typescript = { "prettierd" },
+			markdown = { "prettierd" },
 			bash = { "shfmt" },
 			nix = { "nixfmt" },
 			templ = { "templ" },

@@ -1,0 +1,14 @@
+[Unit]
+Description=ElKowars wacky widgets daemon
+PartOf=graphical-session.target
+After=graphical-session.target
+
+Requires=podman-container@trantbox-services.service
+PartOf=podman-container@trantbox-services.service
+Conflicts=eww-daemon.service
+
+[Service]
+Type=simple
+ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/eww" ]'
+ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/eww daemon --no-daemonize
+Restart=on-failure

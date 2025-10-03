@@ -2,7 +2,6 @@ configuration {
 	terminal: "uwsm-app -T";
   	run-command: "uwsm-app -- {cmd}";
   	run-shell-command: "{terminal} -- {cmd}";
-	drun-url-launcher: "uwsm-app";
 }
 
 @import "config.rasi"

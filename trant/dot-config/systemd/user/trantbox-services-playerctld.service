@@ -1,0 +1,14 @@
+# Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/services/playerctld.nix
+[Unit]
+Description=MPRIS media player daemon
+
+Requires=podman-container@trantbox-services.service
+PartOf=podman-container@trantbox-services.service
+Conflicts=fcitx5-daemon.service
+
+[Service]
+Type=dbus
+BusName=org.mpris.MediaPlayer2.playerctld
+ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/playerctld" ]'
+ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/playerctld
+Restart=on-failure

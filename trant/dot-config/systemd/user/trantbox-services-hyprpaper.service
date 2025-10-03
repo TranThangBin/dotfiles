@@ -7,7 +7,8 @@ After=graphical-session.target
 ConditionEnvironment=WAYLAND_DISPLAY
 ConditionPathExists=/usr/bin/distrobox
 
-PartOf=distrobox-container@trantbox-services.service
+Requires=podman-container@trantbox-services.service
+PartOf=podman-container@trantbox-services.service
 Conflicts=hyprpaper.service
 
 [Service]

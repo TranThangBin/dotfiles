@@ -44,6 +44,9 @@ table.insert(M, {
 	"m4xshen/hardtime.nvim",
 	dependencies = { "MunifTanjim/nui.nvim", "j-hui/fidget.nvim" },
 	opts = {
+		disabled_filetypes = {
+			harpoon = true,
+		},
 		callback = function(text)
 			require("fidget").notify(text, vim.log.levels.WARN, {
 				group = "Hardtime",
@@ -135,21 +138,15 @@ table.insert(M, {
 table.insert(M, {
 	"stevearc/oil.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	opts = {
-		default_file_explorer = false,
-		view_options = { show_hidden = true },
-	},
+	opts = { default_file_explorer = false },
 	cmd = "Oil",
 	keys = {
 		{
 			"<leader>-",
 			function()
-				require("oil").setup({
-					view_options = { show_hidden = true },
-				})
 				local file_pattern =
 					vim.fn.escape(vim.fn.expand("%:t"), [[\/.*~]])
-				vim.cmd.Oil()
+				require("oil").open_float()
 				vim.fn.search(file_pattern)
 			end,
 		},

@@ -3,7 +3,7 @@
 if [ -n "${CONTAINER_ID}" ]; then
     exec distrobox-host-exec -- xdg-open "$@"
 elif [ -n "${WAYLAND_DISPLAY}" ] && command -v uwsm-app &>/dev/null; then
-    exec /usr/bin/uwsm-app "$@"
+    exec /usr/bin/uwsm-app -- /usr/bin/xdg-open "$@"
 else
     exec /usr/bin/xdg-open "$@"
 fi
