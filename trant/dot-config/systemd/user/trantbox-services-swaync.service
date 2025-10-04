@@ -2,12 +2,11 @@
 Description=Swaync notification daemon
 Documentation=https://github.com/ErikReider/SwayNotificationCenter
 PartOf=graphical-session.target
-PartOf=distrobox-container@trantbox-services.service
 After=graphical-session.target
 # ConditionEnvironment requires systemd v247 to work correctly
 ConditionEnvironment=WAYLAND_DISPLAY
-ConditionPathExists=/usr/bin/distrobox
 
+ConditionPathExists=/usr/bin/distrobox
 Requires=podman-container@trantbox-services.service
 PartOf=podman-container@trantbox-services.service
 Conflicts=swaync.service
