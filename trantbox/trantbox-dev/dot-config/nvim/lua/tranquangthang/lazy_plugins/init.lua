@@ -46,6 +46,7 @@ table.insert(M, {
 	opts = {
 		disabled_filetypes = {
 			harpoon = true,
+			[""] = true,
 		},
 		callback = function(text)
 			require("fidget").notify(text, vim.log.levels.WARN, {
