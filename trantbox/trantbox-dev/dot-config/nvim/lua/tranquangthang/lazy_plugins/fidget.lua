@@ -47,7 +47,7 @@ return {
 			poll_rate = 10,
 			filter = vim.log.levels.INFO,
 			history_size = 128,
-			override_vim_notify = false,
+			override_vim_notify = true,
 			configs = {
 				default = require("fidget.notification").default_config,
 			},

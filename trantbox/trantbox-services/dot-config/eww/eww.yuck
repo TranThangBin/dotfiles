@@ -1,1 +1,1 @@
-(include "./bar/hyprland/hyprland-bar.yuck")
+(include "./bar/hyprland-bar/hyprland-bar.yuck")

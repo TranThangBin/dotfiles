@@ -1,3 +1,5 @@
+math.randomseed(os.time())
+
 vim.opt.guicursor = ""
 
 vim.opt.number = true

@@ -2,7 +2,6 @@ local M = { "nvim-treesitter/nvim-treesitter-textobjects" }
 
 table.insert(M, {
 	"nvim-treesitter/nvim-treesitter",
-	dependencies = { "j-hui/fidget.nvim" },
 	build = function()
 		require("nvim-treesitter.install").update({ with_sync = true })()
 	end,
@@ -20,14 +19,19 @@ table.insert(M, {
 				local max_filesize = 100 * kilobyte
 				local ok, stats =
 					pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-				if ok and stats and stats.size > max_filesize then
-					require("fidget").notify(
+				local should_disable = ok
+					and stats
+					and stats.size > max_filesize
+
+				if should_disable then
+					vim.notify(
 						"File larger than 100KB treesitter disabled for performance",
 						vim.log.levels.WARN,
 						{ annote = "Treesitter", group = "Treesitter" }
 					)
-					return true
 				end
+
+				return should_disable
 			end,
 		},
 		incremental_selection = {

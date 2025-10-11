@@ -41,7 +41,6 @@ table.insert(M, {
 			"taplo",
 			"zls",
 			"lua_ls",
-			"roslyn",
 			"nil_ls",
 			"ruff",
 			"pyright",
@@ -54,17 +53,41 @@ table.insert(M, {
 table.insert(M, {
 	"seblyng/roslyn.nvim",
 	opts = {},
+	config = function(_, opts)
+		require("roslyn").setup(opts)
+		vim.lsp.enable("roslyn")
+	end,
 })
 
 table.insert(M, {
 	"mfussenegger/nvim-lint",
 	config = function()
-		require("lint").linters_by_ft = {
+		local lint = require("lint")
+		lint.linters_by_ft = {
 			lua = { "luacheck" },
 			sh = { "shellcheck" },
 			bash = { "shellcheck" },
 			zsh = { "shellcheck" },
 		}
+		-- local lint_group =
+		-- 	vim.api.nvim_create_augroup("tranquangthang/lint", { clear = true })
+		-- vim.api.nvim_create_autocmd("BufEnter", {
+		-- 	group = lint_group,
+		-- 	callback = function(e)
+		-- 		vim.api.nvim_buf_create_user_command(
+		-- 			e.buf,
+		-- 			"LintStart",
+		-- 			function() end,
+		-- 			{}
+		-- 		)
+		-- 	end,
+		-- })
+		-- vim.api.nvim_create_autocmd("BufLeave", {
+		-- 	group = lint_group,
+		-- 	callback = function(e)
+		-- 		vim.api.nvim_buf_del_user_command(e.buf, "LintStart")
+		-- 	end,
+		-- })
 	end,
 })
 

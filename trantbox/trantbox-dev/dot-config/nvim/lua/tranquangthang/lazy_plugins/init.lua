@@ -42,14 +42,14 @@ table.insert(M, {
 
 table.insert(M, {
 	"m4xshen/hardtime.nvim",
-	dependencies = { "MunifTanjim/nui.nvim", "j-hui/fidget.nvim" },
+	dependencies = { "MunifTanjim/nui.nvim" },
 	opts = {
 		disabled_filetypes = {
 			harpoon = true,
 			[""] = true,
 		},
 		callback = function(text)
-			require("fidget").notify(text, vim.log.levels.WARN, {
+			vim.notify(text, vim.log.levels.WARN, {
 				group = "Hardtime",
 				ttl = require("hardtime.config").config.timeout / 1000,
 			})
@@ -106,6 +106,7 @@ table.insert(M, {
 	config = function()
 		local extensions = require("harpoon.extensions")
 		local harpoon = require("harpoon")
+		harpoon:setup()
 		harpoon:extend(extensions.builtins.navigate_with_number())
 		harpoon:extend(extensions.builtins.highlight_current_file())
 	end,

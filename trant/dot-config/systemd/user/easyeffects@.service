@@ -7,7 +7,9 @@ PartOf=graphical-session.target pipewire.service
 ConditionPathExists=/usr/bin/easyeffects
 
 [Service]
-ExecStart=/usr/bin/easyeffects --gapplication-service --load-preset LoudnessEqualizer
+Type=dbus
+BusName=com.github.wwmm.easyeffects
+ExecStart=/usr/bin/easyeffects --gapplication-service
 ExecStop=/usr/bin/easyeffects --quit
 Restart=on-failure
 RestartSec=5

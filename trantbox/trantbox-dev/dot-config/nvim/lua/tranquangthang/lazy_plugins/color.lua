@@ -1,22 +1,24 @@
 local M = {}
 
+local rng = math.random(0, 5)
+
 table.insert(M, {
 	"rose-pine/neovim",
 	name = "rose-pine",
 	opts = {
-		enable = {},
-		highlight_groups = {},
-		groups = {},
-		palette = {},
 		styles = { transparency = true },
-		before_highlight = function() end,
 		variant = "auto",
 		dark_variant = "moon",
 		dim_inactive_windows = false,
 		extend_background_behind_borders = true,
 	},
 	config = function(_, opts)
-		require("rose-pine").setup(opts)
+		local rose_pine = require("rose-pine")
+		rose_pine.setup(opts)
+
+		if rng ~= 5 then
+			rose_pine.colorscheme("moon")
+		end
 	end,
 })
 
@@ -34,6 +36,14 @@ table.insert(M, {
 	"catppuccin/nvim",
 	name = "catppuccin",
 	opts = { transparent_background = true },
+	config = function(_, opts)
+		local catppuccin = require("catppuccin")
+		catppuccin.setup(opts)
+
+		if rng == 5 then
+			catppuccin.load("mocha")
+		end
+	end,
 })
 
 return M
