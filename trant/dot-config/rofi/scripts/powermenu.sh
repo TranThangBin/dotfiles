@@ -62,6 +62,8 @@ run_cmd() {
             systemctl suspend
         elif [[ $1 == '--logout' ]]; then
             loginctl terminate-user ""
+        elif [[ $1 == '--lock' ]]; then
+            loginctl lock-session
         fi
     else
         exit 0
@@ -78,7 +80,7 @@ $reboot)
     run_cmd --reboot
     ;;
 $lock)
-    loginctl lock-session
+    run_cmd --lock
     ;;
 $suspend)
     run_cmd --suspend
