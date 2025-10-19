@@ -1,6 +1,6 @@
 local M = {}
 
-local rng = math.random(0, 5)
+local rng = vim.fn.rand() % 6
 
 table.insert(M, {
 	"rose-pine/neovim",

@@ -46,6 +46,7 @@ table.insert(M, {
 	opts = {
 		disabled_filetypes = {
 			harpoon = true,
+			git = true,
 			[""] = true,
 		},
 		callback = function(text)
@@ -162,6 +163,8 @@ table.insert(M, {
 		{ "<leader>gs", "<cmd>Git<CR>" },
 		{ "gh", "<cmd>diffget //2<CR>" },
 		{ "gl", "<cmd>diffget //3<CR>" },
+		{ "gH", "<cmd>1,$diffget //2<CR>" },
+		{ "gL", "<cmd>1,$diffget //3<CR>" },
 	},
 })
 

@@ -46,6 +46,7 @@ table.insert(M, {
 			"pyright",
 			"jsonls",
 			"yamlls",
+			"hyprls",
 		})
 	end,
 })
@@ -100,6 +101,7 @@ table.insert(M, {
 			html = { "prettierd" },
 			css = { "prettierd" },
 			json = { "prettierd" },
+			jsonc = { "prettierd" },
 			javascript = { "prettierd" },
 			typescript = { "prettierd" },
 			markdown = { "prettierd" },

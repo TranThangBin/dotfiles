@@ -6,7 +6,7 @@ if status is-login && test "$(tty)" = /dev/tty1
     echo "- reboot to [F]irmware interface"
     echo "- [P]oweroff"
     echo "- [Enter] tty"
-    read -p "set_color blue; echo -n 'Pick your option '; set_color green; echo -n '> '; set_color normal" -n 1 OPT
+    read -p "set_color cyan; echo -n 'Pick your option '; set_color green; echo -n '> '; set_color normal" -n 1 OPT
 
     switch "$OPT"
         case X
