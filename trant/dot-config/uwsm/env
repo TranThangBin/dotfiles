@@ -5,6 +5,7 @@ export ELECTRON_OZONE_PLATFORM_HINT=auto
 
 export PATH=$HOME/bin:$PATH:$HOME/.local/bin
 export XDG_CONFIG_DIRS=$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS
+export QT_QPA_PLATFORMTHEME=gtk3
 
 export DISTROBOX_HOME=$HOME/.local/share/distrobox/home
 export DOTFILES_DIR=$HOME/dotfiles

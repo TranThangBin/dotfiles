@@ -62,6 +62,7 @@ return {
 				y_padding = 1,
 				align = "top",
 				relative = "editor",
+				avoid = { "NvimTree", "TestExplorer" },
 			},
 			view = {
 				stack_upwards = true,
@@ -82,11 +83,6 @@ return {
 					)
 				end
 			end,
-		}
-
-		opts.integration = {
-			["nvim-tree"] = { enable = false },
-			["xcodebuild-nvim"] = { enable = false },
 		}
 
 		opts.logger = {

@@ -141,14 +141,18 @@ table.insert(M, {
 table.insert(M, {
 	"stevearc/oil.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	opts = { default_file_explorer = false },
+	opts = {
+		default_file_explorer = false,
+		float = { border = "rounded" },
+	},
 	cmd = "Oil",
 	keys = {
 		{
 			"<leader>-",
 			function()
-				local file_pattern =
-					vim.fn.escape(vim.fn.expand("%:t"), [[\/.*~]])
+				local file_pattern = "^"
+					.. vim.fn.escape(vim.fn.expand("%:t"), [[\/.*~]])
+					.. "$"
 				require("oil").open_float()
 				vim.fn.search(file_pattern)
 			end,

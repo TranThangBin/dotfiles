@@ -17,6 +17,9 @@ image/webp=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.deskt
 text/plain=trantbox-dev-neovide.desktop;neovide.desktop;trantbox-dev-nvim.desktop;nvim.desktop;vim.desktop;
 text/html=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 text/xml=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
+text/calendar=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
+text/vcard=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
+text/x-vcard=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
 
 video/ogg=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 video/webm=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
@@ -24,7 +27,12 @@ video/webm=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.deskt
 x-scheme-handler/chrome=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 x-scheme-handler/http=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 x-scheme-handler/https=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
-x-scheme-handler/mailto=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
+x-scheme-handler/mailto=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
+x-scheme-handler/mid=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
+x-scheme-handler/webcal=org.mozilla.Thunderbird.desktop;
+x-scheme-handler/webcals=org.mozilla.Thunderbird.desktop;
+
+message/rfc822=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
 
 audio/3gpp=trantbox-services-mpv.desktop;mpv.desktop;
 audio/3gpp2=trantbox-services-mpv.desktop;mpv.desktop;

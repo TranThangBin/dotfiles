@@ -45,6 +45,8 @@ vim.keymap.set("n", "<leader>e", function()
 		or fileperm:sub(9, 9) == "x"
 	then
 		file_pattern = file_pattern .. "\\*"
+	else
+		file_pattern = file_pattern .. "$"
 	end
 
 	vim.cmd.Explore()
