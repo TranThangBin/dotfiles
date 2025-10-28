@@ -2,6 +2,7 @@ local M = {
 	"tpope/vim-obsession",
 	"habamax/vim-godot",
 	"ThePrimeagen/vim-be-good",
+	"pteroctopus/faster.nvim",
 	{
 		"laytan/cloak.nvim",
 		opts = {},
@@ -19,7 +20,9 @@ local M = {
 table.insert(M, {
 	"mbbill/undotree",
 	cmd = "UndoTreeToggle",
-	keys = { { "<leader>u", "<cmd>UndotreeToggle<CR>" } },
+	keys = {
+		{ "<leader>u", "<cmd>UndotreeToggle<CR>" },
+	},
 })
 
 table.insert(M, {
@@ -49,12 +52,6 @@ table.insert(M, {
 			git = true,
 			[""] = true,
 		},
-		callback = function(text)
-			vim.notify(text, vim.log.levels.WARN, {
-				group = "Hardtime",
-				ttl = require("hardtime.config").config.timeout / 1000,
-			})
-		end,
 	},
 })
 

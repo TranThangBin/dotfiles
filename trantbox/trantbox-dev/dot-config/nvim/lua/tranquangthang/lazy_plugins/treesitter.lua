@@ -12,28 +12,7 @@ table.insert(M, {
 		sync_install = false,
 		auto_install = true,
 		indent = { enable = false },
-		highlight = {
-			enable = true,
-			disable = function(_, buf)
-				local kilobyte = 1024
-				local max_filesize = 100 * kilobyte
-				local ok, stats =
-					pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-				local should_disable = ok
-					and stats
-					and stats.size > max_filesize
-
-				if should_disable then
-					vim.notify(
-						"File larger than 100KB treesitter disabled for performance",
-						vim.log.levels.WARN,
-						{ annote = "Treesitter", group = "Treesitter" }
-					)
-				end
-
-				return should_disable
-			end,
-		},
+		highlight = { enable = true },
 		incremental_selection = {
 			enable = true,
 			keymaps = {

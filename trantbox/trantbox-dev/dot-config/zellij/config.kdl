@@ -89,7 +89,7 @@ keybinds clear-defaults=true {
         bind "tab" { MovePane; }
     }
     scroll {
-        bind "e" { EditScrollback; SwitchToMode "normal"; }
+        bind "e" { EditScrollback; SwitchToMode "locked"; }
         bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
     }
     search {
@@ -310,3 +310,7 @@ copy_on_select false
 // serialization_interval 10000
 
 show_startup_tips false
+
+env {
+    EDITOR "/usr/bin/nvim"
+}
