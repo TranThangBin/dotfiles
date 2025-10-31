@@ -1,67 +1,188 @@
-local M = { "nvim-treesitter/nvim-treesitter-textobjects" }
+local M = {}
 
 table.insert(M, {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "main",
+	lazy = false,
 	build = function()
-		require("nvim-treesitter.install").update({ with_sync = true })()
+		require("nvim-treesitter").update()
 	end,
+	config = function()
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	end,
+})
+
+table.insert(M, {
+	"nvim-treesitter/nvim-treesitter-textobjects",
+	branch = "main",
 	opts = {
-		modules = {},
-		ensure_installed = { "lua" },
-		ignore_install = {},
-		sync_install = false,
-		auto_install = true,
-		indent = { enable = false },
-		highlight = { enable = true },
-		incremental_selection = {
-			enable = true,
-			keymaps = {
-				init_selection = "<Tab>",
-				node_incremental = "<Tab>",
-				node_decremental = "<S-Tab>",
-				scope_incremental = "<C-Space>",
+		select = {
+			lookahead = true,
+			selection_modes = {
+				["@parameter.outer"] = "v",
+				["@function.outer"] = "V",
+				["@class.outer"] = "<c-v>",
 			},
+			include_surrounding_whitespace = false,
 		},
-		textobjects = {
-			select = {
-				enable = true,
-				lookahead = true,
-				keymaps = {
-					["aa"] = "@parameter.outer",
-					["ia"] = "@parameter.inner",
-					["af"] = "@function.outer",
-					["if"] = "@function.inner",
-					["ac"] = "@class.outer",
-					["ic"] = "@class.inner",
-				},
-			},
-			swap = {
-				enable = true,
-				swap_next = {
-					["<leader>sl"] = "@parameter.inner",
-				},
-				swap_previous = {
-					["<leader>sh"] = "@parameter.inner",
-				},
-			},
-			move = {
-				enable = true,
-				set_jumps = true,
-				goto_next = {
-					["]f"] = "@function.outer",
-					["]c"] = "@class.outer",
-					["]a"] = "@parameter.outer",
-				},
-				goto_previous = {
-					["[f"] = "@function.outer",
-					["[c"] = "@class.outer",
-					["[a"] = "@parameter.outer",
-				},
-			},
-		},
+		move = { set_jumps = true },
 	},
-	config = function(_, opts)
-		require("nvim-treesitter.configs").setup(opts)
+	keys = function()
+		local textobjs_select = require("nvim-treesitter-textobjects.select")
+		local textobjs_swap = require("nvim-treesitter-textobjects.swap")
+		local textobjs_move = require("nvim-treesitter-textobjects.move")
+		local textobjs_repeat =
+			require("nvim-treesitter-textobjects.repeatable_move")
+
+		local keys_select = {
+			{
+				"aa",
+				function()
+					textobjs_select.select_textobject("@parameter.outer")
+				end,
+				mode = { "x", "o" },
+			},
+			{
+				"ia",
+				function()
+					textobjs_select.select_textobject("@parameter.inner")
+				end,
+				mode = { "x", "o" },
+			},
+			{
+				"af",
+				function()
+					textobjs_select.select_textobject("@function.outer")
+				end,
+				mode = { "x", "o" },
+			},
+			{
+				"if",
+				function()
+					textobjs_select.select_textobject("@function.inner")
+				end,
+				mode = { "x", "o" },
+			},
+			{
+				"ac",
+				function()
+					textobjs_select.select_textobject("@class.outer")
+				end,
+				mode = { "x", "o" },
+			},
+			{
+				"ic",
+				function()
+					textobjs_select.select_textobject("@class.inner")
+				end,
+				mode = { "x", "o" },
+			},
+		}
+
+		local keys_swap = {
+			{
+				"<leader>sl",
+				function()
+					textobjs_swap.swap_next("@parameter.inner")
+				end,
+			},
+			{
+				"<leader>sh",
+				function()
+					textobjs_swap.swap_previous("@parameter.inner")
+				end,
+			},
+		}
+
+		local keys_move = {
+			{
+				"]a",
+				function()
+					textobjs_move.goto_next("@parameter.outer")
+				end,
+				mode = { "n", "x", "o" },
+			},
+			{
+				"[a",
+				function()
+					textobjs_move.goto_previous("@parameter.outer")
+				end,
+				mode = { "n", "x", "o" },
+			},
+			{
+				"]f",
+				function()
+					textobjs_move.goto_next("@function.outer")
+				end,
+				mode = { "n", "x", "o" },
+			},
+			{
+				"[f",
+				function()
+					textobjs_move.goto_previous("@function.outer")
+				end,
+				mode = { "n", "x", "o" },
+			},
+			{
+				"]c",
+				function()
+					textobjs_move.goto_next("@class.outer")
+				end,
+				mode = { "n", "x", "o" },
+			},
+			{
+				"[c",
+				function()
+					textobjs_move.goto_previous("@class.outer")
+				end,
+				mode = { "n", "x", "o" },
+			},
+		}
+
+		local keys_repeat = {
+			{
+				";",
+				textobjs_repeat.repeat_last_move_next,
+				mode = { "n", "x", "o" },
+			},
+			{
+				",",
+				textobjs_repeat.repeat_last_move_previous,
+				mode = { "n", "x", "o" },
+			},
+			{
+				"f",
+				textobjs_repeat.builtin_f_expr,
+				mode = { "n", "x", "o" },
+				expr = true,
+			},
+			{
+				"F",
+				textobjs_repeat.builtin_F_expr,
+				mode = { "n", "x", "o" },
+				expr = true,
+			},
+			{
+				"t",
+				textobjs_repeat.builtin_t_expr,
+				mode = { "n", "x", "o" },
+				expr = true,
+			},
+			{
+				"T",
+				textobjs_repeat.builtin_T_expr,
+				mode = { "n", "x", "o" },
+				expr = true,
+			},
+		}
+
+		local keys_all = {}
+		vim.list_extend(keys_all, keys_select)
+		vim.list_extend(keys_all, keys_swap)
+		vim.list_extend(keys_all, keys_move)
+		vim.list_extend(keys_all, keys_repeat)
+
+		return keys_all
 	end,
 })
 
