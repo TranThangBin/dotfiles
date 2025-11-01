@@ -8,7 +8,44 @@ table.insert(M, {
 		require("nvim-treesitter").update()
 	end,
 	config = function()
+		local treesitter = require("nvim-treesitter")
+
 		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = {
+				"c",
+				"cpp",
+				"cs",
+				"html",
+				"css",
+				"javascript",
+				"typescript",
+				"gdscript",
+				"go",
+				"dockerfile",
+				"sh",
+				"bash",
+				"fish",
+				"templ",
+				"rust",
+				"toml",
+				"zig",
+				"lua",
+				"nix",
+				"python",
+				"json",
+				"yaml",
+				"hyprlang",
+				"gitcommit",
+				"dosini",
+				"rasi",
+			},
+			callback = function(e)
+				local lang = vim.treesitter.language.get_lang(e.match)
+				treesitter.install(lang):wait(30 * 1000)
+				vim.treesitter.start(e.buf, lang)
+			end,
+		})
 	end,
 })
 

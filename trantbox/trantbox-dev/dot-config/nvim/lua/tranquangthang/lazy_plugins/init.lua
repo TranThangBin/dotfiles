@@ -1,8 +1,11 @@
 local M = {
 	"tpope/vim-obsession",
-	"habamax/vim-godot",
 	"ThePrimeagen/vim-be-good",
 	"pteroctopus/faster.nvim",
+	{
+		"habamax/vim-godot",
+		ft = "gdscript",
+	},
 	{
 		"laytan/cloak.nvim",
 		opts = {},

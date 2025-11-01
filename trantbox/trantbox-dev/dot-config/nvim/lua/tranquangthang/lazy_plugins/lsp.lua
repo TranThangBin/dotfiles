@@ -53,6 +53,7 @@ table.insert(M, {
 
 table.insert(M, {
 	"seblyng/roslyn.nvim",
+	ft = "cs",
 	opts = {},
 	config = function(_, opts)
 		require("roslyn").setup(opts)
