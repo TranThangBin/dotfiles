@@ -5,45 +5,61 @@ table.insert(M, {
 	branch = "main",
 	lazy = false,
 	build = function()
-		require("nvim-treesitter").update()
+		require("nvim-treesitter.install").update()
 	end,
 	config = function()
-		local treesitter = require("nvim-treesitter")
+		local ts_install = require("nvim-treesitter.install")
+		local ts_async = require("nvim-treesitter.async")
+
+		local filetypes = {
+			"help",
+			"markdown",
+			"c",
+			"cpp",
+			"cs",
+			"html",
+			"css",
+			"javascript",
+			"typescript",
+			"gdscript",
+			"go",
+			"dockerfile",
+			"sh",
+			"bash",
+			"fish",
+			"templ",
+			"rust",
+			"toml",
+			"zig",
+			"lua",
+			"nix",
+			"python",
+			"json",
+			"yaml",
+			"hyprlang",
+			"gitcommit",
+			"dosini",
+			"rasi",
+		}
+
+		ts_async
+			.arun(function()
+				local tasks = {}
+				for _, ft in ipairs(filetypes) do
+					table.insert(
+						tasks,
+						ts_install.install(vim.treesitter.language.get_lang(ft))
+					)
+				end
+				ts_async.join(tasks)
+			end)
+			:wait(30 * 1000)
 
 		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 		vim.api.nvim_create_autocmd("FileType", {
-			pattern = {
-				"c",
-				"cpp",
-				"cs",
-				"html",
-				"css",
-				"javascript",
-				"typescript",
-				"gdscript",
-				"go",
-				"dockerfile",
-				"sh",
-				"bash",
-				"fish",
-				"templ",
-				"rust",
-				"toml",
-				"zig",
-				"lua",
-				"nix",
-				"python",
-				"json",
-				"yaml",
-				"hyprlang",
-				"gitcommit",
-				"dosini",
-				"rasi",
-			},
-			callback = function(e)
-				local lang = vim.treesitter.language.get_lang(e.match)
-				treesitter.install(lang):wait(30 * 1000)
-				vim.treesitter.start(e.buf, lang)
+			pattern = filetypes,
+			callback = function()
+				vim.treesitter.start()
 			end,
 		})
 	end,

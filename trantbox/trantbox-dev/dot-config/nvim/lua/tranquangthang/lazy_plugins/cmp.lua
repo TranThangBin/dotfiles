@@ -27,7 +27,7 @@ table.insert(M, {
 				format = require("lspkind").cmp_format({}),
 			},
 
-			mapping = cmp.mapping.preset.insert({
+			mapping = {
 				["<CR>"] = cmp.mapping.confirm({ select = false }),
 				["<Tab>"] = cmp.mapping.confirm({ select = false }),
 
@@ -51,7 +51,7 @@ table.insert(M, {
 
 				["<C-u>"] = cmp.mapping.scroll_docs(-5),
 				["<C-d>"] = cmp.mapping.scroll_docs(5),
-			}),
+			},
 
 			snippet = {
 				expand = function(args)
@@ -96,7 +96,7 @@ table.insert(M, {
 
 		cmp.event:on(
 			"confirm_done",
-			require("nvim-autopairs.completion.cmp").on_confirm_done
+			require("nvim-autopairs.completion.cmp").on_confirm_done()
 		)
 
 		cmp.setup(opts)
