@@ -1,39 +1,40 @@
-vim.opt.guicursor = ""
+vim.g.mapleader = " "
+vim.o.guicursor = ""
 
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.o.number = true
+vim.o.relativenumber = true
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
 
-vim.opt.smartindent = true
+vim.o.smartindent = true
 
-vim.opt.wrap = false
+vim.o.wrap = false
 
-vim.opt.swapfile = false
-vim.opt.backup = false
+vim.o.swapfile = false
+vim.o.backup = false
 local user = os.getenv("HOME") or os.getenv("USERPROFILE")
-vim.opt.undodir = user .. "/.vim/undodir"
-vim.opt.undofile = true
+vim.o.undodir = user .. "/.vim/undodir"
+vim.o.undofile = true
 
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
+vim.o.hlsearch = false
+vim.o.incsearch = true
 
-vim.opt.termguicolors = true
+vim.o.termguicolors = true
 
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
+vim.o.scrolloff = 8
+vim.o.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
-vim.opt.updatetime = 50
+vim.o.updatetime = 50
 
-vim.opt.colorcolumn = "80"
+vim.o.colorcolumn = "80"
 
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.mouse = ""
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.mouse = ""
 
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0

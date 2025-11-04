@@ -13,6 +13,7 @@ image/jpeg=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.deskt
 image/png=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 image/svg+xml=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 image/webp=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
+image/vnd.microsoft.icon=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 
 text/plain=trantbox-dev-neovide.desktop;neovide.desktop;trantbox-dev-nvim.desktop;nvim.desktop;vim.desktop;
 text/html=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;

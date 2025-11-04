@@ -1,7 +1,14 @@
-local my_group = vim.api.nvim_create_augroup("tranquangthang", { clear = true })
+local function set_light_bg(bg_color)
+	bg_color = bg_color or "#dddddd"
+
+	local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal" })
+
+	if not normal_hl.bg then
+		vim.api.nvim_set_hl(0, "Normal", { bg = bg_color, fg = normal_hl.fg })
+	end
+end
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	group = my_group,
 	pattern = "*",
 	callback = function()
 		local pos = vim.fn.getpos(".")
@@ -11,15 +18,33 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-	group = my_group,
 	pattern = "*",
 	callback = function()
 		vim.hl.on_yank()
 	end,
 })
 
+vim.api.nvim_create_autocmd({ "ColorScheme", "OptionSet" }, {
+	pattern = { "background", "bg", "rose-pine", "tokyonight", "catppuccin" },
+	callback = function()
+		if vim.o.background == "light" then
+			set_light_bg()
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	pattern = { "rose-pine-dawn", "tokyonight-day", "catppuccin-latte" },
+	callback = function()
+		if vim.o.background == "light" then
+			set_light_bg()
+		else
+			vim.o.background = "light"
+		end
+	end,
+})
+
 vim.api.nvim_create_autocmd("BufEnter", {
-	group = my_group,
 	pattern = "*",
 	callback = function(e)
 		local ok, conform = pcall(require, "conform")
@@ -43,7 +68,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
-	group = my_group,
 	pattern = "*",
 	callback = function(e)
 		local ok, telescope_builtin = pcall(require, "telescope.builtin")

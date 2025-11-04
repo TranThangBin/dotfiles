@@ -45,7 +45,7 @@ table.insert(M, {
 		ts_async
 			.arun(function()
 				local tasks = {}
-				for _, ft in ipairs(filetypes) do
+				for _, ft in pairs(filetypes) do
 					table.insert(
 						tasks,
 						ts_install.install(vim.treesitter.language.get_lang(ft))

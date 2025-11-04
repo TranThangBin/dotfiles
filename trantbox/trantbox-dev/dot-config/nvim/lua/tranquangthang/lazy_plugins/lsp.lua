@@ -147,7 +147,7 @@ table.insert(M, {
 		vim.list_extend(pkgs, formatters)
 		vim.list_extend(pkgs, linters)
 
-		for _, pkg_name in ipairs(pkgs) do
+		for _, pkg_name in pairs(pkgs) do
 			local ok, pkg = pcall(registry.get_package, pkg_name)
 			if ok and not pkg:is_installed() then
 				local handle = fidget.progress.handle.create({
