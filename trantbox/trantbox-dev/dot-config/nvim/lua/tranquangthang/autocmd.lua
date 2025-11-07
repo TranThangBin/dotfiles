@@ -44,29 +44,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("BufEnter", {
-	pattern = "*",
-	callback = function(e)
-		local ok, conform = pcall(require, "conform")
-		local opts = {
-			bufnr = e.buf,
-			async = true,
-			lsp_format = "fallback",
-			stop_after_first = true,
-		}
-
-		if ok then
-			vim.keymap.set("n", "<leader>f", function()
-				conform.format(opts)
-			end, { buffer = e.buf })
-		else
-			vim.keymap.set("n", "<leader>f", function()
-				vim.lsp.buf.format(opts)
-			end, { buffer = e.buf })
-		end
-	end,
-})
-
 vim.api.nvim_create_autocmd("LspAttach", {
 	pattern = "*",
 	callback = function(e)

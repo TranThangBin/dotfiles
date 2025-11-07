@@ -5,7 +5,7 @@ table.insert(M, {
 	branch = "main",
 	lazy = false,
 	build = function()
-		require("nvim-treesitter.install").update()
+		require("nvim-treesitter.install").update():wait(30 * 1000)
 	end,
 	config = function()
 		local ts_install = require("nvim-treesitter.install")

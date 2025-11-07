@@ -13,10 +13,8 @@ vim.o.smartindent = true
 
 vim.o.wrap = false
 
-vim.o.swapfile = false
+vim.o.swapfile = true
 vim.o.backup = false
-local user = os.getenv("HOME") or os.getenv("USERPROFILE")
-vim.o.undodir = user .. "/.vim/undodir"
 vim.o.undofile = true
 
 vim.o.hlsearch = false
