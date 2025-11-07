@@ -73,6 +73,7 @@ table.insert(M, {
 		}
 		local lint_group =
 			vim.api.nvim_create_augroup("tranquangthang/lint", { clear = true })
+		local states = {}
 
 		local function enable_lint(bufnr)
 			local clients = vim.lsp.get_clients({ bufnr = bufnr })
@@ -112,14 +113,12 @@ table.insert(M, {
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = vim.tbl_keys(nvim_lint.linters_by_ft),
 			callback = function(e)
-				local state = false
-
 				vim.api.nvim_buf_create_user_command(
 					e.buf,
 					"LintEnable",
 					function()
-						if not state then
-							state = true
+						if not states[e.buf] then
+							states[e.buf] = true
 							enable_lint(e.buf)
 						end
 					end,
@@ -130,8 +129,8 @@ table.insert(M, {
 					e.buf,
 					"LintDisable",
 					function()
-						if state then
-							state = false
+						if states[e.buf] then
+							states[e.buf] = false
 							disable_lint(e.buf, e.match)
 						end
 					end,
@@ -143,7 +142,7 @@ table.insert(M, {
 					"LintInfo",
 					function()
 						vim.print({
-							enabled = state,
+							enabled = states[e.buf] and true or false,
 							linters = nvim_lint.linters_by_ft[e.match],
 							bufnr = e.buf,
 							ft = e.match,
