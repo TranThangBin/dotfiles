@@ -1,0 +1,8 @@
+[Unit]
+Description=Distrobox container - %i
+ConditionPathExists=/usr/bin/distrobox
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/distrobox enter %i
+RemainAfterExit=true

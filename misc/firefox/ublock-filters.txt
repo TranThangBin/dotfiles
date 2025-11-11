@@ -5,3 +5,8 @@ www.youtube.com##.ytp-fullscreen-grid-stills-container
 
 ! Nov 1, 2025 https://www.youtube.com
 www.youtube.com###comments > .ytd-comments.style-scope
+
+! Nov 6, 2025 https://www.youtube.com
+www.youtube.com###sections > .ytd-item-section-renderer.style-scope
+www.youtube.com##grid-shelf-view-model
+www.youtube.com##ytd-horizontal-card-list-renderer.ytd-item-section-renderer.style-scope

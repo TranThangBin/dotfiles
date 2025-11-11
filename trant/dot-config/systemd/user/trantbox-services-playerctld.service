@@ -2,8 +2,8 @@
 [Unit]
 Description=MPRIS media player daemon
 
-Requires=podman-container@trantbox-services.service
-PartOf=podman-container@trantbox-services.service
+Requires=distrobox-container@trantbox-services.service
+PartOf=distrobox-container@trantbox-services.service
 Conflicts=fcitx5-daemon.service
 
 [Service]

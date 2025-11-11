@@ -311,6 +311,8 @@ copy_on_select false
 
 show_startup_tips false
 
+// post_command_discovery_hook "~/.config/zellij/post_command_discovery_hook.sh"
+
 env {
     EDITOR "/usr/bin/nvim"
 }

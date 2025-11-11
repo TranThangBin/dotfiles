@@ -1,9 +1,0 @@
-[Unit]
-Description=Podman container - %i
-ConditionPathExists=/usr/bin/podman
-
-[Service]
-Type=simple
-ExecCondition=/usr/bin/podman container exists %i
-ExecStart=/usr/bin/podman container start %i --attach
-ExecStop=/usr/bin/podman container stop %i

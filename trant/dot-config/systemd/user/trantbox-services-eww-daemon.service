@@ -3,8 +3,8 @@ Description=ElKowars wacky widgets daemon
 PartOf=graphical-session.target
 After=graphical-session.target
 
-Requires=podman-container@trantbox-services.service
-PartOf=podman-container@trantbox-services.service
+Requires=distrobox-container@trantbox-services.service
+PartOf=distrobox-container@trantbox-services.service
 Conflicts=eww-daemon.service
 
 [Service]
