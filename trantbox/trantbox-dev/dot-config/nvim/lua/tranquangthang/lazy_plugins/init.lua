@@ -145,19 +145,25 @@ table.insert(M, {
 		default_file_explorer = false,
 		float = { border = "rounded" },
 	},
-	cmd = "Oil",
-	keys = {
-		{
-			"<leader>-",
-			function()
-				local file_pattern = "^"
-					.. vim.fn.escape(vim.fn.expand("%:t"), [[\/.*~]])
-					.. "$"
-				require("oil").open_float()
-				vim.fn.search(file_pattern)
+	config = function(_, opts)
+		local oil = require("oil")
+		oil.setup(opts)
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "*",
+			callback = function(e)
+				local filename = vim.fs.basename(e.file)
+				local file_pattern =
+					string.format("^%s$", vim.fn.escape(filename, [[\/.*~]]))
+
+				vim.keymap.set("n", "<leader>-", function()
+					oil.open_float(nil, nil, function()
+						vim.fn.search(file_pattern)
+					end)
+				end, { buffer = e.buf })
 			end,
-		},
-	},
+		})
+	end,
 })
 
 table.insert(M, {

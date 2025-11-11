@@ -106,3 +106,31 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end)
 	end,
 })
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*",
+	callback = function(e)
+		local filename = vim.fs.basename(e.file)
+		local file_pattern = vim.fn.escape(filename, [[\/.*~]])
+
+		local filetype = vim.fn.getftype(e.file)
+		local fileperm = vim.fn.getfperm(e.file)
+
+		if filetype == "link" then
+			file_pattern = file_pattern .. "@"
+		elseif
+			fileperm:sub(3, 3) == "x"
+			or fileperm:sub(6, 6) == "x"
+			or fileperm:sub(9, 9) == "x"
+		then
+			file_pattern = file_pattern .. "\\*"
+		else
+			file_pattern = file_pattern .. "$"
+		end
+
+		vim.keymap.set("n", "<leader>e", function()
+			vim.cmd.Explore()
+			vim.fn.search(file_pattern)
+		end, { buffer = e.buf })
+	end,
+})

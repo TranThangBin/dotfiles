@@ -27,26 +27,3 @@ vim.keymap.set("n", "<leader><leader>", function()
 		vim.cmd("so")
 	end
 end)
-
-vim.keymap.set("n", "<leader>e", function()
-	local file_pattern = vim.fn.escape(vim.fn.expand("%:t"), [[\/.*~]])
-
-	local file_absolute = vim.fn.expand("%")
-	local filetype = vim.fn.getftype(file_absolute)
-	local fileperm = vim.fn.getfperm(file_absolute)
-
-	if filetype == "link" then
-		file_pattern = file_pattern .. "@"
-	elseif
-		fileperm:sub(3, 3) == "x"
-		or fileperm:sub(6, 6) == "x"
-		or fileperm:sub(9, 9) == "x"
-	then
-		file_pattern = file_pattern .. "\\*"
-	else
-		file_pattern = file_pattern .. "$"
-	end
-
-	vim.cmd.Explore()
-	vim.fn.search(file_pattern)
-end)

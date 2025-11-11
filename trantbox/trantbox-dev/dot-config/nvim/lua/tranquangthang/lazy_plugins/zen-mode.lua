@@ -9,7 +9,7 @@ return {
 				function()
 					zen_mode.toggle({
 						window = {
-							width = 85,
+							width = 0.7,
 							options = {
 								signcolumn = "no",
 								number = false,
@@ -27,33 +27,7 @@ return {
 		}
 	end,
 	opts = {
-		window = {
-			backdrop = 0.95,
-			width = 90,
-			height = 1,
-			options = {},
-		},
-		plugins = {
-			options = {
-				enabled = true,
-				ruler = false,
-				laststatus = 0,
-			},
-			twilight = { enabled = true },
-			gitsigns = { enabled = false },
-			tmux = { enabled = true },
-			kitty = {
-				enabled = false,
-				font = "+4",
-			},
-			alacritty = {
-				enabled = false,
-				font = "14",
-			},
-			wezterm = {
-				enabled = false,
-				font = "+4",
-			},
-		},
+		window = { width = 0.8 },
+		plugins = { neovide = { enabled = true } },
 	},
 }
