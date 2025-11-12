@@ -21,9 +21,3 @@ vim.keymap.set(
 	"<leader>rw",
 	":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>"
 )
-
-vim.keymap.set("n", "<leader><leader>", function()
-	if vim.bo.filetype == "lua" then
-		vim.cmd("so")
-	end
-end)

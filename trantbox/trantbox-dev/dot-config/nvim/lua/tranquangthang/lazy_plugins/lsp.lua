@@ -187,6 +187,7 @@ table.insert(M, {
 			javascript = { "prettierd" },
 			typescript = { "prettierd" },
 			markdown = { "prettierd" },
+			sh = { "shfmt" },
 			bash = { "shfmt" },
 			nix = { "nixfmt" },
 			templ = { "templ" },
