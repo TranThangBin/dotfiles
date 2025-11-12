@@ -5,13 +5,13 @@
 		"modules-left": [
 			"custom/menu",
 			"custom/notification",
-			"power-profiles-daemon",
+			"power-profiles-daemon"
 		],
 		"modules-center": [
 			"clock",
 			"pulseaudio#speaker",
 			"pulseaudio#microphone",
-			"backlight",
+			"backlight"
 		],
 		"modules-right": ["battery", "memory", "cpu"],
 		"custom/menu": {
@@ -30,8 +30,8 @@
 				"brave": "uwsm-app brave &>/dev/null & disown",
 				"swaync": "swaync-client -t -sw",
 				"hyprsysteminfo": "uwsm-app hyprsysteminfo &>/dev/null & disown",
-				"wlogout": "wlogout &>/dev/null & disown",
-			},
+				"wlogout": "wlogout &>/dev/null & disown"
+			}
 		},
 		"power-profiles-daemon": {
 			"format": "<big>{icon}</big>",
@@ -39,8 +39,8 @@
 				"default": "",
 				"performance": "",
 				"balanced": "󰗑",
-				"power-saver": "",
-			},
+				"power-saver": ""
+			}
 		},
 		"clock": {
 			"timezone": "Asia/Ho_Chi_Minh",
@@ -55,21 +55,21 @@
 					"days": "<span color='#ecc6d9'><b>{}</b></span>",
 					"weeks": "<span color='#99ffdd'><b>W{}</b></span>",
 					"weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-					"today": "<span color='#ff6699'><b><u>{}</u></b></span>",
-				},
+					"today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+				}
 			},
 			"actions": {
 				"on-click-right": "mode",
 				"on-scroll-up": "shift_up",
-				"on-scroll-down": "shift_down",
-			},
+				"on-scroll-down": "shift_down"
+			}
 		},
 		"pulseaudio#speaker": {
 			"justify": "center",
 			"format": "<big>{icon}</big>\n{volume}%",
 			"format-muted": "<s>{icon}\n{volume}%</s>",
 			"format-icons": {
-				"default": ["", "", ""],
+				"default": ["", "", ""]
 			},
 			"on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
 			"menu": "on-click-right",
@@ -84,8 +84,8 @@
 				"brave": "uwsm-app brave &>/dev/null & disown",
 				"swaync": "swaync-client -t -sw",
 				"hyprsysteminfo": "uwsm-app hyprsysteminfo &>/dev/null & disown",
-				"wlogout": "wlogout &>/dev/null & disown",
-			},
+				"wlogout": "wlogout &>/dev/null & disown"
+			}
 		},
 		"pulseaudio#microphone": {
 			"justify": "center",
@@ -107,19 +107,19 @@
 				"brave": "uwsm-app brave &>/dev/null & disown",
 				"swaync": "swaync-client -t -sw",
 				"hyprsysteminfo": "uwsm-app hyprsysteminfo &>/dev/null & disown",
-				"wlogout": "wlogout &>/dev/null & disown",
-			},
+				"wlogout": "wlogout &>/dev/null & disown"
+			}
 		},
 		"backlight": {
 			"device": "intel_backlight",
 			"justify": "center",
 			"format": "{icon}\n{percent}%",
-			"format-icons": ["", "", "", "", "", "", "", "", ""],
+			"format-icons": ["", "", "", "", "", "", "", "", ""]
 		},
 		"battery": {
 			"states": {
 				"warning": 30,
-				"critical": 15,
+				"critical": 15
 			},
 			"justify": "center",
 			"format": "<big>{icon}</big>\n{capacity}%",
@@ -128,19 +128,19 @@
 				"warning": "󰂑",
 				"critical": "󰂃",
 				"charging": "󰂄",
-				"plugged": "",
+				"plugged": ""
 			},
-			"on-click": "uwsm-app tuned-gui",
+			"on-click": "uwsm-app tuned-gui"
 		},
 		"memory": {
 			"format": "<big></big>\n{percentage}%",
 			"tooltip-format": "{used:0.1f} GiB / {total:0.1f} GiB",
-			"justify": "center",
+			"justify": "center"
 			// Add inherited values from resourcesModule manually if needed
 		},
 		"cpu": {
 			"format": "<big></big>\n{usage}%",
-			"justify": "center",
+			"justify": "center"
 			// Add inherited values from resourcesModule manually if needed
 		},
 		"custom/notification": {
@@ -153,13 +153,13 @@
 				"inhibited-notification": "󱅫",
 				"inhibited-none": "󰂚",
 				"dnd-inhibited-notification": "󰂛",
-				"dnd-inhibited-none": "󰂛",
+				"dnd-inhibited-none": "󰂛"
 			},
 			"return-type": "json",
 			"exec": "swaync-client -swb",
 			"on-click": "swaync-client -t -sw",
-			"on-click-right": "swaync-client -d -sw",
-		},
+			"on-click-right": "swaync-client -d -sw"
+		}
 	},
 	{
 		"layer": "top",
@@ -168,7 +168,7 @@
 		"modules-right": [
 			// "disk#root",
 			// "disk#home",
-			"tray",
+			"tray"
 		],
 		"hyprland/workspaces": {
 			"sort-by-name": true,
@@ -183,26 +183,26 @@
 				"7": "󰲬",
 				"8": "󰲮",
 				"9": "󰲰",
-				"10": "󰿬",
-			},
+				"10": "󰿬"
+			}
 		},
 		"hyprland/window": {
 			"icon": true,
 			"rewrite": {
-				"": "🐧",
-			},
+				"": "🐧"
+			}
 		},
 		"disk#root": {
 			"path": "/",
-			"on-click": "uwsm-app ncdu.desktop /",
+			"on-click": "uwsm-app ncdu.desktop /"
 		},
 		"disk#home": {
 			"path": "/home",
-			"on-click": "uwsm-app ncdu.desktop",
+			"on-click": "uwsm-app ncdu.desktop"
 		},
 		"tray": {
 			"icon-size": 21,
-			"spacing": 10,
+			"spacing": 10
 		},
 		"mpris": {
 			"format": "<big>{status_icon}</big> | {player}: {dynamic}",
@@ -211,8 +211,8 @@
 			"status-icons": {
 				"playing": "",
 				"paused": "",
-				"stopped": "",
-			},
-		},
-	},
+				"stopped": ""
+			}
+		}
+	}
 ]

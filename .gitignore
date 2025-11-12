@@ -1,3 +1,5 @@
 Session.vim
 cached_layouts
 trantbox-local.ini
+post_command_discovery_hook.sh
+resurrect.sh
