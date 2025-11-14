@@ -1,5 +1,5 @@
 if not set -q DISTROBOX_HOME
-    set -x DISTROBOX_HOME $HOME/.local/share/distrobox/home
+    set -x DISTROBOX_HOME $HOME/distrobox
 end
 
 if not set -q DOTFILES_DIR
