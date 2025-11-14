@@ -3,7 +3,7 @@ export __GLX_VENDOR_LIBRARY_NAME=nvidia
 export LIBVA_DRIVER_NAME=nvidia
 export ELECTRON_OZONE_PLATFORM_HINT=auto
 
-export DISTROBOX_HOME=$HOME/.local/share/distrobox/home
+export DISTROBOX_HOME=$HOME/distrobox
 export DOTFILES_DIR=$HOME/dotfiles
 
 export PATH=$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin
