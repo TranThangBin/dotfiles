@@ -136,12 +136,10 @@
 			"format": "<big></big>\n{percentage}%",
 			"tooltip-format": "{used:0.1f} GiB / {total:0.1f} GiB",
 			"justify": "center"
-			// Add inherited values from resourcesModule manually if needed
 		},
 		"cpu": {
 			"format": "<big></big>\n{usage}%",
 			"justify": "center"
-			// Add inherited values from resourcesModule manually if needed
 		},
 		"custom/notification": {
 			"format": "<big>{icon}</big>",
@@ -163,13 +161,14 @@
 	},
 	{
 		"layer": "top",
-		"modules-left": ["hyprland/workspaces", "hyprland/window"],
-		"modules-center": ["mpris"],
-		"modules-right": [
-			// "disk#root",
-			// "disk#home",
-			"tray"
+		"modules-left": [
+			"hyprland/workspaces",
+			"hyprland/window",
+			"niri/workspaces",
+			"niri/window"
 		],
+		"modules-center": ["mpris"],
+		"modules-right": ["tray"],
 		"hyprland/workspaces": {
 			"sort-by-name": true,
 			"format": " <big>{icon}</big> ",
@@ -183,7 +182,8 @@
 				"7": "󰲬",
 				"8": "󰲮",
 				"9": "󰲰",
-				"10": "󰿬"
+				"10": "󰿬",
+				"default": ""
 			}
 		},
 		"hyprland/window": {
@@ -192,13 +192,28 @@
 				"": "🐧"
 			}
 		},
-		"disk#root": {
-			"path": "/",
-			"on-click": "uwsm-app ncdu.desktop /"
+		"niri/workspaces": {
+			"sort-by-name": true,
+			"format": " <big>{icon}</big> ",
+			"format-icons": {
+				"1": "󰲠",
+				"2": "󰲢",
+				"3": "󰲤",
+				"4": "󰲦",
+				"5": "󰲨",
+				"6": "󰲪",
+				"7": "󰲬",
+				"8": "󰲮",
+				"9": "󰲰",
+				"10": "󰿬",
+				"default": ""
+			}
 		},
-		"disk#home": {
-			"path": "/home",
-			"on-click": "uwsm-app ncdu.desktop"
+		"niri/window": {
+			"icon": true,
+			"rewrite": {
+				"": "🐧"
+			}
 		},
 		"tray": {
 			"icon-size": 21,
@@ -207,7 +222,7 @@
 		"mpris": {
 			"format": "<big>{status_icon}</big> | {player}: {dynamic}",
 			"max-length": 50,
-			"dynamic-order": ["title", "position", "length"],
+			"dynamic-order": ["title", "length"],
 			"status-icons": {
 				"playing": "",
 				"paused": "",
