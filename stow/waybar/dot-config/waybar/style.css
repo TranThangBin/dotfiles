@@ -45,6 +45,7 @@
 #clock,
 #battery,
 #power-profiles-daemon,
+#idle_inhibitor,
 #wireplumber,
 #custom-menu,
 #pulseaudio,
@@ -87,6 +88,7 @@
 #custom-menu,
 #custom-notification,
 #power-profiles-daemon,
+#idle_inhibitor,
 #clock,
 #pulseaudio,
 #backlight,
@@ -108,9 +110,6 @@
 	background-color: @blue;
 }
 
-#power-profiles-daemon {
-	border-radius: 0 0 1rem 1rem;
-}
 #power-profiles-daemon.performance {
 	color: @yellow;
 }
@@ -119,6 +118,11 @@
 }
 #power-profiles-daemon.power-saver {
 	color: @green;
+}
+
+#idle_inhibitor {
+	color: @text;
+	border-radius: 0 0 1rem 1rem;
 }
 
 #clock {

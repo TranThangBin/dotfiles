@@ -5,7 +5,8 @@
 		"modules-left": [
 			"custom/menu",
 			"custom/notification",
-			"power-profiles-daemon"
+			"power-profiles-daemon",
+			"idle_inhibitor"
 		],
 		"modules-center": [
 			"clock",
@@ -41,6 +42,16 @@
 				"balanced": "󰗑",
 				"power-saver": ""
 			}
+		},
+		"idle_inhibitor": {
+			"format": "<big>{icon}</big>",
+			"format-icons": {
+				"activated": "󰒳",
+				"deactivated": "󰒲"
+			},
+			"tooltip-format-activated": "idle is inhibited",
+			"tooltip-format-deactivated": "idle is active",
+			"timeout": 120
 		},
 		"clock": {
 			"timezone": "Asia/Ho_Chi_Minh",
