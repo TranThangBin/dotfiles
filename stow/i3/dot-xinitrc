@@ -4,16 +4,11 @@ wm=i3
 
 export TERMINAL=ghostty
 
-export DISTROBOX_HOME=$HOME/.local/share/distrobox/home
-export DOTFILES_DIR=$HOME/dotfiles
-
-export PATH="$DISTROBOX_HOME/bin:$PATH:$HOME/.local/bin"
-
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-export XDG_CONFIG_DIRS="$XDG_CONFIG_DIRS:$XDG_CONFIG_HOME:/etc/xdg"
+export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-export XDG_DATA_DIRS="$XDG_DATA_DIRS:$XDG_DATA_HOME:/usr/local/share:/usr/share"
+export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
@@ -28,6 +23,8 @@ export XDG_SESSION_CLASS=user
 export XMODIFIERS=@im=fcitx
 export QT_IM_MODULE=fcitx
 export GTK_IM_MODULE=fcitx
+
+source $HOME/.config/uwsm/env
 
 systemctl --user import-environment DISPLAY XAUTHORITY
 

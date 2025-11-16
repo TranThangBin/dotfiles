@@ -5,7 +5,14 @@ export ELECTRON_OZONE_PLATFORM_HINT=auto
 
 export DISTROBOX_HOME=$HOME/distrobox
 export DOTFILES_DIR=$HOME/dotfiles
+export STOW_DIR=$DOTFILES_DIR/stow
 
-export PATH=$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin
-export XDG_CONFIG_DIRS=$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS
 export QT_QPA_PLATFORMTHEME=gtk3
+
+# if test (basename $SHELL) = "fish"
+#   set -gx PATH $DOTFILES_DIR/bin $PATH $HOME/.local/bin
+#   set -gx XDG_CONFIG_DIRS $XDG_CONFIG_HOME $XDG_CONFIG_DIRS
+# else
+    export PATH=$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin
+    export XDG_CONFIG_DIRS=$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS
+# end
