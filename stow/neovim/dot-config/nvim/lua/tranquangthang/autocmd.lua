@@ -83,7 +83,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			end)
 		end
 
-		map("n", "<leader>ca", function()
+		map({ "n", "x" }, "<leader>ca", function()
 			vim.lsp.buf.code_action()
 		end)
 		map("n", "<leader>rn", function()
@@ -111,7 +111,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = "*",
 	callback = function(e)
 		local filename = vim.fs.basename(e.file)
-		local file_pattern = vim.fn.escape(filename, [[\/.*~]])
+		local file_pattern = "^" .. vim.fn.escape(filename, [[\/.*~]])
 
 		local filetype = vim.fn.getftype(e.file)
 		local fileperm = vim.fn.getfperm(e.file)
