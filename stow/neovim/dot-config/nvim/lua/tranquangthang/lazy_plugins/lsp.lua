@@ -215,10 +215,9 @@ table.insert(M, {
 	},
 	config = function(_, opts)
 		local fidget = require("fidget")
+		local registry = require("mason-registry")
 
 		require("mason").setup(opts)
-
-		local registry = require("mason-registry")
 
 		local lsp_servers = { "lua-language-server" }
 		local formatters = { "stylua" }
@@ -229,9 +228,21 @@ table.insert(M, {
 		vim.list_extend(pkgs, formatters)
 		vim.list_extend(pkgs, linters)
 
-		for _, pkg_name in pairs(pkgs) do
-			local ok, pkg = pcall(registry.get_package, pkg_name)
-			if ok and not pkg:is_installed() then
+		registry.update(function(update_success, _)
+			if not update_success then
+				fidget.notify(
+					"Mason registry was not updated successfully",
+					vim.log.levels.ERROR
+				)
+				return
+			end
+
+			for _, pkg_name in pairs(pkgs) do
+				local ok, pkg = pcall(registry.get_package, pkg_name)
+				if not ok or pkg:is_installed() then
+					goto continue
+				end
+
 				local handle = fidget.progress.handle.create({
 					title = "MasonInstall",
 					message = string.format(
@@ -253,8 +264,10 @@ table.insert(M, {
 						done = true,
 					})
 				end)
+
+				::continue::
 			end
-		end
+		end)
 	end,
 })
 
