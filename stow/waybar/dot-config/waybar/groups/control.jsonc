@@ -1,0 +1,85 @@
+{
+	"group/control": {
+		"orientation": "vertical",
+		"modules": [
+			"clock",
+			"pulseaudio#speaker",
+			"pulseaudio#microphone",
+			"backlight"
+		]
+	},
+	"clock": {
+		"timezone": "Asia/Ho_Chi_Minh",
+		"tooltip-format": "<big><u>{:%a %d-%m-%Y\n%Z %H:%M}</u></big>\n<small>{calendar}</small>",
+		"justify": "center",
+		"format": "<big>󰥔</big>\n{:%I:%M\n%p}",
+		"format-alt": "<big></big>\n{:%d/%m\n%Y}",
+		"calendar": {
+			"mode-mon-col": 3,
+			"format": {
+				"months": "<span color='#ffead3'><b>{}</b></span>",
+				"days": "<span color='#ecc6d9'><b>{}</b></span>",
+				"weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+				"weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+				"today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+			}
+		},
+		"actions": {
+			"on-click-right": "mode",
+			"on-scroll-up": "shift_up",
+			"on-scroll-down": "shift_down"
+		}
+	},
+	"pulseaudio#speaker": {
+		"justify": "center",
+		"format": "<big>{icon}</big>\n{volume}%",
+		"format-muted": "<s>{icon}\n{volume}%</s>",
+		"format-icons": {
+			"default": ["", "", ""]
+		},
+		"on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+		"menu": "on-click-right",
+		"menu-file": "$XDG_CONFIG_HOME/waybar/menus/audio-apps.xml",
+		"menu-actions": {
+			"kitty": "uwsm-app kitty &>/dev/null & disown",
+			"ghostty": "uwsm-app ghostty &>/dev/null & disown",
+			"btop": "uwsm-app btop.desktop &>/dev/null & disown",
+			"yazi": "uwsm-app yazi.desktop &>/dev/null & disown",
+			"neovide": "uwsm-app neovide &>/dev/null & disown",
+			"firefox": "uwsm-app firefox &>/dev/null & disown",
+			"brave": "uwsm-app brave &>/dev/null & disown",
+			"swaync": "swaync-client -t -sw",
+			"hyprsysteminfo": "uwsm-app hyprsysteminfo &>/dev/null & disown",
+			"wlogout": "wlogout &>/dev/null & disown"
+		}
+	},
+	"pulseaudio#microphone": {
+		"justify": "center",
+		"format": "{format_source}",
+		"format-source": "<big>󰍬</big>\n{volume}%",
+		"format-source-muted": "<s><big>󰍬</big>\n{volume}%</s>",
+		"on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+		"on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SOURCE@ 1%+",
+		"on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%-",
+		"menu": "on-click-right",
+		"menu-file": "$XDG_CONFIG_HOME/waybar/menus/audio-apps.xml",
+		"menu-actions": {
+			"kitty": "uwsm-app kitty &>/dev/null & disown",
+			"ghostty": "uwsm-app ghostty &>/dev/null & disown",
+			"btop": "uwsm-app btop.desktop &>/dev/null & disown",
+			"yazi": "uwsm-app yazi.desktop &>/dev/null & disown",
+			"neovide": "uwsm-app neovide &>/dev/null & disown",
+			"firefox": "uwsm-app firefox &>/dev/null & disown",
+			"brave": "uwsm-app brave &>/dev/null & disown",
+			"swaync": "swaync-client -t -sw",
+			"hyprsysteminfo": "uwsm-app hyprsysteminfo &>/dev/null & disown",
+			"wlogout": "wlogout &>/dev/null & disown"
+		}
+	},
+	"backlight": {
+		"device": "intel_backlight",
+		"justify": "center",
+		"format": "{icon}\n{percent}%",
+		"format-icons": ["", "", "", "", "", "", "", "", ""]
+	}
+}

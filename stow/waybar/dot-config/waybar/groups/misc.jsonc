@@ -1,0 +1,46 @@
+{
+	"group/misc": {
+		"orientation": "vertical",
+		"modules": [
+			"custom/notification",
+			"power-profiles-daemon",
+			"idle_inhibitor"
+		]
+	},
+	"custom/notification": {
+		"format": "<big>{icon}</big>",
+		"format-icons": {
+			"notification": "󱅫",
+			"none": "󰂚",
+			"dnd-notification": "󰂛",
+			"dnd-none": "󰂛",
+			"inhibited-notification": "󱅫",
+			"inhibited-none": "󰂚",
+			"dnd-inhibited-notification": "󰂛",
+			"dnd-inhibited-none": "󰂛"
+		},
+		"return-type": "json",
+		"exec": "swaync-client -swb",
+		"on-click": "swaync-client -t -sw",
+		"on-click-right": "swaync-client -d -sw"
+	},
+	"power-profiles-daemon": {
+		"format": "<big>{icon}</big>",
+		"format-icons": {
+			"default": "",
+			"performance": "",
+			"balanced": "󰗑",
+			"power-saver": ""
+		}
+	},
+	"idle_inhibitor": {
+		"format": "<big>{icon}</big>",
+		"format-icons": {
+			"activated": "󰒳",
+			"deactivated": "󰒲"
+		},
+		"tooltip-format-activated": "idle is inhibited",
+		"tooltip-format-deactivated": "idle is active",
+		"timeout": 120
+	}
+}
