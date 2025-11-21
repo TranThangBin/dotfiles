@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+FILE_PATH="$(realpath "${BASH_SOURCE[0]}")"
+FILE_DIR="$(dirname "$FILE_PATH")"
+
+DOTFILES_DIR=$(dirname "$FILE_DIR")
+IMAGE="ghcr.io/ublue-os/arch-toolbox:latest"
+if [ -z "$CONTAINER_ID" ]; then
+    DISTROBOX_HOME_ROOT="$HOME/distrobox"
+else
+    DISTROBOX_HOME_ROOT="$DISTROBOX_HOST_HOME/distrobox"
+fi
+
+have_extra() {
+    [ -d "/extra/$USER" ] && [ -r "/extra/$USER" ] && [ -w "/extra/$USER" ]
+}
+
+trantbox-create() {
+    local container_name="$1"
+    shift 1
+    distrobox-create \
+        --image "$IMAGE" \
+        --name "$container_name" \
+        --home "$DISTROBOX_HOME_ROOT/$container_name" \
+        --volume "$container_name-cache:/var/cache/pacman/pkg:rw" \
+        --pre-init-hooks "$DOTFILES_DIR/scripts/trantbox/arch-mirrorlist-integration.sh" \
+        --volume "$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/$container_name/.config/fish:ro" \
+        "$@"
+}
+
+trantbox-create-desktop() {
+    local container_name="trantbox-desktop"
+    local extra_options=()
+    if have_extra; then
+        extra_options=("--volume" "/extra/$USER/Unity:$DISTROBOX_HOME_ROOT/trantbox-desktop/Unity:rw")
+    fi
+    trantbox-create "$container_name" \
+        --nvidia \
+        --volume "$DOTFILES_DIR/stow/WebCord/dot-config/WebCord/Themes:$DISTROBOX_HOME_ROOT/$container_name/.config/WebCord/Themes:ro" \
+        --volume "$DOTFILES_DIR/stow/btop/dot-config/btop:$DISTROBOX_HOME_ROOT/$container_name/.config/btop:ro" \
+        --volume "$DOTFILES_DIR/stow/neovide/dot-config/neovide:$DISTROBOX_HOME_ROOT/$container_name/.config/neovide:ro" \
+        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim:ro" \
+        --volume "$DOTFILES_DIR/stow/zellij/dot-config/zellij:$DISTROBOX_HOME_ROOT/$container_name/.config/zellij:ro" \
+        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim/lazy-lock.json:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim/lazy-lock.json:rw" \
+        --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro" \
+        --volume "$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro" \
+        "${extra_options[@]}"
+}
+
+trantbox-create-games() {
+    local container_name="trantbox-games"
+    local extra_options=()
+    if have_extra; then
+        extra_options=(
+            "--volume" "/extra/$USER/.local/share/Steam:$DISTROBOX_HOME_ROOT/trantbox-games/.local/share/Steam:rw"
+            "--volume" "/extra/$USER/Games:$DISTROBOX_HOME_ROOT/trantbox-games/Games:rw"
+        )
+    fi
+    trantbox-create "$container_name" \
+        --nvidia \
+        --unshare-netns \
+        --additional-flags "--env-file $DOTFILES_DIR/misc/distrobox/nvidia.env" \
+        --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/Mangohud:$DISTROBOX_HOME_ROOT/$container_name/.config/Mangohud:ro" \
+        "${extra_options[@]}"
+}
+
+trantbox-create-services() {
+    local container_name="trantbox-services"
+    trantbox-create "$container_name" \
+        --volume "$DOTFILES_DIR/stow/fcitx5/dot-local/share/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.local/share/fcitx5:ro" \
+        --volume "$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.config/fcitx5:rw" \
+        --volume "$DOTFILES_DIR/stow/swaync/dot-config/swaync:$DISTROBOX_HOME_ROOT/$container_name/.config/swaync:ro" \
+        --volume "$DOTFILES_DIR/stow/hyprpaper/dot-config/hypr/hyprpaper.conf:$DISTROBOX_HOME_ROOT/$container_name/.config/hypr/hyprpaper.conf:ro" \
+        --volume "$DOTFILES_DIR/stow/hyprsunset/dot-config/hypr/hyprsunset.conf:$DISTROBOX_HOME_ROOT/$container_name/.config/hypr/hyprsunset.conf:ro" \
+        --volume "$DOTFILES_DIR/stow/picom/dot-config/picom:$DISTROBOX_HOME_ROOT/$container_name/.config/picom:ro"
+}
+
+trantbox-create-utils() {
+    local container_name="trantbox-utils"
+    trantbox-create "$container_name" \
+        --volume "$DOTFILES_DIR/stow/rofimoji/dot-config/rofimoji.rc:$DISTROBOX_HOME_ROOT/$container_name/.config/rofimoji.rc:ro" \
+        --volume "$DOTFILES_DIR/stow/fastfetch/dot-config/fastfetch:$DISTROBOX_HOME_ROOT/$container_name/.config/fastfetch:ro" \
+        --init-hooks "ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rofi"
+}
+
+setup() {
+    local box_tag="$1"
+    local post_install_script="$DOTFILES_DIR/scripts/trantbox/trantbox-$box_tag-post_install.sh"
+    if "trantbox-create-$box_tag" && [ -f "$post_install_script" ]; then
+        distrobox-enter "trantbox-$box_tag" -- "$post_install_script"
+    fi
+}
+
+opt="$1"
+shift 1
+
+set -euo pipefail
+
+case "$opt" in
+desktop | games | services | utils)
+    setup "$opt"
+    ;;
+all)
+    setup desktop
+    setup games
+    setup services
+    setup utils
+    ;;
+*)
+    echo "Unknown option" >&2
+    exit 1
+    ;;
+esac
