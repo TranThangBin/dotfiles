@@ -3,10 +3,8 @@ export __GLX_VENDOR_LIBRARY_NAME="nvidia"
 export LIBVA_DRIVER_NAME="nvidia"
 export ELECTRON_OZONE_PLATFORM_HINT="auto"
 
-export DISTROBOX_HOME="$HOME/distrobox"
-export DOTFILES_DIR="$( "$XDG_CONFIG_HOME/uwsm/uwsm-dotfiles_dir.sh" )"
-
 export QT_QPA_PLATFORMTHEME="gtk3"
-
-export PATH="$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin"
 export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS"
+
+export DOTFILES_DIR="$( "$XDG_CONFIG_HOME/uwsm/uwsm-dotfiles_dir.sh" )"
+export PATH="$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin"
