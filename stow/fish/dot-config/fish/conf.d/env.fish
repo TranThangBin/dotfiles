@@ -1,1 +1,0 @@
-set -gx PATH $DOTFILES_DIR/bin $PATH
