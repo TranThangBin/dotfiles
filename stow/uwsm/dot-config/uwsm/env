@@ -1,18 +1,12 @@
-export GBM_BACKEND=nvidia-drm
-export __GLX_VENDOR_LIBRARY_NAME=nvidia
-export LIBVA_DRIVER_NAME=nvidia
-export ELECTRON_OZONE_PLATFORM_HINT=auto
+export GBM_BACKEND="nvidia-drm"
+export __GLX_VENDOR_LIBRARY_NAME="nvidia"
+export LIBVA_DRIVER_NAME="nvidia"
+export ELECTRON_OZONE_PLATFORM_HINT="auto"
 
-export DISTROBOX_HOME=$HOME/distrobox
-export DOTFILES_DIR=$HOME/dotfiles
-export STOW_DIR=$DOTFILES_DIR/stow
+export DISTROBOX_HOME="$HOME/distrobox"
+export DOTFILES_DIR="$( "$XDG_CONFIG_HOME/uwsm/uwsm-dotfiles_dir.sh" )"
 
-export QT_QPA_PLATFORMTHEME=gtk3
+export QT_QPA_PLATFORMTHEME="gtk3"
 
-# if test (basename $SHELL) = "fish"
-#   set -gx PATH $DOTFILES_DIR/bin $PATH $HOME/.local/bin
-#   set -gx XDG_CONFIG_DIRS $XDG_CONFIG_HOME $XDG_CONFIG_DIRS
-# else
-    export PATH=$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin
-    export XDG_CONFIG_DIRS=$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS
-# end
+export PATH="$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin"
+export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS"
