@@ -33,7 +33,7 @@
 	"pulseaudio#speaker": {
 		"justify": "center",
 		"format": "<big>{icon}</big>\n{volume}%",
-		"format-muted": "<s>{icon}\n{volume}%</s>",
+		"format-muted": "<s><big>{icon}</big>\n{volume}%</s>",
 		"format-icons": {
 			"default": ["", "", ""]
 		},
