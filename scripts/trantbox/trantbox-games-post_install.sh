@@ -17,7 +17,6 @@ exported_apps=(
 )
 
 paru -S --needed --noconfirm "${packages[@]}"
-paru -S --needed --noconfirm steam umu-launcher --overwrite "*"
 for app in "${exported_apps[@]}"; do
     distrobox-export --app "$app"
 done

@@ -1,0 +1,169 @@
+#!/usr/bin/env bash
+
+FILE_PATH="$(realpath "${BASH_SOURCE[0]}")"
+FILE_DIR="$(dirname "$FILE_PATH")"
+UTILS_DIR="$(realpath "$FILE_DIR/../scripts/t_controller")"
+
+terminal() {
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        exec uwsm-app -T
+    elif [ -n "$DISPLAY" ]; then
+        exec ghostty
+    fi
+}
+
+file_explorer() {
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        exec rofi -config wayland-config.rasi -show filebrowser
+    elif [ -n "$DISPLAY" ]; then
+        exec rofi -config x11-config.rasi -show filebrowser
+    fi
+}
+
+launcher() {
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        exec rofi -config wayland-config.rasi -show
+    elif [ -n "$DISPLAY" ]; then
+        exec rofi -config x11-config.rasi -show
+    fi
+}
+
+powermenu() {
+    exec "$UTILS_DIR/powermenu.sh"
+}
+
+color_picker() {
+    local lock_file="$XDG_RUNTIME_DIR/color_picker.lock"
+    if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+        exec flock -n "$lock_file" hyprpicker -a
+    fi
+}
+
+emoji_picker() {
+    exec rofimoji
+}
+
+clipboard_picker() {
+    local action="$1"
+    case "$action" in
+    pick)
+        if [ -n "$WAYLAND_DISPLAY" ]; then
+            exec cliphist list | rofi -dmenu -p "Copy Clipboard Entry" | cliphist decode | wl-copy
+        fi
+        ;;
+    delete)
+        if [ -n "$WAYLAND_DISPLAY" ]; then
+            exec cliphist list | rofi -dmenu -p "Delete Clipboard Entry" | cliphist delete
+        fi
+        ;;
+    wipe)
+        if [ -n "$WAYLAND_DISPLAY" ]; then
+            local choice
+            choice=$({
+                echo no
+                echo yes
+            } | rofi -dmenu -p 'Wipe Clipboard')
+            if [ "$choice" == "yes" ]; then
+                cliphist wipe
+            fi
+        fi
+        ;;
+    esac
+}
+
+screenshot() {
+    local lock_file="$XDG_RUNTIME_DIR/screenshot.lock"
+    local screenshot_dir="$HOME/Pictures/Screenshots"
+    local notification_timeout=5000
+    local action="$1"
+    local method="$2"
+    case "$action" in
+    save)
+        case "$method" in
+        region)
+            if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+                flock -n "$lock_file" \
+                    hyprshot -z -m region -t "$notification_timeout" -o "$screenshot_dir" &&
+                    rm "$lock_file"
+            fi
+            ;;
+        window)
+            if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+                flock -n "$lock_file" \
+                    hyprshot -z -m window -t "$notification_timeout" -o "$screenshot_dir" &&
+                    rm "$lock_file"
+            fi
+            ;;
+        output)
+            if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+                flock -n "$lock_file" \
+                    hyprshot -z -m output -t "$notification_timeout" -o "$screenshot_dir" &&
+                    rm "$lock_file"
+            fi
+            ;;
+        esac
+        ;;
+    clipboard)
+        case "$method" in
+        region)
+            if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+                flock -n "$lock_file" \
+                    hyprshot -z -m region -t "$notification_timeout" --clipboard-only &&
+                    rm "$lock_file"
+            fi
+            ;;
+        window)
+            if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+                flock -n "$lock_file" \
+                    hyprshot -z -m window -t "$notification_timeout" --clipboard-only &&
+                    rm "$lock_file"
+            fi
+            ;;
+        output)
+            if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+                flock -n "$lock_file" \
+                    hyprshot -z -m output -t "$notification_timeout" --clipboard-only &&
+                    rm "$lock_file"
+            fi
+            ;;
+        esac
+        ;;
+    esac
+}
+
+status_bar() {
+    local action="$1"
+    case "$action" in
+    toggle)
+        if [ -n "$WAYLAND_DISPLAY" ]; then
+            killall -SIGUSR1 waybar
+        fi
+        ;;
+    refresh)
+        if [ -n "$WAYLAND_DISPLAY" ]; then
+            killall -SIGUSR2 waybar
+        fi
+        ;;
+    esac
+}
+
+opt="$1"
+shift 1
+
+case "$opt" in
+terminal | \
+    file_explorer | \
+    launcher | \
+    powermenu | \
+    color_picker | \
+    emoji_picker | \
+    clipboard_picker | \
+    screenshot | \
+    status_bar)
+    "$opt" "$@"
+    ;;
+*)
+    echo "Unknown option" >&2
+    exit 1
+    ;;
+esac

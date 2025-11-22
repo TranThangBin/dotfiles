@@ -24,7 +24,7 @@ export XMODIFIERS=@im=fcitx
 export QT_IM_MODULE=fcitx
 export GTK_IM_MODULE=fcitx
 
-source $HOME/.config/uwsm/env
+# source $HOME/.config/uwsm/env
 
 systemctl --user import-environment DISPLAY XAUTHORITY
 

@@ -24,6 +24,7 @@ packages=(
     "luarocks"
     "brave-bin"
     "libnotify"
+    "lazydocker"
     "dotnet-sdk"
     "obs-studio"
     "webcord-bin"
@@ -60,10 +61,15 @@ exported_apps=(
     "libreoffice"
 )
 
+imported_binaries=("podman")
+
 paru -S --needed --noconfirm "${packages[@]}"
 paru -S --needed --noconfirm neovide --assume-installed neovim
 paru -S --needed --noconfirm pwvucontrol --overwrite "/usr/lib/libgstcuda-1.0.so*"
 mkdir -p "$HOME/.local/share/unity3d"
 for app in "${exported_apps[@]}"; do
     distrobox-export --app "$app"
+done
+for bin in "${imported_binaries[@]}"; do
+    sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"
 done

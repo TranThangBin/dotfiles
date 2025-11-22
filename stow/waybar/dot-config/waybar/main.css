@@ -62,6 +62,9 @@
 #mpris {
 	color: @mauve;
 }
+#mpris.paused {
+	color: @yellow;
+}
 
 #custom-menu {
 	background-color: @blueAlpha;
@@ -109,15 +112,10 @@
 	color: @peach;
 }
 
-#battery {
-	color: @green;
-}
-
-#memory {
-	color: @green;
-}
-
-#cpu {
+#battery,
+#memory,
+#cpu,
+#temperature {
 	color: @green;
 }
 

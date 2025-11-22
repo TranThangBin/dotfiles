@@ -8,16 +8,4 @@ else
     TARGET_DIR="$DISTROBOX_HOST_HOME"
 fi
 
-is_delete=0
-
-for opt in "$@"; do
-    if [[ "$opt" == "-"* && "$opt" == *"D"* ]] || [ "$opt" = "--delete" ]; then
-        is_delete=1
-    fi
-done
-
-if [ "$is_delete" -eq 1 ]; then
-    stow --dotfiles -d "$STOW_DIR" -t "$TARGET_DIR" "$@"
-else
-    stow --dotfiles --no-folding -d "$STOW_DIR" -t "$TARGET_DIR" "$@"
-fi
+stow --dotfiles --no-folding -d "$STOW_DIR" -t "$TARGET_DIR" "$@"

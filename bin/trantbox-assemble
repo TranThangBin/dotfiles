@@ -16,7 +16,7 @@ have_extra() {
 }
 
 trantbox-create() {
-    local container_name="$1"
+    local container_name="${FUNCNAME[1]}"
     shift 1
     distrobox-create \
         --image "$IMAGE" \
@@ -28,8 +28,8 @@ trantbox-create() {
         "$@"
 }
 
-trantbox-create-desktop() {
-    local container_name="trantbox-desktop"
+trantbox-desktop() {
+    local container_name="${FUNCNAME[0]}"
     local extra_options=()
     if have_extra; then
         extra_options=("--volume" "/extra/$USER/Unity:$DISTROBOX_HOME_ROOT/trantbox-desktop/Unity:rw")
@@ -47,8 +47,8 @@ trantbox-create-desktop() {
         "${extra_options[@]}"
 }
 
-trantbox-create-games() {
-    local container_name="trantbox-games"
+trantbox-games() {
+    local container_name="${FUNCNAME[0]}"
     local extra_options=()
     if have_extra; then
         extra_options=(
@@ -60,12 +60,13 @@ trantbox-create-games() {
         --nvidia \
         --unshare-netns \
         --additional-flags "--env-file $DOTFILES_DIR/misc/distrobox/nvidia.env" \
+        --additional-packages "steam umu-launcher" \
         --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/Mangohud:$DISTROBOX_HOME_ROOT/$container_name/.config/Mangohud:ro" \
         "${extra_options[@]}"
 }
 
-trantbox-create-services() {
-    local container_name="trantbox-services"
+trantbox-services() {
+    local container_name="${FUNCNAME[0]}"
     trantbox-create "$container_name" \
         --volume "$DOTFILES_DIR/stow/fcitx5/dot-local/share/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.local/share/fcitx5:ro" \
         --volume "$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.config/fcitx5:rw" \
@@ -75,8 +76,8 @@ trantbox-create-services() {
         --volume "$DOTFILES_DIR/stow/picom/dot-config/picom:$DISTROBOX_HOME_ROOT/$container_name/.config/picom:ro"
 }
 
-trantbox-create-utils() {
-    local container_name="trantbox-utils"
+trantbox-utils() {
+    local container_name="${FUNCNAME[0]}"
     trantbox-create "$container_name" \
         --volume "$DOTFILES_DIR/stow/rofimoji/dot-config/rofimoji.rc:$DISTROBOX_HOME_ROOT/$container_name/.config/rofimoji.rc:ro" \
         --volume "$DOTFILES_DIR/stow/fastfetch/dot-config/fastfetch:$DISTROBOX_HOME_ROOT/$container_name/.config/fastfetch:ro" \
@@ -85,8 +86,9 @@ trantbox-create-utils() {
 
 setup() {
     local box_tag="$1"
+    local box_func="trantbox-$box_tag"
     local post_install_script="$DOTFILES_DIR/scripts/trantbox/trantbox-$box_tag-post_install.sh"
-    if "trantbox-create-$box_tag" && [ -f "$post_install_script" ]; then
+    if "$box_func" && [ -f "$post_install_script" ]; then
         distrobox-enter "trantbox-$box_tag" -- "$post_install_script"
     fi
 }
@@ -105,6 +107,17 @@ all)
     setup games
     setup services
     setup utils
+    ;;
+waydroid)
+    distrobox create \
+        --root \
+        --init \
+        --unshare-all \
+        --image ghcr.io/vanilla-os/waydroid:main \
+        --home "$DISTROBOX_HOME_ROOT/trantbox-waydroid" \
+        --name trantbox-waydroid \
+        --volume "$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/trantbox-waydroid/.config/fish:ro" \
+        --volume "trantbox-waydroid-cache:/var/cache/apt/archives:rw" \
     ;;
 *)
     echo "Unknown option" >&2

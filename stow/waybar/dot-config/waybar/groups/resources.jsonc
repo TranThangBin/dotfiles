@@ -1,7 +1,7 @@
 {
 	"group/resources": {
 		"orientation": "vertical",
-		"modules": ["battery", "memory", "cpu"]
+		"modules": ["battery", "memory", "cpu", "temperature"]
 	},
 	"battery": {
 		"states": {
@@ -26,6 +26,11 @@
 	},
 	"cpu": {
 		"format": "<big></big>\n{usage}%",
+		"justify": "center"
+	},
+	"temperature": {
+		"format": "<big>{icon}</big>\n{temperatureC}°C",
+		"format-icons": ["", "", "", "", ""],
 		"justify": "center"
 	}
 }
