@@ -1,0 +1,7 @@
+before-sleep "t_controller idle before_sleep"
+after-resume "t_controller idle after_resume"
+lock "t_controller lock"
+timeout 150 "t_controller idle 1 timeout" resume "t_controller idle 1 resume"
+timeout 300 "t_controller idle 2 timeout"
+timeout 330 "t_controller idle 3 timeout" resume "t_controller idle 3 resume"
+timeout 1800 "t_controller idle 4 timeout"

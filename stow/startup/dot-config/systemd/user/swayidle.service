@@ -1,0 +1,13 @@
+# Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/services/swayidle.nix
+[Unit]
+Description=Idle manager for Wayland
+Documentation=man:swayidle(1)
+ConditionEnvironment=WAYLAND_DISPLAY
+PartOf=graphical-session.target
+After=graphical-session.target
+ConditionPathExists=/usr/bin/swayidle
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=swayidle -w
