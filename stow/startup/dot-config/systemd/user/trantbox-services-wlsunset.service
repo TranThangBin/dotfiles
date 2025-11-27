@@ -1,0 +1,19 @@
+# Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/services/wlsunset.nix
+[Unit]
+Description=Day/night gamma adjustments for Wayland compositors.
+PartOf=graphical-session.target
+Requires=graphical-session.target
+After=graphical-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+Requires=distrobox-container@trantbox-services.service
+PartOf=distrobox-container@trantbox-services.service
+Conflicts=wlsunset.service
+
+[Service]
+Type=simple
+ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/wlsunset" ]'
+# Vietnam/Ho Chi Minh city
+ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/wlsunset -l 10.7 -L 106.7 -t 5000 -T 6000
+Slice=session.slice
+Restart=on-failure
