@@ -10,7 +10,6 @@ ConditionPathExists=/usr/bin/distrobox
 Requires=distrobox-container@trantbox-services.service
 PartOf=distrobox-container@trantbox-services.service
 Conflicts=swaync.service
-Before=fumon.service
 
 [Service]
 Type=dbus
