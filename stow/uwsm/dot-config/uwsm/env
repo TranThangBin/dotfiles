@@ -6,9 +6,5 @@ export ELECTRON_OZONE_PLATFORM_HINT="auto"
 export QT_QPA_PLATFORMTHEME="gtk3"
 export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS"
 
-export PATH="$PATH:$HOME/.local/bin"
-if [ -f "$HOME/dotfiles_utils/get_dotfiles_dir.sh" ]; then
-    DOTFILES_DIR="$("$HOME/dotfiles_utils/get_dotfiles_dir.sh")"
-    export PATH="$DOTFILES_DIR/bin:$PATH"
-    export DOTFILES_DIR
-fi
+export DOTFILES_DIR="$HOME/dotfiles"
+export PATH="$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin"
