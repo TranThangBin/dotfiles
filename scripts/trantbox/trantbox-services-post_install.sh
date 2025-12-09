@@ -3,12 +3,12 @@
 packages=(
     "mpv"
     "feh"
+    "swww"
     "picom"
     "swaync"
     "fcitx5"
     "cliphist"
-    "hyprpaper"
-    "hyprsunset"
+    "wlsunset"
     "wl-clipboard"
     "fcitx5-unikey"
     "fcitx5-configtool"
@@ -21,6 +21,7 @@ exported_apps=(
 
 exported_binaries=(
     "/usr/bin/feh"
+    "/usr/bin/swww"
     "/usr/bin/picom"
     "/usr/bin/fcitx5"
     "/usr/bin/wl-copy"

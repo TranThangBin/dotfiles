@@ -1,6 +1,6 @@
 {
 	"group/resources": {
-		"orientation": "vertical",
+		"orientation": "inherit",
 		"modules": ["battery", "memory", "cpu", "temperature"]
 	},
 	"battery": {

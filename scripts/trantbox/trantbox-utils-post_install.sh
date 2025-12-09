@@ -4,7 +4,6 @@ packages=(
     "fd"
     "unzip"
     "unrar"
-    "wtype"
     "catimg"
     "ripgrep"
     "rofimoji"

@@ -1,2 +1,2 @@
-action = [type, copy]
+action = [copy]
 max-recent = 0

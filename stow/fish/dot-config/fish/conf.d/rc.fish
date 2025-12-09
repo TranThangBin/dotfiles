@@ -1,3 +1,5 @@
+set -g fish_greeting ""
+
 if status is-login && test "$(tty)" = /dev/tty1
     echo "- [X]11"
     echo "- [W]ayland"
@@ -10,7 +12,9 @@ if status is-login && test "$(tty)" = /dev/tty1
 
     switch "$OPT"
         case X
-            exec startx
+            if command -v startx 1>/dev/null
+                exec startx
+            end
         case W S
             if command -v uwsm 1>/dev/null && uwsm check may-start
                 if test $OPT = S
@@ -28,11 +32,11 @@ if status is-login && test "$(tty)" = /dev/tty1
 end
 
 if status is-interactive
-    set -g fish_greeting ""
     fish_config prompt choose arrow
 
     if command -v podman &>/dev/null
         alias docker podman
+        set -gx DOCKER_HOST "unix://$XDG_RUNTIME_DIR/podman/podman.sock"
     end
 
     if command -v nvim &>/dev/null
@@ -40,7 +44,5 @@ if status is-interactive
         alias vi /usr/bin/vim
     end
 
-    if command -v podman &>/dev/null
-        set -gx DOCKER_HOST "unix://$XDG_RUNTIME_DIR/podman/podman.sock"
-    end
+    abbr dbx distrobox
 end

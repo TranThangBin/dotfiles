@@ -1,6 +1,6 @@
 {
 	"group/compositor": {
-		"orientation": "horizontal",
+		"orientation": "inherit",
 		"modules": [
 			"hyprland/workspaces",
 			"hyprland/window",

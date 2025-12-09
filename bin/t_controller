@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
+APP_NAME="t_controller"
+
 FILE_PATH="$(realpath "${BASH_SOURCE[0]}")"
 FILE_DIR="$(dirname "$FILE_PATH")"
 UTILS_DIR="$(realpath "$FILE_DIR/../scripts/t_controller")"
+
+SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+NOTIFY_TIMEOUT=5000
+RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}/$APP_NAME"
 
 terminal() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
@@ -14,17 +20,17 @@ terminal() {
 
 file_explorer() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
-        exec rofi -config wayland-config.rasi -show filebrowser
+        rofi -config wayland-config.rasi -show filebrowser
     elif [ -n "$DISPLAY" ]; then
-        exec rofi -config x11-config.rasi -show filebrowser
+        rofi -config x11-config.rasi -show filebrowser
     fi
 }
 
 launcher() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
-        exec rofi -config wayland-config.rasi -show
+        rofi -config wayland-config.rasi -show
     elif [ -n "$DISPLAY" ]; then
-        exec rofi -config x11-config.rasi -show
+        rofi -config x11-config.rasi -show
     fi
 }
 
@@ -33,14 +39,14 @@ powermenu() {
 }
 
 color_picker() {
-    local lock_file="$XDG_RUNTIME_DIR/color_picker.lock"
+    local lock_file="$RUNTIME_DIR/color_picker.lock"
     if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
         exec flock -n "$lock_file" hyprpicker -a
     fi
 }
 
 emoji_picker() {
-    exec rofimoji
+    rofimoji
 }
 
 clipboard_picker() {
@@ -48,12 +54,12 @@ clipboard_picker() {
     case "$action" in
     pick)
         if [ -n "$WAYLAND_DISPLAY" ]; then
-            exec cliphist list | rofi -dmenu -p "Copy Clipboard Entry" | cliphist decode | wl-copy
+            cliphist list | rofi -dmenu -p "Copy Clipboard Entry" | cliphist decode | wl-copy
         fi
         ;;
     delete)
         if [ -n "$WAYLAND_DISPLAY" ]; then
-            exec cliphist list | rofi -dmenu -p "Delete Clipboard Entry" | cliphist delete
+            cliphist list | rofi -dmenu -p "Delete Clipboard Entry" | cliphist delete
         fi
         ;;
     wipe)
@@ -72,33 +78,33 @@ clipboard_picker() {
 }
 
 screenshot() {
-    local lock_file="$XDG_RUNTIME_DIR/screenshot.lock"
-    local screenshot_dir="$HOME/Pictures/Screenshots"
-    local notification_timeout=5000
+    local LOCK_FILE="$RUNTIME_DIR/screenshot.lock"
+
     local action="$1"
     local method="$2"
+
     case "$action" in
     save)
         case "$method" in
         region)
             if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-                flock -n "$lock_file" \
-                    hyprshot -z -m region -t "$notification_timeout" -o "$screenshot_dir" &&
-                    rm "$lock_file"
+                flock -n "$LOCK_FILE" \
+                    hyprshot -z -m region -t "$NOTIFY_TIMEOUT" -o "$SCREENSHOT_DIR" &&
+                    rm "$LOCK_FILE"
             fi
             ;;
         window)
             if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-                flock -n "$lock_file" \
-                    hyprshot -z -m window -t "$notification_timeout" -o "$screenshot_dir" &&
-                    rm "$lock_file"
+                flock -n "$LOCK_FILE" \
+                    hyprshot -z -m window -t "$NOTIFY_TIMEOUT" -o "$SCREENSHOT_DIR" &&
+                    rm "$LOCK_FILE"
             fi
             ;;
         output)
             if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-                flock -n "$lock_file" \
-                    hyprshot -z -m output -t "$notification_timeout" -o "$screenshot_dir" &&
-                    rm "$lock_file"
+                flock -n "$LOCK_FILE" \
+                    hyprshot -z -m output -t "$NOTIFY_TIMEOUT" -o "$SCREENSHOT_DIR" &&
+                    rm "$LOCK_FILE"
             fi
             ;;
         esac
@@ -107,23 +113,23 @@ screenshot() {
         case "$method" in
         region)
             if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-                flock -n "$lock_file" \
-                    hyprshot -z -m region -t "$notification_timeout" --clipboard-only &&
-                    rm "$lock_file"
+                flock -n "$LOCK_FILE" \
+                    hyprshot -z -m region -t "$NOTIFY_TIMEOUT" --clipboard-only &&
+                    rm "$LOCK_FILE"
             fi
             ;;
         window)
             if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-                flock -n "$lock_file" \
-                    hyprshot -z -m window -t "$notification_timeout" --clipboard-only &&
-                    rm "$lock_file"
+                flock -n "$LOCK_FILE" \
+                    hyprshot -z -m window -t "$NOTIFY_TIMEOUT" --clipboard-only &&
+                    rm "$LOCK_FILE"
             fi
             ;;
         output)
             if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-                flock -n "$lock_file" \
-                    hyprshot -z -m output -t "$notification_timeout" --clipboard-only &&
-                    rm "$lock_file"
+                flock -n "$LOCK_FILE" \
+                    hyprshot -z -m output -t "$NOTIFY_TIMEOUT" --clipboard-only &&
+                    rm "$LOCK_FILE"
             fi
             ;;
         esac
@@ -133,6 +139,7 @@ screenshot() {
 
 status_bar() {
     local action="$1"
+
     case "$action" in
     toggle)
         if [ -n "$WAYLAND_DISPLAY" ]; then
@@ -147,6 +154,111 @@ status_bar() {
     esac
 }
 
+volume() {
+    local VOLUME_LIMIT=1
+
+    local action="$1"
+    local audio_device="$2"
+    local value="$3"
+
+    local id="$audio_device"
+    if [ "$audio_device" = "speaker" ]; then
+        id="@DEFAULT_AUDIO_SINK@"
+    elif [ "$audio_device" = "microphone" ]; then
+        id="@DEFAULT_AUDIO_SOURCE@"
+    fi
+
+    case "$action" in
+    set)
+        wpctl set-volume -l "$VOLUME_LIMIT" "$id" "$value"
+        ;;
+    mute)
+        wpctl set-mute "$id" 1
+        ;;
+    toggle_mute)
+        wpctl set-mute "$id" toggle
+        ;;
+    esac
+}
+
+brightness() {
+    local action="$1"
+    local value="$2"
+    local device="${3:-"*"}"
+
+    if [ "$action" = "set" ]; then
+        brightnessctl --device "$device" set "$value"
+    fi
+}
+
+player() {
+    local action="$1"
+    local player="$2"
+
+    case "$action" in
+    play | pause | play-pause | stop | next | previous)
+        if [ "$player" = "all" ]; then
+            playerctl -a "$action"
+        elif [ -n "$player" ]; then
+            playerctl -p "$player" "$action"
+        else
+            playerctl "$action"
+        fi
+        ;;
+    esac
+}
+
+lock() {
+    player pause all
+    volume mute speaker
+    volume mute microphone
+
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        pidof swaylock || exec swaylock
+    fi
+}
+
+idle() {
+    local action="$1"
+    local tier="$2"
+
+    case "$action" in
+    before_sleep)
+        idle timeout 2
+        ;;
+    after_resume)
+        idle resume 1
+        idle resume 3
+        ;;
+    timeout)
+        if [ "$tier" -eq 1 ]; then
+            brightnessctl --device "*" set 10 --save
+        elif [ "$tier" -eq 2 ]; then
+            loginctl lock-session
+        elif [ "$tier" -eq 3 ]; then
+            if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+                hyprctl dispatch dpms off
+            fi
+        elif [ "$tier" -eq 4 ]; then
+            systemctl suspend
+        fi
+        ;;
+    resume)
+        if [ "$tier" -eq 1 ]; then
+            brightnessctl --device "*" --restore
+        elif [ "$tier" -eq 3 ]; then
+            if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+                hyprctl dispatch dpms on
+            fi
+        fi
+        ;;
+    esac
+}
+
+if [ ! -d "$RUNTIME_DIR" ]; then
+    mkdir "$RUNTIME_DIR"
+fi
+
 opt="$1"
 shift 1
 
@@ -159,11 +271,19 @@ terminal | \
     emoji_picker | \
     clipboard_picker | \
     screenshot | \
-    status_bar)
+    status_bar | \
+    volume | \
+    brightness | \
+    player | \
+    lock | \
+    idle)
     "$opt" "$@"
     ;;
+type)
+    type "$@"
+    ;;
 *)
-    echo "Unknown option" >&2
+    echo "Unknown option \"$opt\"" >&2
     exit 1
     ;;
 esac

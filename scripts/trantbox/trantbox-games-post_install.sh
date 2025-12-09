@@ -4,6 +4,8 @@ packages=(
     "legacy-launcher"
     "openal"
     "mangohud"
+    "gamescope"
+    "wine-mono"
     "wireplumber"
     "pipewire"
     "pipewire-jack"

@@ -13,7 +13,7 @@
 		"custom/menu": {
 			"format": "<big>󰣇</big>",
 			"tooltip-format": "Left click to open the apps menu\nRight click for more options",
-			"on-click": "run-wofi-uwsm-wrapped.sh",
+			"on-click": "t_controller launcher",
 			"menu": "on-click-right",
 			"menu-file": "$XDG_CONFIG_HOME/waybar/menus/user-menu.xml",
 			"menu-actions": {

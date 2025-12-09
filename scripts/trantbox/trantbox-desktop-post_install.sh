@@ -6,6 +6,7 @@ packages=(
     "git"
     "gcc"
     "npm"
+    "rust"
     "make"
     "gimp"
     "btop"
@@ -27,7 +28,9 @@ packages=(
     "lazydocker"
     "dotnet-sdk"
     "obs-studio"
+    "postman-bin"
     "webcord-bin"
+    "pwvucontrol"
     "thunderbird"
     "qt5-wayland"
     "sfxr-qt-bin"
@@ -65,7 +68,6 @@ imported_binaries=("podman")
 
 paru -S --needed --noconfirm "${packages[@]}"
 paru -S --needed --noconfirm neovide --assume-installed neovim
-paru -S --needed --noconfirm pwvucontrol --overwrite "/usr/lib/libgstcuda-1.0.so*"
 mkdir -p "$HOME/.local/share/unity3d"
 for app in "${exported_apps[@]}"; do
     distrobox-export --app "$app"

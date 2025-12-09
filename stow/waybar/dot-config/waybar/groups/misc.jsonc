@@ -1,6 +1,6 @@
 {
 	"group/misc": {
-		"orientation": "vertical",
+		"orientation": "inherit",
 		"modules": [
 			"custom/notification",
 			"power-profiles-daemon",

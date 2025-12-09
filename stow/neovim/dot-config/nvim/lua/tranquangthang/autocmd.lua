@@ -55,6 +55,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.keymap.set(mode, lhs, rhs, opts)
 		end
 
+        -- TODO: follow the default mapping
 		if ok then
 			map("n", "gd", function()
 				telescope_builtin.lsp_definitions()

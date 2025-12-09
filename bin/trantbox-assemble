@@ -12,12 +12,13 @@ else
 fi
 
 have_extra() {
-    [ -d "/extra/$USER" ] && [ -r "/extra/$USER" ] && [ -w "/extra/$USER" ]
+    [ -d "/extra/$USER" ] &&
+        [ -r "/extra/$USER" ] &&
+        [ -w "/extra/$USER" ]
 }
 
 trantbox-create() {
     local container_name="${FUNCNAME[1]}"
-    shift 1
     distrobox-create \
         --image "$IMAGE" \
         --name "$container_name" \
@@ -29,12 +30,12 @@ trantbox-create() {
 }
 
 trantbox-desktop() {
-    local container_name="${FUNCNAME[0]}"
+    local container_name=${FUNCNAME[0]}
     local extra_options=()
     if have_extra; then
         extra_options=("--volume" "/extra/$USER/Unity:$DISTROBOX_HOME_ROOT/trantbox-desktop/Unity:rw")
     fi
-    trantbox-create "$container_name" \
+    trantbox-create \
         --nvidia \
         --volume "$DOTFILES_DIR/stow/WebCord/dot-config/WebCord/Themes:$DISTROBOX_HOME_ROOT/$container_name/.config/WebCord/Themes:ro" \
         --volume "$DOTFILES_DIR/stow/btop/dot-config/btop:$DISTROBOX_HOME_ROOT/$container_name/.config/btop:ro" \
@@ -48,7 +49,7 @@ trantbox-desktop() {
 }
 
 trantbox-games() {
-    local container_name="${FUNCNAME[0]}"
+    local container_name=${FUNCNAME[0]}
     local extra_options=()
     if have_extra; then
         extra_options=(
@@ -56,29 +57,29 @@ trantbox-games() {
             "--volume" "/extra/$USER/Games:$DISTROBOX_HOME_ROOT/trantbox-games/Games:rw"
         )
     fi
-    trantbox-create "$container_name" \
+    trantbox-create \
         --nvidia \
         --unshare-netns \
         --additional-flags "--env-file $DOTFILES_DIR/misc/distrobox/nvidia.env" \
+        --additional-flags "--env PROTON_ENABLE_WAYLAND=1" \
         --additional-packages "steam umu-launcher" \
         --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/Mangohud:$DISTROBOX_HOME_ROOT/$container_name/.config/Mangohud:ro" \
+        --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
         "${extra_options[@]}"
 }
 
 trantbox-services() {
-    local container_name="${FUNCNAME[0]}"
-    trantbox-create "$container_name" \
+    local container_name=${FUNCNAME[0]}
+    trantbox-create \
         --volume "$DOTFILES_DIR/stow/fcitx5/dot-local/share/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.local/share/fcitx5:ro" \
         --volume "$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.config/fcitx5:rw" \
         --volume "$DOTFILES_DIR/stow/swaync/dot-config/swaync:$DISTROBOX_HOME_ROOT/$container_name/.config/swaync:ro" \
-        --volume "$DOTFILES_DIR/stow/hyprpaper/dot-config/hypr/hyprpaper.conf:$DISTROBOX_HOME_ROOT/$container_name/.config/hypr/hyprpaper.conf:ro" \
-        --volume "$DOTFILES_DIR/stow/hyprsunset/dot-config/hypr/hyprsunset.conf:$DISTROBOX_HOME_ROOT/$container_name/.config/hypr/hyprsunset.conf:ro" \
         --volume "$DOTFILES_DIR/stow/picom/dot-config/picom:$DISTROBOX_HOME_ROOT/$container_name/.config/picom:ro"
 }
 
 trantbox-utils() {
-    local container_name="${FUNCNAME[0]}"
-    trantbox-create "$container_name" \
+    local container_name=${FUNCNAME[0]}
+    trantbox-create \
         --volume "$DOTFILES_DIR/stow/rofimoji/dot-config/rofimoji.rc:$DISTROBOX_HOME_ROOT/$container_name/.config/rofimoji.rc:ro" \
         --volume "$DOTFILES_DIR/stow/fastfetch/dot-config/fastfetch:$DISTROBOX_HOME_ROOT/$container_name/.config/fastfetch:ro" \
         --init-hooks "ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rofi"
@@ -117,7 +118,7 @@ waydroid)
         --home "$DISTROBOX_HOME_ROOT/trantbox-waydroid" \
         --name trantbox-waydroid \
         --volume "$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/trantbox-waydroid/.config/fish:ro" \
-        --volume "trantbox-waydroid-cache:/var/cache/apt/archives:rw" \
+        --volume "trantbox-waydroid-cache:/var/cache/apt/archives:rw"
     ;;
 *)
     echo "Unknown option" >&2
