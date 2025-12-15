@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
 packages=(
-    "legacy-launcher"
     "openal"
     "mangohud"
-    "gamescope"
     "wine-mono"
     "wireplumber"
     "pipewire"
@@ -12,13 +10,17 @@ packages=(
     "pipewire-alsa"
     "pipewire-pulse"
 )
+aur_packages=(
+    "legacy-launcher"
+)
 
 exported_apps=(
     "steam"
     "legacy-launcher"
 )
 
-paru -S --needed --noconfirm "${packages[@]}"
+sudo pacman -S --needed --noconfirm "${packages[@]}"
+paru -S --needed --noconfirm "${aur_packages}"
 for app in "${exported_apps[@]}"; do
     distrobox-export --app "$app"
 done

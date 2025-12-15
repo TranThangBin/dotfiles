@@ -47,6 +47,7 @@ table.insert(M, {
 			"jsonls",
 			"yamlls",
 			"hyprls",
+            "copilot_ls"
 		})
 	end,
 })

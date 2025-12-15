@@ -10,10 +10,9 @@ packages=(
     "make"
     "gimp"
     "btop"
-    "teams"
     "godot"
     "which"
-    "rider"
+    "gopass"
     "zellij"
     "nodejs"
     "python3"
@@ -21,24 +20,28 @@ packages=(
     "discord"
     "shotcut"
     "firefox"
-    "unityhub"
     "luarocks"
-    "brave-bin"
     "libnotify"
     "lazydocker"
     "dotnet-sdk"
     "obs-studio"
-    "postman-bin"
-    "webcord-bin"
-    "pwvucontrol"
     "thunderbird"
     "qt5-wayland"
-    "sfxr-qt-bin"
     "wl-clipboard"
     "drawio-desktop"
-    "tor-browser-bin"
     "tree-sitter-cli"
     "libreoffice-fresh"
+)
+aur_packages=(
+    "teams"
+    "rider"
+    "unityhub"
+    "brave-bin"
+    "webcord-bin"
+    "pwvucontrol"
+    "postman-bin"
+    "sfxr-qt-bin"
+    "tor-browser-bin"
     "neovim-nightly-bin"
 )
 
@@ -66,7 +69,8 @@ exported_apps=(
 
 imported_binaries=("podman")
 
-paru -S --needed --noconfirm "${packages[@]}"
+sudo pacman -S --needed --noconfirm "${packages[@]}"
+paru -S --needed --noconfirm "${aur_packages}"
 paru -S --needed --noconfirm neovide --assume-installed neovim
 mkdir -p "$HOME/.local/share/unity3d"
 for app in "${exported_apps[@]}"; do

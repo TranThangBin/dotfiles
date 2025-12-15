@@ -8,3 +8,5 @@ export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS"
 
 export DOTFILES_DIR="$HOME/dotfiles"
 export PATH="$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin"
+export GOPASS_CLIPBOARD_COPY_CMD="$DOTFILES_DIR/scripts/gopass/gopass_clipboard_copy_cmd.sh"
+export GOPASS_CLIPBOARD_CLEAR_CMD="$DOTFILES_DIR/scripts/gopass/gopass_clipboard_clear_cmd.sh"

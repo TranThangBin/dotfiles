@@ -30,7 +30,7 @@ exported_binaries=(
     "/usr/bin/swaync-client"
 )
 
-paru -S --needed --noconfirm "${packages[@]}"
+sudo pacman -S --needed --noconfirm "${packages[@]}"
 for app in "${exported_apps[@]}"; do
     distrobox-export --app "$app"
 done

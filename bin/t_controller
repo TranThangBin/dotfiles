@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-APP_NAME="t_controller"
-
 FILE_PATH="$(realpath "${BASH_SOURCE[0]}")"
 FILE_DIR="$(dirname "$FILE_PATH")"
-UTILS_DIR="$(realpath "$FILE_DIR/../scripts/t_controller")"
 
+APP_NAME="$(basename "$FILE_PATH")"
 SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
 NOTIFY_TIMEOUT=5000
 RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}/$APP_NAME"
+
+UTILS_DIR="$(realpath "$FILE_DIR/../scripts/$APP_NAME")"
 
 terminal() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
@@ -209,12 +209,11 @@ player() {
 }
 
 lock() {
-    player pause all
-    volume mute speaker
-    volume mute microphone
-
-    if [ -n "$WAYLAND_DISPLAY" ]; then
-        pidof swaylock || exec swaylock
+    if [ -n "$WAYLAND_DISPLAY" ] && ! pidof swaylock; then
+        player pause all
+        volume mute speaker
+        volume mute microphone
+        exec swaylock --daemonize
     fi
 }
 
@@ -227,7 +226,6 @@ idle() {
         idle timeout 2
         ;;
     after_resume)
-        idle resume 1
         idle resume 3
         ;;
     timeout)

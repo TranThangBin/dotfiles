@@ -59,13 +59,13 @@ trantbox-games() {
     fi
     trantbox-create \
         --nvidia \
-        --unshare-netns \
         --additional-flags "--env-file $DOTFILES_DIR/misc/distrobox/nvidia.env" \
         --additional-flags "--env PROTON_ENABLE_WAYLAND=1" \
+        --additional-flags "--env MANGOHUD=1" \
         --additional-packages "steam umu-launcher" \
         --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/Mangohud:$DISTROBOX_HOME_ROOT/$container_name/.config/Mangohud:ro" \
-        --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
         "${extra_options[@]}"
+    # --unshare-netns
 }
 
 trantbox-services() {
@@ -86,42 +86,40 @@ trantbox-utils() {
 }
 
 setup() {
-    local box_tag="$1"
-    local box_func="trantbox-$box_tag"
-    local post_install_script="$DOTFILES_DIR/scripts/trantbox/trantbox-$box_tag-post_install.sh"
-    if "$box_func" && [ -f "$post_install_script" ]; then
-        distrobox-enter "trantbox-$box_tag" -- "$post_install_script"
+    local container_name="$1"
+    local post_install_script="$DOTFILES_DIR/scripts/trantbox/$container_name-post_install.sh"
+
+    if "$container_name" && [ -f "$post_install_script" ]; then
+        distrobox-enter "$container_name" -- "$post_install_script"
     fi
 }
 
-opt="$1"
-shift 1
+BOX_TAGS=("desktop" "games" "services" "utils")
+
+OPT="$1"
+BOX_TAG="$2"
 
 set -euo pipefail
 
-case "$opt" in
-desktop | games | services | utils)
-    setup "$opt"
+case "$OPT" in
+create)
+    if [ "$BOX_TAG" = "all" ]; then
+        for container_tag in "${BOX_TAGS[@]}"; do
+            setup "trantbox-$container_tag"
+        done
+    else
+        setup "trantbox-$BOX_TAG"
+    fi
     ;;
-all)
-    setup desktop
-    setup games
-    setup services
-    setup utils
-    ;;
-waydroid)
-    distrobox create \
-        --root \
-        --init \
-        --unshare-all \
-        --image ghcr.io/vanilla-os/waydroid:main \
-        --home "$DISTROBOX_HOME_ROOT/trantbox-waydroid" \
-        --name trantbox-waydroid \
-        --volume "$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/trantbox-waydroid/.config/fish:ro" \
-        --volume "trantbox-waydroid-cache:/var/cache/apt/archives:rw"
-    ;;
-*)
-    echo "Unknown option" >&2
-    exit 1
+remove | rm)
+    if [ "$BOX_TAG" = "all" ]; then
+        containers=()
+        for container_tag in "${BOX_TAGS[@]}"; do
+            containers+=("trantbox-$container_tag")
+        done
+        distrobox-rm "${containers[@]}"
+    else
+        distrobox-rm "trantbox-$BOX_TAG"
+    fi
     ;;
 esac

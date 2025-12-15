@@ -26,7 +26,7 @@ exported_binaries=(
     "/usr/bin/trash-restore"
 )
 
-paru -S --needed --noconfirm "${packages[@]}"
+sudo pacman -S --needed --noconfirm "${packages[@]}"
 for bin in "${exported_binaries[@]}"; do
     distrobox-export --bin "$bin"
 done

@@ -1,5 +1,9 @@
 local M = {}
 
+local function foobar()
+
+end
+
 table.insert(M, {
 	"hrsh7th/nvim-cmp",
 
@@ -94,11 +98,6 @@ table.insert(M, {
 
 		vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
-		cmp.event:on(
-			"confirm_done",
-			require("nvim-autopairs.completion.cmp").on_confirm_done()
-		)
-
 		cmp.setup(opts)
 
 		cmp.setup.filetype("sql", {
@@ -122,6 +121,17 @@ table.insert(M, {
 				{ name = "cmdline" },
 			}),
 		})
+
+		cmp.event:on(
+			"confirm_done",
+			require("nvim-autopairs.completion.cmp").on_confirm_done()
+		)
+		cmp.event:on("menu_opened", function()
+			vim.b.copilot_suggestion_hidden = true
+		end)
+		cmp.event:on("menu_closed", function()
+			vim.b.copilot_suggestion_hidden = false
+		end)
 
 		for server, _ in pairs(vim.lsp._enabled_configs) do
 			vim.lsp.config(server, { capabilities = capabilities })
