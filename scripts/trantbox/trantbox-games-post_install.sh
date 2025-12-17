@@ -20,7 +20,7 @@ exported_apps=(
 )
 
 sudo pacman -S --needed --noconfirm "${packages[@]}"
-paru -S --needed --noconfirm "${aur_packages}"
+paru -S --needed --noconfirm "${aur_packages[@]}"
 for app in "${exported_apps[@]}"; do
     distrobox-export --app "$app"
 done

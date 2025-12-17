@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+PASSKEY="$1"
+
 if [ -n "$WAYLAND_DISPLAY" ]; then
-    cliphist delete-query "$@"
+    # probably insecure
+    cliphist delete-query "$(gopass -o "$PASSKEY")"
 fi

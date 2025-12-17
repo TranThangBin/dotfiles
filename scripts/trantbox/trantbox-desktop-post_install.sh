@@ -12,7 +12,6 @@ packages=(
     "btop"
     "godot"
     "which"
-    "gopass"
     "zellij"
     "nodejs"
     "python3"
@@ -70,7 +69,7 @@ exported_apps=(
 imported_binaries=("podman")
 
 sudo pacman -S --needed --noconfirm "${packages[@]}"
-paru -S --needed --noconfirm "${aur_packages}"
+paru -S --needed --noconfirm "${aur_packages[@]}"
 paru -S --needed --noconfirm neovide --assume-installed neovim
 mkdir -p "$HOME/.local/share/unity3d"
 for app in "${exported_apps[@]}"; do

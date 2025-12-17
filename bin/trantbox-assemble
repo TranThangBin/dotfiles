@@ -10,6 +10,7 @@ if [ -z "$CONTAINER_ID" ]; then
 else
     DISTROBOX_HOME_ROOT="$DISTROBOX_HOST_HOME/distrobox"
 fi
+BOX_TAGS=("desktop" "games" "services" "utils")
 
 have_extra() {
     [ -d "/extra/$USER" ] &&
@@ -31,41 +32,41 @@ trantbox-create() {
 
 trantbox-desktop() {
     local container_name=${FUNCNAME[0]}
-    local extra_options=()
+    local options=(
+        --nvidia
+        --volume "$DOTFILES_DIR/stow/WebCord/dot-config/WebCord/Themes:$DISTROBOX_HOME_ROOT/$container_name/.config/WebCord/Themes:ro"
+        --volume "$DOTFILES_DIR/stow/btop/dot-config/btop:$DISTROBOX_HOME_ROOT/$container_name/.config/btop:ro"
+        --volume "$DOTFILES_DIR/stow/neovide/dot-config/neovide:$DISTROBOX_HOME_ROOT/$container_name/.config/neovide:ro"
+        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim:ro"
+        --volume "$DOTFILES_DIR/stow/zellij/dot-config/zellij:$DISTROBOX_HOME_ROOT/$container_name/.config/zellij:ro"
+        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim/lazy-lock.json:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim/lazy-lock.json:rw"
+        --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro"
+        --volume "$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro"
+    )
     if have_extra; then
-        extra_options=("--volume" "/extra/$USER/Unity:$DISTROBOX_HOME_ROOT/trantbox-desktop/Unity:rw")
+        options+=("--volume" "/extra/$USER/Unity:$DISTROBOX_HOME_ROOT/trantbox-desktop/Unity:rw")
     fi
-    trantbox-create \
-        --nvidia \
-        --volume "$DOTFILES_DIR/stow/WebCord/dot-config/WebCord/Themes:$DISTROBOX_HOME_ROOT/$container_name/.config/WebCord/Themes:ro" \
-        --volume "$DOTFILES_DIR/stow/btop/dot-config/btop:$DISTROBOX_HOME_ROOT/$container_name/.config/btop:ro" \
-        --volume "$DOTFILES_DIR/stow/neovide/dot-config/neovide:$DISTROBOX_HOME_ROOT/$container_name/.config/neovide:ro" \
-        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim:ro" \
-        --volume "$DOTFILES_DIR/stow/zellij/dot-config/zellij:$DISTROBOX_HOME_ROOT/$container_name/.config/zellij:ro" \
-        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim/lazy-lock.json:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim/lazy-lock.json:rw" \
-        --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro" \
-        --volume "$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro" \
-        "${extra_options[@]}"
+    trantbox-create "${options[@]}"
 }
 
 trantbox-games() {
     local container_name=${FUNCNAME[0]}
-    local extra_options=()
+    local options=(
+        --nvidia
+        # --unshare-netns
+        --additional-flags "--env-file $DOTFILES_DIR/misc/distrobox/nvidia.env"
+        --additional-flags "--env PROTON_ENABLE_WAYLAND=1"
+        --additional-flags "--env MANGOHUD=1"
+        --additional-packages "steam umu-launcher"
+        --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/Mangohud:$DISTROBOX_HOME_ROOT/$container_name/.config/Mangohud:ro"
+    )
     if have_extra; then
-        extra_options=(
+        options+=(
             "--volume" "/extra/$USER/.local/share/Steam:$DISTROBOX_HOME_ROOT/trantbox-games/.local/share/Steam:rw"
             "--volume" "/extra/$USER/Games:$DISTROBOX_HOME_ROOT/trantbox-games/Games:rw"
         )
     fi
-    trantbox-create \
-        --nvidia \
-        --additional-flags "--env-file $DOTFILES_DIR/misc/distrobox/nvidia.env" \
-        --additional-flags "--env PROTON_ENABLE_WAYLAND=1" \
-        --additional-flags "--env MANGOHUD=1" \
-        --additional-packages "steam umu-launcher" \
-        --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/Mangohud:$DISTROBOX_HOME_ROOT/$container_name/.config/Mangohud:ro" \
-        "${extra_options[@]}"
-    # --unshare-netns
+    trantbox-create "${options[@]}"
 }
 
 trantbox-services() {
@@ -82,6 +83,8 @@ trantbox-utils() {
     trantbox-create \
         --volume "$DOTFILES_DIR/stow/rofimoji/dot-config/rofimoji.rc:$DISTROBOX_HOME_ROOT/$container_name/.config/rofimoji.rc:ro" \
         --volume "$DOTFILES_DIR/stow/fastfetch/dot-config/fastfetch:$DISTROBOX_HOME_ROOT/$container_name/.config/fastfetch:ro" \
+        --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro" \
+        --volume "$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro" \
         --init-hooks "ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rofi"
 }
 
@@ -94,15 +97,8 @@ setup() {
     fi
 }
 
-BOX_TAGS=("desktop" "games" "services" "utils")
-
-OPT="$1"
-BOX_TAG="$2"
-
-set -euo pipefail
-
-case "$OPT" in
-create)
+create() {
+    BOX_TAG="$1"
     if [ "$BOX_TAG" = "all" ]; then
         for container_tag in "${BOX_TAGS[@]}"; do
             setup "trantbox-$container_tag"
@@ -110,8 +106,10 @@ create)
     else
         setup "trantbox-$BOX_TAG"
     fi
-    ;;
-remove | rm)
+}
+
+remove() {
+    BOX_TAG="$1"
     if [ "$BOX_TAG" = "all" ]; then
         containers=()
         for container_tag in "${BOX_TAGS[@]}"; do
@@ -121,5 +119,21 @@ remove | rm)
     else
         distrobox-rm "trantbox-$BOX_TAG"
     fi
+}
+
+alias rm=remove
+
+OPT="$1"
+shift 1
+
+set -euo pipefail
+
+case "$OPT" in
+create | remove | rm)
+    "$OPT" "$@"
+    ;;
+recreate)
+    remove "$@"
+    create "$@"
     ;;
 esac

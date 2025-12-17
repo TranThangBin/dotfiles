@@ -10,3 +10,7 @@ www.youtube.com###comments > .ytd-comments.style-scope
 www.youtube.com###sections > .ytd-item-section-renderer.style-scope
 www.youtube.com##grid-shelf-view-model
 www.youtube.com##ytd-horizontal-card-list-renderer.ytd-item-section-renderer.style-scope
+
+! Dec 17, 2025 https://chatgpt.com
+chatgpt.com##.pb-6.p-4.border-t.gap-2.flex-col.flex.border-token-border-heavy.bg-token-bg-tertiary.overflow-hidden.max-w-full.w-full.z-\[100\]
+chatgpt.com##.max-w-\[768px\].\@container\/images-promo-banner.dark\:bg-token-main-surface-secondary.text-token-text-primary.bg-token-main-surface-primary.border-token-border-default.md\:items-center.shadow-xxs.dark\:border-transparent.lg\:mx-auto.\[text-wrap\:pretty\].text-sm.pe-3.ps-5.py-4.border.rounded-3xl.gap-4.items-start.w-full.flex

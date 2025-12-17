@@ -35,7 +35,6 @@ if status is-interactive
     fish_config prompt choose arrow
 
     if command -v podman &>/dev/null
-        alias docker podman
         set -gx DOCKER_HOST "unix://$XDG_RUNTIME_DIR/podman/podman.sock"
     end
 
@@ -48,4 +47,6 @@ if status is-interactive
     end
 
     abbr dbx distrobox
+    abbr sc systemctl
+    abbr scu "systemctl --user"
 end

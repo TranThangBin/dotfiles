@@ -2,8 +2,11 @@
 
 packages=(
     "fd"
+    "git"
+    "zip"
     "unzip"
     "unrar"
+    "gopass"
     "catimg"
     "ripgrep"
     "rofimoji"
@@ -14,8 +17,10 @@ packages=(
 exported_binaries=(
     "/usr/bin/rg"
     "/usr/bin/fd"
+    "/usr/bin/zip"
     "/usr/bin/unzip"
     "/usr/bin/unrar"
+    "/usr/bin/gopass"
     "/usr/bin/catimg"
     "/usr/bin/rofimoji"
     "/usr/bin/fastfetch"
