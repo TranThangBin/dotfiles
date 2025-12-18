@@ -5,12 +5,13 @@ FILE_DIR="$(dirname "$FILE_PATH")"
 
 DOTFILES_DIR=$(dirname "$FILE_DIR")
 IMAGE="ghcr.io/ublue-os/arch-toolbox:latest"
+BOX_TAGS=("desktop" "games" "services" "utils" "gremlin")
+
 if [ -z "$CONTAINER_ID" ]; then
     DISTROBOX_HOME_ROOT="$HOME/distrobox"
 else
     DISTROBOX_HOME_ROOT="$DISTROBOX_HOST_HOME/distrobox"
 fi
-BOX_TAGS=("desktop" "games" "services" "utils")
 
 have_extra() {
     [ -d "/extra/$USER" ] &&
@@ -84,8 +85,11 @@ trantbox-utils() {
         --volume "$DOTFILES_DIR/stow/rofimoji/dot-config/rofimoji.rc:$DISTROBOX_HOME_ROOT/$container_name/.config/rofimoji.rc:ro" \
         --volume "$DOTFILES_DIR/stow/fastfetch/dot-config/fastfetch:$DISTROBOX_HOME_ROOT/$container_name/.config/fastfetch:ro" \
         --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro" \
-        --volume "$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro" \
-        --init-hooks "ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rofi"
+        --volume "$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro"
+}
+
+trantbox-gremlin() {
+    trantbox-create
 }
 
 setup() {
@@ -98,30 +102,49 @@ setup() {
 }
 
 create() {
-    BOX_TAG="$1"
-    if [ "$BOX_TAG" = "all" ]; then
-        for container_tag in "${BOX_TAGS[@]}"; do
-            setup "trantbox-$container_tag"
+    local all=0
+    local containers=()
+
+    for box_tag in "$@"; do
+        if [ "$box_tag" = "all" ]; then
+            all=1
+        else
+            containers+=("trantbox-$box_tag")
+        fi
+    done
+
+    if [ "$all" -eq 1 ]; then
+        for box_tag in "${BOX_TAGS[@]}"; do
+            setup "trantbox-$box_tag"
         done
     else
-        setup "trantbox-$BOX_TAG"
+        for container in "${containers[@]}"; do
+            setup "$container"
+        done
     fi
 }
 
 remove() {
-    BOX_TAG="$1"
-    if [ "$BOX_TAG" = "all" ]; then
-        containers=()
-        for container_tag in "${BOX_TAGS[@]}"; do
-            containers+=("trantbox-$container_tag")
-        done
-        distrobox-rm "${containers[@]}"
-    else
-        distrobox-rm "trantbox-$BOX_TAG"
-    fi
-}
+    local all=0
+    local containers=()
 
-alias rm=remove
+    for box_tag in "$@"; do
+        if [ "$box_tag" = "all" ]; then
+            all=1
+        else
+            containers+=("trantbox-$box_tag")
+        fi
+    done
+
+    if [ "$all" -eq 1 ]; then
+        containers=()
+        for box_tag in "${BOX_TAGS[@]}"; do
+            containers+=("trantbox-$box_tag")
+        done
+    fi
+
+    distrobox-rm "${containers[@]}"
+}
 
 OPT="$1"
 shift 1
@@ -129,8 +152,11 @@ shift 1
 set -euo pipefail
 
 case "$OPT" in
-create | remove | rm)
-    "$OPT" "$@"
+create)
+    create "$@"
+    ;;
+remove | rm)
+    remove "$@"
     ;;
 recreate)
     remove "$@"

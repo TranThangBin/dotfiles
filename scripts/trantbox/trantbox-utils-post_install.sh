@@ -31,7 +31,12 @@ exported_binaries=(
     "/usr/bin/trash-restore"
 )
 
+imported_binaries=("rofi")
+
 sudo pacman -S --needed --noconfirm "${packages[@]}"
 for bin in "${exported_binaries[@]}"; do
     distrobox-export --bin "$bin"
+done
+for bin in "${imported_binaries[@]}"; do
+    sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"
 done
