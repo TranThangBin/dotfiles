@@ -51,10 +51,15 @@ emoji_picker() {
 
 clipboard_picker() {
     local action="$1"
+
     case "$action" in
     pick)
         if [ -n "$WAYLAND_DISPLAY" ]; then
-            cliphist list | rofi -dmenu -p "Copy Clipboard Entry" | cliphist decode | wl-copy
+            local entry_id
+            entry_id=$(cliphist list | rofi -dmenu -p "Copy Clipboard Entry")
+            if [ -n "$entry_id" ]; then
+                cliphist decode <<<"$entry_id" | wl-copy
+            fi
         fi
         ;;
     delete)

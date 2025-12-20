@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 packages=(
+    "yay-bin"
     "fd"
     "go"
     "git"
@@ -69,8 +70,8 @@ exported_apps=(
 imported_binaries=("podman")
 
 sudo pacman -S --needed --noconfirm "${packages[@]}"
-paru -S --needed --noconfirm "${aur_packages[@]}"
-paru -S --needed --noconfirm neovide --assume-installed neovim
+yay -S --needed --noconfirm "${aur_packages[@]}"
+yay -S --needed --noconfirm neovide --assume-installed neovim
 mkdir -p "$HOME/.local/share/unity3d"
 for app in "${exported_apps[@]}"; do
     distrobox-export --app "$app"

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 packages=(
+    "yay-bin"
     "openal"
     "mangohud"
     "wine-mono"
@@ -20,7 +21,7 @@ exported_apps=(
 )
 
 sudo pacman -S --needed --noconfirm "${packages[@]}"
-paru -S --needed --noconfirm "${aur_packages[@]}"
+yay -S --needed --noconfirm "${aur_packages[@]}"
 for app in "${exported_apps[@]}"; do
     distrobox-export --app "$app"
 done

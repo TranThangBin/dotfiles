@@ -121,6 +121,7 @@ table.insert(M, {
 			"css",
 			"javascript",
 			"typescript",
+			"templ",
 			cmp_menu = { always_update = true },
 			cmp_docs = { always_update = true },
 		},

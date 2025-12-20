@@ -4,7 +4,8 @@ FILE_PATH="$(realpath "${BASH_SOURCE[0]}")"
 FILE_DIR="$(dirname "$FILE_PATH")"
 
 DOTFILES_DIR=$(dirname "$FILE_DIR")
-IMAGE="ghcr.io/ublue-os/arch-toolbox:latest"
+# IMAGE="ghcr.io/ublue-os/arch-toolbox:latest"
+IMAGE="docker.io/cachyos/cachyos:latest"
 BOX_TAGS=("desktop" "games" "services" "utils" "gremlin")
 
 if [ -z "$CONTAINER_ID" ]; then

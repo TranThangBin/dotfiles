@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 packages=(
+    "yay-bin"
     "fd"
     "git"
     "zip"
