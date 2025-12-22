@@ -4,7 +4,6 @@ FILE_PATH="$(realpath "${BASH_SOURCE[0]}")"
 FILE_DIR="$(dirname "$FILE_PATH")"
 
 DOTFILES_DIR=$(dirname "$FILE_DIR")
-# IMAGE="ghcr.io/ublue-os/arch-toolbox:latest"
 IMAGE="docker.io/cachyos/cachyos:latest"
 BOX_TAGS=("desktop" "games" "services" "utils" "gremlin")
 
@@ -26,8 +25,10 @@ trantbox-create() {
         --image "$IMAGE" \
         --name "$container_name" \
         --home "$DISTROBOX_HOME_ROOT/$container_name" \
-        --volume "$container_name-cache:/var/cache/pacman/pkg:rw" \
+        --additional-packages "yay-bin" \
         --pre-init-hooks "$DOTFILES_DIR/scripts/trantbox/arch-mirrorlist-integration.sh" \
+        --pre-init-hooks "export SHELL=/usr/bin/fish" \
+        --volume "$container_name-cache:/var/cache/pacman/pkg:rw" \
         --volume "$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/$container_name/.config/fish:ro" \
         "$@"
 }
@@ -55,10 +56,11 @@ trantbox-games() {
     local container_name=${FUNCNAME[0]}
     local options=(
         --nvidia
-        # --unshare-netns
+        --unshare-netns
         --additional-flags "--env-file $DOTFILES_DIR/misc/distrobox/nvidia.env"
         --additional-flags "--env PROTON_ENABLE_WAYLAND=1"
         --additional-flags "--env MANGOHUD=1"
+        --additional-flags "--network pasta"
         --additional-packages "steam umu-launcher"
         --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/Mangohud:$DISTROBOX_HOME_ROOT/$container_name/.config/Mangohud:ro"
     )

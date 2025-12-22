@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 packages=(
-    "yay-bin"
     "fd"
     "git"
     "zip"
+    "vim"
     "unzip"
     "unrar"
     "gopass"
@@ -15,29 +15,31 @@ packages=(
     "trash-cli"
 )
 
-exported_binaries=(
-    "/usr/bin/rg"
-    "/usr/bin/fd"
-    "/usr/bin/zip"
-    "/usr/bin/unzip"
-    "/usr/bin/unrar"
-    "/usr/bin/gopass"
-    "/usr/bin/catimg"
-    "/usr/bin/rofimoji"
-    "/usr/bin/fastfetch"
-    "/usr/bin/trash-rm"
-    "/usr/bin/trash-put"
-    "/usr/bin/trash-list"
-    "/usr/bin/trash-empty"
-    "/usr/bin/trash-restore"
-)
+yay -S --needed --noconfirm "${packages[@]}"
 
-imported_binaries=("rofi")
+if [ -n "$CONTAINER_ID" ]; then
+    exported_binaries=(
+        "/usr/bin/rg"
+        "/usr/bin/fd"
+        "/usr/bin/zip"
+        "/usr/bin/unzip"
+        "/usr/bin/unrar"
+        "/usr/bin/gopass"
+        "/usr/bin/catimg"
+        "/usr/bin/rofimoji"
+        "/usr/bin/fastfetch"
+        "/usr/bin/trash-rm"
+        "/usr/bin/trash-put"
+        "/usr/bin/trash-list"
+        "/usr/bin/trash-empty"
+        "/usr/bin/trash-restore"
+    )
+    imported_binaries=("rofi")
 
-sudo pacman -S --needed --noconfirm "${packages[@]}"
-for bin in "${exported_binaries[@]}"; do
-    distrobox-export --bin "$bin"
-done
-for bin in "${imported_binaries[@]}"; do
-    sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"
-done
+    for bin in "${exported_binaries[@]}"; do
+        distrobox-export --bin "$bin"
+    done
+    for bin in "${imported_binaries[@]}"; do
+        sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"
+    done
+fi

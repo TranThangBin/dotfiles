@@ -45,37 +45,39 @@ aur_packages=(
     "neovim-nightly-bin"
 )
 
-exported_apps=(
-    "obs"
-    "gimp"
-    "btop"
-    "brave"
-    "teams"
-    "godot"
-    "rider"
-    "discord"
-    "shotcut"
-    "firefox"
-    "neovide"
-    "unityhub"
-    "thunderbird"
-    "webcord"
-    "pwvucontrol"
-    "sfxr-qt"
-    "drawio"
-    "tor-browser"
-    "libreoffice"
-)
-
 imported_binaries=("podman")
 
-sudo pacman -S --needed --noconfirm "${packages[@]}"
-yay -S --needed --noconfirm "${aur_packages[@]}"
+yay -S --needed --noconfirm "${packages[@]}" "${aur_packages[@]}"
 yay -S --needed --noconfirm neovide --assume-installed neovim
 mkdir -p "$HOME/.local/share/unity3d"
-for app in "${exported_apps[@]}"; do
-    distrobox-export --app "$app"
-done
-for bin in "${imported_binaries[@]}"; do
-    sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"
-done
+
+if [ -n "$CONTAINER_ID" ]; then
+    exported_apps=(
+        "obs"
+        "gimp"
+        "btop"
+        "brave"
+        "teams"
+        "godot"
+        "rider"
+        "discord"
+        "shotcut"
+        "firefox"
+        "neovide"
+        "unityhub"
+        "thunderbird"
+        "webcord"
+        "pwvucontrol"
+        "sfxr-qt"
+        "drawio"
+        "tor-browser"
+        "libreoffice"
+    )
+
+    for app in "${exported_apps[@]}"; do
+        distrobox-export --app "$app"
+    done
+    for bin in "${imported_binaries[@]}"; do
+        sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"
+    done
+fi
