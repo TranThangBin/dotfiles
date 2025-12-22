@@ -47,7 +47,7 @@ table.insert(M, {
 			"jsonls",
 			"yamlls",
 			"hyprls",
-            "copilot_ls"
+			"copilot_ls",
 		})
 	end,
 })
@@ -178,6 +178,16 @@ table.insert(M, {
 		}
 	end,
 	opts = {
+		formatters = {
+			templ = {
+				args = {
+					"fmt",
+					"-prettier-required",
+					"-prettier-command",
+					"prettierd --stdin-filepath $TEMPL_PRETTIER_FILE_NAME",
+				},
+			},
+		},
 		formatters_by_ft = {
 			lua = { "stylua" },
 			gdscript = { "gdformat" },
