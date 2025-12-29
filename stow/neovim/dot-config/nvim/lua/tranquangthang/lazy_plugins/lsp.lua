@@ -160,19 +160,17 @@ table.insert(M, {
 	"stevearc/conform.nvim",
 	keys = function()
 		local conform = require("conform")
-		local opts = {
-			async = true,
-			lsp_format = "fallback",
-			stop_after_first = true,
-		}
 
 		return {
 			{
 				"<leader>f",
 				function()
-					if not pcall(conform.format, opts) then
-						vim.lsp.buf.format(opts)
-					end
+					conform.format(nil, function(err)
+						if err ~= nil then
+							---@diagnostic disable-next-line
+							vim.lsp.buf.format(conform.default_format_opts)
+						end
+					end)
 				end,
 			},
 		}
@@ -187,6 +185,11 @@ table.insert(M, {
 					"prettierd --stdin-filepath $TEMPL_PRETTIER_FILE_NAME",
 				},
 			},
+		},
+		default_format_opts = {
+			async = true,
+			lsp_format = "fallback",
+			stop_after_first = true,
 		},
 		formatters_by_ft = {
 			lua = { "stylua" },
