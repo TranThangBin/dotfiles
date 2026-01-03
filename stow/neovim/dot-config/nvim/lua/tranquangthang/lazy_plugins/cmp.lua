@@ -1,9 +1,5 @@
 local M = {}
 
-local function foobar()
-
-end
-
 table.insert(M, {
 	"hrsh7th/nvim-cmp",
 
@@ -64,8 +60,12 @@ table.insert(M, {
 			},
 
 			window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
+				completion = cmp.config.window.bordered({
+					border = "rounded",
+				}),
+				documentation = cmp.config.window.bordered({
+					border = "rounded",
+				}),
 			},
 
 			completion = {
@@ -95,8 +95,6 @@ table.insert(M, {
 		require("luasnip.loaders.from_lua").lazy_load({
 			paths = vim.fn.stdpath("config") .. "/lua/snippets",
 		})
-
-		vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 		cmp.setup(opts)
 
