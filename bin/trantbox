@@ -37,6 +37,11 @@ trantbox-desktop() {
     local container_name=${FUNCNAME[0]}
     local options=(
         --nvidia
+        --unshare-devsys
+        --unshare-groups
+        --unshare-ipc
+        --unshare-netns
+        --additional-flags "--network host"
         --volume "$DOTFILES_DIR/stow/WebCord/dot-config/WebCord/Themes:$DISTROBOX_HOME_ROOT/$container_name/.config/WebCord/Themes:ro"
         --volume "$DOTFILES_DIR/stow/btop/dot-config/btop/btop.conf:$DISTROBOX_HOME_ROOT/$container_name/.config/btop/btop.conf:ro"
         --volume "$DOTFILES_DIR/stow/neovide/dot-config/neovide:$DISTROBOX_HOME_ROOT/$container_name/.config/neovide:ro"
@@ -56,7 +61,10 @@ trantbox-games() {
     local container_name=${FUNCNAME[0]}
     local options=(
         --nvidia
+        --unshare-devsys
+        --unshare-groups
         --unshare-netns
+        --unshare-process
         --additional-flags "--env-file $DOTFILES_DIR/misc/distrobox/nvidia.env"
         --additional-flags "--env PROTON_ENABLE_WAYLAND=1"
         --additional-flags "--env MANGOHUD=1"
@@ -76,6 +84,7 @@ trantbox-games() {
 trantbox-services() {
     local container_name=${FUNCNAME[0]}
     trantbox-create \
+        --unshare-all \
         --volume "$DOTFILES_DIR/stow/fcitx5/dot-local/share/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.local/share/fcitx5:ro" \
         --volume "$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.config/fcitx5:rw" \
         --volume "$DOTFILES_DIR/stow/swaync/dot-config/swaync:$DISTROBOX_HOME_ROOT/$container_name/.config/swaync:ro" \
@@ -85,6 +94,7 @@ trantbox-services() {
 trantbox-utils() {
     local container_name=${FUNCNAME[0]}
     trantbox-create \
+        --unshare-all \
         --volume "$DOTFILES_DIR/stow/rofimoji/dot-config/rofimoji.rc:$DISTROBOX_HOME_ROOT/$container_name/.config/rofimoji.rc:ro" \
         --volume "$DOTFILES_DIR/stow/fastfetch/dot-config/fastfetch:$DISTROBOX_HOME_ROOT/$container_name/.config/fastfetch:ro" \
         --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro" \
@@ -92,7 +102,7 @@ trantbox-utils() {
 }
 
 trantbox-gremlin() {
-    trantbox-create
+    trantbox-create --unshare-all
 }
 
 setup() {
