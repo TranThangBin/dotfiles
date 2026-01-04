@@ -22,9 +22,6 @@ text/calendar=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thund
 text/vcard=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
 text/x-vcard=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
 
-video/ogg=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
-video/webm=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
-
 x-scheme-handler/chrome=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 x-scheme-handler/http=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 x-scheme-handler/https=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
