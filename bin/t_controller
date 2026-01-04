@@ -35,13 +35,13 @@ launcher() {
 }
 
 powermenu() {
-    exec "$UTILS_DIR/powermenu.sh"
+    "$UTILS_DIR/powermenu.sh"
 }
 
 color_picker() {
     local lock_file="$RUNTIME_DIR/color_picker.lock"
     if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-        exec flock -n "$lock_file" hyprpicker -a
+        flock -n "$lock_file" hyprpicker -a
     fi
 }
 
@@ -56,7 +56,8 @@ clipboard_picker() {
     pick)
         if [ -n "$WAYLAND_DISPLAY" ]; then
             local entry_id
-            entry_id=$(cliphist list | rofi -dmenu -p "Copy Clipboard Entry")
+            entry_id=$(cliphist list | rofi -dmenu -p "Copy Clipboard Entry" \
+                -theme-str 'entry {placeholder: "Copy Clipboard Entry";}')
             if [ -n "$entry_id" ]; then
                 cliphist decode <<<"$entry_id" | wl-copy
             fi
@@ -64,7 +65,9 @@ clipboard_picker() {
         ;;
     delete)
         if [ -n "$WAYLAND_DISPLAY" ]; then
-            cliphist list | rofi -dmenu -p "Delete Clipboard Entry" | cliphist delete
+            cliphist list | rofi -dmenu -p "Delete Clipboard Entry" \
+                -theme-str 'entry {placeholder: "Delete Clipboard Entry";}' |
+                cliphist delete
         fi
         ;;
     wipe)
@@ -73,7 +76,8 @@ clipboard_picker() {
             choice=$({
                 echo no
                 echo yes
-            } | rofi -dmenu -p 'Wipe Clipboard')
+            } | rofi -dmenu -p "Wipe Clipboard" \
+                -theme-str 'entry {placeholder: "Wipe Clipboard";}')
             if [ "$choice" == "yes" ]; then
                 cliphist wipe
             fi
@@ -218,7 +222,7 @@ lock() {
         player pause all
         volume mute speaker
         volume mute microphone
-        exec swaylock --daemonize
+        swaylock --daemonize
     fi
 }
 
