@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 packages=(
-    "yay-bin"
     "fd"
     "go"
     "git"
     "gcc"
     "npm"
+    "bear"
     "rust"
     "make"
     "gimp"
@@ -25,6 +25,7 @@ packages=(
     "lazydocker"
     "dotnet-sdk"
     "obs-studio"
+    "libfdk-aac"
     "thunderbird"
     "qt5-wayland"
     "wl-clipboard"
@@ -33,7 +34,6 @@ packages=(
     "libreoffice-fresh"
 )
 aur_packages=(
-    "teams"
     "rider"
     "unityhub"
     "brave-bin"
@@ -57,7 +57,6 @@ if [ -n "$CONTAINER_ID" ]; then
         "gimp"
         "btop"
         "brave"
-        "teams"
         "godot"
         "rider"
         "discord"

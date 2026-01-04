@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 packages=(
-    "yay-bin"
     "openal"
     "mangohud"
     "wine-mono"
