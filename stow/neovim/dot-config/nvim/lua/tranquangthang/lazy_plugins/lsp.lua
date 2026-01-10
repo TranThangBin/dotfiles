@@ -205,7 +205,6 @@ table.insert(M, {
 			bash = { "shfmt" },
 			nix = { "nixfmt" },
 			templ = { "templ" },
-			cs = { "csharpier" },
 		},
 	},
 })

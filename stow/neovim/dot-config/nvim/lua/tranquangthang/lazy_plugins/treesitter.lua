@@ -5,12 +5,9 @@ table.insert(M, {
 	branch = "main",
 	lazy = false,
 	build = function()
-		require("nvim-treesitter.install").update():wait(30 * 1000)
+		require("nvim-treesitter").update():wait(30 * 1000)
 	end,
 	config = function()
-		local ts_install = require("nvim-treesitter.install")
-		local ts_async = require("nvim-treesitter.async")
-
 		local filetypes = {
 			"help",
 			"markdown",
@@ -41,19 +38,11 @@ table.insert(M, {
 			"dosini",
 			"rasi",
 		}
-
-		ts_async
-			.arun(function()
-				local tasks = {}
-				for _, ft in pairs(filetypes) do
-					table.insert(
-						tasks,
-						ts_install.install(vim.treesitter.language.get_lang(ft))
-					)
-				end
-				ts_async.join(tasks)
-			end)
-			:wait(30 * 1000)
+		local languages = {}
+		for _, ft in pairs(filetypes) do
+			table.insert(languages, vim.treesitter.language.get_lang(ft))
+		end
+		require("nvim-treesitter").install(languages):wait(30 * 1000)
 
 		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 		vim.api.nvim_create_autocmd("FileType", {
