@@ -3,7 +3,6 @@
 packages=(
     "mpv"
     "feh"
-    "swww"
     "picom"
     "swaync"
     "fcitx5"
@@ -13,8 +12,11 @@ packages=(
     "fcitx5-unikey"
     "fcitx5-configtool"
 )
+aur_packages=(
+    "awww-git"
+)
 
-yay -S --needed --noconfirm "${packages[@]}"
+yay -S --needed --noconfirm "${packages[@]}" "${aur_packages[@]}"
 
 if [ -n "$CONTAINER_ID" ]; then
     exported_apps=(
@@ -23,7 +25,7 @@ if [ -n "$CONTAINER_ID" ]; then
     )
     exported_binaries=(
         "/usr/bin/feh"
-        "/usr/bin/swww"
+        "/usr/bin/awww"
         "/usr/bin/picom"
         "/usr/bin/fcitx5"
         "/usr/bin/wl-copy"

@@ -28,6 +28,7 @@ trantbox-create() {
         --additional-packages "yay-bin" \
         --pre-init-hooks "$DOTFILES_DIR/scripts/trantbox/arch-mirrorlist-integration.sh" \
         --pre-init-hooks "export SHELL=/usr/bin/fish" \
+        --init-hooks "ln -sf /usr/bin/distrobox-host-exec /usr/bin/xdg-open" \
         --volume "$container_name-cache:/var/cache/pacman/pkg:rw" \
         --volume "$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/$container_name/.config/fish:ro" \
         "$@"

@@ -1,6 +1,0 @@
-#!/usr/bin/bash
-
-FILE_PATH="$(realpath "${BASH_SOURCE[0]}")"
-FILE_DIR="$(dirname "$FILE_PATH")"
-
-exec "$FILE_DIR/xdg-open"

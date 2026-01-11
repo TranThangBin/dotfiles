@@ -1,17 +1,17 @@
 # Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/services/swww.nix
 [Unit]
 ConditionEnvironment=WAYLAND_DISPLAY
-Description=swww-daemon
+Description=awww-daemon
 After=graphical-session.target
 PartOf=graphical-session.target
 ConditionPathExists=/usr/bin/distrobox
 
 Requires=distrobox-container@trantbox-services.service
 PartOf=distrobox-container@trantbox-services.service
-Conflicts=swww.service
+Conflicts=awww.service
 
 [Service]
-ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/swww-daemon" ]'
-ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/swww-daemon
+ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/awww-daemon" ]'
+ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/awww-daemon
 Restart=always
 RestartSec=10
