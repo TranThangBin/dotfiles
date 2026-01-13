@@ -35,6 +35,7 @@ packages=(
 )
 aur_packages=(
     "rider"
+    "opencode"
     "unityhub"
     "brave-bin"
     "webcord-bin"
