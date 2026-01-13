@@ -13,13 +13,14 @@ if status is-login && test "$(tty)" = /dev/tty1
 
     switch "$OPT"
         case X
-            if command -v startx 1>/dev/null
+            if command -vq startx
+                set -gx XINITRC "$HOME/.config/xinit/xinitrc"
                 exec startx
             end
         case W S
-            if command -v uwsm 1>/dev/null && uwsm check may-start
+            if command -vq uwsm && command uwsm check may-start
                 if test $OPT = S
-                    uwsm select
+                    command uwsm select
                 end
                 exec uwsm start default
             end
@@ -35,11 +36,11 @@ end
 if status is-interactive
     fish_config prompt choose arrow
 
-    if command -v podman &>/dev/null
+    if command -vq podman
         set -gx DOCKER_HOST "unix://$XDG_RUNTIME_DIR/podman/podman.sock"
     end
 
-    if command -v nvim &>/dev/null
+    if command -vq nvim
         alias vim nvim
         alias vi /usr/bin/vim
         set -gx EDITOR nvim
