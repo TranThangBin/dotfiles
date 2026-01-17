@@ -2,7 +2,9 @@ local M = {}
 
 table.insert(M, {
 	"folke/sidekick.nvim",
-	opts = {},
+	opts = {
+		mux = { enabled = true },
+	},
 	keys = {
 		{
 			"<tab>",

@@ -10,6 +10,6 @@ Conflicts=cliphist.service
 
 [Service]
 Type=simple
-ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/wl-paste" ]'
+ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/local/bin/wl-paste" ]'
 ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/cliphist" ]'
-ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/wl-paste --watch cliphist store
+ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/local/bin/wl-paste --watch cliphist store
