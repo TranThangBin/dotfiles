@@ -7,6 +7,7 @@ packages=(
     "fontconfig"
     "qt6-wayland"
     "libxkbcommon"
+    "qt6-multimedia"
     "pipewire-pulse"
 )
 
@@ -15,12 +16,8 @@ curl -s https://raw.githubusercontent.com/iluvgirlswithglasses/linux-desktop-gre
 
 if [ -n "$CONTAINER_ID" ]; then
     exported_apps=("gremlin-picker")
-    imported_binaries=("rofi")
 
     for app in "${exported_apps[@]}"; do
         distrobox-export --app "$app"
-    done
-    for bin in "${imported_binaries[@]}"; do
-        sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"
     done
 fi

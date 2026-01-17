@@ -5,7 +5,7 @@ FILE_DIR="$(dirname "$FILE_PATH")"
 
 DOTFILES_DIR=$(dirname "$FILE_DIR")
 IMAGE="docker.io/cachyos/cachyos:latest"
-BOX_TAGS=("desktop" "games" "services" "utils" "gremlin")
+BOX_TAGS=("services" "utils" "gremlin" "desktop" "games")
 
 if [ -z "$CONTAINER_ID" ]; then
     DISTROBOX_HOME_ROOT="$HOME/distrobox"
@@ -26,9 +26,7 @@ trantbox-create() {
         --name "$container_name" \
         --home "$DISTROBOX_HOME_ROOT/$container_name" \
         --additional-packages "yay-bin" \
-        --pre-init-hooks "$DOTFILES_DIR/scripts/trantbox/arch-mirrorlist-integration.sh" \
-        --pre-init-hooks "export SHELL=/usr/bin/fish" \
-        --init-hooks "ln -sf /usr/bin/distrobox-host-exec /usr/bin/xdg-open" \
+        --pre-init-hooks "export SHELL=/usr/bin/fish && $DOTFILES_DIR/scripts/trantbox/arch-mirrorlist-integration.sh" \
         --volume "$container_name-cache:/var/cache/pacman/pkg:rw" \
         --volume "$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/$container_name/.config/fish:ro" \
         "$@"
@@ -50,6 +48,7 @@ trantbox-desktop() {
         --volume "$DOTFILES_DIR/stow/zellij/dot-config/zellij:$DISTROBOX_HOME_ROOT/$container_name/.config/zellij:ro"
         --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim/lazy-lock.json:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim/lazy-lock.json:rw"
         --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro"
+        --volume "$DOTFILES_DIR/stow/opencode/dot-config/opencode/opencode.json:$DISTROBOX_HOME_ROOT/$container_name/.config/opencode/opencode.json:ro"
         --volume "$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro"
     )
     if have_extra; then

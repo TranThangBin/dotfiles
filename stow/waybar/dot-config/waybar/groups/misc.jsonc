@@ -27,7 +27,6 @@
 	"power-profiles-daemon": {
 		"format": "<big>{icon}</big>",
 		"format-icons": {
-			"default": "",
 			"performance": "",
 			"balanced": "󰗑",
 			"power-saver": ""
@@ -39,8 +38,8 @@
 			"activated": "󰒳",
 			"deactivated": "󰒲"
 		},
-		"tooltip-format-activated": "idle is inhibited",
-		"tooltip-format-deactivated": "idle is active",
+		"tooltip-format-activated": "idle inhibitor is active",
+		"tooltip-format-deactivated": "idle inhibitor is inactive",
 		"timeout": 120
 	}
 }

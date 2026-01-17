@@ -29,7 +29,7 @@ if [ -n "$CONTAINER_ID" ]; then
         "/usr/bin/rofimoji"
         "/usr/bin/fastfetch"
         "/usr/bin/trash-rm"
-        "/usr/bin/trash-put"
+        "/usr/bin/trash"
         "/usr/bin/trash-list"
         "/usr/bin/trash-empty"
         "/usr/bin/trash-restore"

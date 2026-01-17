@@ -8,15 +8,13 @@ packages=(
     "fcitx5"
     "cliphist"
     "wlsunset"
+    "awww-git"
     "wl-clipboard"
     "fcitx5-unikey"
     "fcitx5-configtool"
 )
-aur_packages=(
-    "awww-git"
-)
 
-yay -S --needed --noconfirm "${packages[@]}" "${aur_packages[@]}"
+yay -S --needed --noconfirm "${packages[@]}"
 
 if [ -n "$CONTAINER_ID" ]; then
     exported_apps=(

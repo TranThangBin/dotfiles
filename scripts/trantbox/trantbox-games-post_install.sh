@@ -5,17 +5,16 @@ packages=(
     "mangohud"
     "wine-mono"
     "wireplumber"
+    "proton-cachyos"
+    "osu-lazer-bin"
+    "legacy-launcher"
     "pipewire"
     "pipewire-jack"
     "pipewire-alsa"
     "pipewire-pulse"
 )
-aur_packages=(
-    "legacy-launcher"
-    "osu-lazer-bin"
-)
 
-yay -S --needed --noconfirm "${packages[@]}" "${aur_packages[@]}"
+yay -S --needed --noconfirm "${packages[@]}"
 
 if [ -n "$CONTAINER_ID" ]; then
     exported_apps=(

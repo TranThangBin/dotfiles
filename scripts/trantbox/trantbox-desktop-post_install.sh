@@ -11,6 +11,7 @@ packages=(
     "make"
     "gimp"
     "btop"
+    "rider"
     "godot"
     "which"
     "zellij"
@@ -21,34 +22,31 @@ packages=(
     "shotcut"
     "firefox"
     "luarocks"
+    "opencode"
+    "unityhub"
     "libnotify"
+    "brave-bin"
     "lazydocker"
     "dotnet-sdk"
     "obs-studio"
     "libfdk-aac"
     "thunderbird"
-    "qt5-wayland"
-    "wl-clipboard"
-    "drawio-desktop"
-    "tree-sitter-cli"
-    "libreoffice-fresh"
-)
-aur_packages=(
-    "rider"
-    "opencode"
-    "unityhub"
-    "brave-bin"
     "webcord-bin"
     "pwvucontrol"
     "postman-bin"
     "sfxr-qt-bin"
+    "qt5-wayland"
+    "wl-clipboard"
+    "drawio-desktop"
+    "tree-sitter-cli"
     "tor-browser-bin"
+    "libreoffice-fresh"
     "neovim-nightly-bin"
 )
 
 imported_binaries=("podman")
 
-yay -S --needed --noconfirm "${packages[@]}" "${aur_packages[@]}"
+yay -S --needed --noconfirm "${packages[@]}"
 yay -S --needed --noconfirm neovide --assume-installed neovim
 mkdir -p "$HOME/.local/share/unity3d"
 

@@ -41,13 +41,15 @@
 			"spacing": 10
 		},
 		"mpris": {
-			"format": "<big>{status_icon}</big> | {player}: {dynamic}",
+			"format": "<big>{player_icon}</big> | <i>{title}</i>",
+			"format-paused": "<big>{status_icon}</big> | {title}",
 			"max-length": 50,
-			"dynamic-order": ["title", "length"],
+			"player-icons": {
+				"default": "",
+				"firefox": "🦊"
+			},
 			"status-icons": {
-				"playing": "",
-				"paused": "",
-				"stopped": ""
+				"paused": ""
 			}
 		}
 	}
