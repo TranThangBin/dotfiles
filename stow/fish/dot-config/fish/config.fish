@@ -2,7 +2,6 @@ set -g fish_greeting ""
 set -g fish_key_bindings fish_vi_key_bindings
 
 if status is-login && test "$(tty)" = /dev/tty1
-    echo "- [X]11"
     echo "- [W]ayland"
     echo "- [S]elect wayland environment"
     echo "- [R]eboot"
@@ -12,11 +11,6 @@ if status is-login && test "$(tty)" = /dev/tty1
     read -p "set_color cyan; echo -n 'Pick your option '; set_color green; echo -n '> '; set_color normal" -n 1 OPT
 
     switch "$OPT"
-        case X
-            if command -vq startx
-                set -gx XINITRC "$HOME/.config/xinit/xinitrc"
-                exec startx
-            end
         case W S
             if command -vq uwsm && command uwsm check may-start
                 if test $OPT = S
