@@ -3,8 +3,8 @@
 		"orientation": "inherit",
 		"modules": [
 			"clock",
-			"pulseaudio#speaker",
-			"pulseaudio#microphone",
+			"wireplumber#sink",
+			"wireplumber#source",
 			"backlight"
 		]
 	},
@@ -30,51 +30,21 @@
 			"on-scroll-down": "shift_down"
 		}
 	},
-	"pulseaudio#speaker": {
+	"wireplumber#sink": {
 		"justify": "center",
 		"format": "<big>{icon}</big>\n{volume}%",
 		"format-muted": "<s><big>{icon}</big>\n{volume}%</s>",
 		"format-icons": {
 			"default": ["", "", ""]
 		},
-		"on-click": "t_controller volume toggle_mute speaker",
-		"menu": "on-click-right",
-		"menu-file": "$XDG_CONFIG_HOME/waybar/menus/audio-apps.xml",
-		"menu-actions": {
-			"kitty": "uwsm-app kitty &>/dev/null & disown",
-			"ghostty": "uwsm-app ghostty &>/dev/null & disown",
-			"btop": "uwsm-app btop.desktop &>/dev/null & disown",
-			"yazi": "uwsm-app yazi.desktop &>/dev/null & disown",
-			"neovide": "uwsm-app neovide &>/dev/null & disown",
-			"firefox": "uwsm-app firefox &>/dev/null & disown",
-			"brave": "uwsm-app brave &>/dev/null & disown",
-			"swaync": "swaync-client -t -sw",
-			"hyprsysteminfo": "uwsm-app hyprsysteminfo &>/dev/null & disown",
-			"wlogout": "wlogout &>/dev/null & disown"
-		}
+		"on-click": "t_controller volume toggle_mute speaker"
 	},
-	"pulseaudio#microphone": {
+	"wireplumber#source": {
 		"justify": "center",
-		"format": "{format_source}",
-		"format-source": "<big>󰍬</big>\n{volume}%",
-		"format-source-muted": "<s><big>󰍬</big>\n{volume}%</s>",
+		"format": "<big>󰍬</big>\n{volume}%",
+		"format-muted": "<s><big>󰍬</big>\n{volume}%</s>",
 		"on-click": "t_controller volume toggle_mute microphone",
-		"on-scroll-up": "t_controller volume set microphone 1%+",
-		"on-scroll-down": "t_controller volume set microphone 1%-",
-		"menu": "on-click-right",
-		"menu-file": "$XDG_CONFIG_HOME/waybar/menus/audio-apps.xml",
-		"menu-actions": {
-			"kitty": "uwsm-app kitty &>/dev/null & disown",
-			"ghostty": "uwsm-app ghostty &>/dev/null & disown",
-			"btop": "uwsm-app btop.desktop &>/dev/null & disown",
-			"yazi": "uwsm-app yazi.desktop &>/dev/null & disown",
-			"neovide": "uwsm-app neovide &>/dev/null & disown",
-			"firefox": "uwsm-app firefox &>/dev/null & disown",
-			"brave": "uwsm-app brave &>/dev/null & disown",
-			"swaync": "swaync-client -t -sw",
-			"hyprsysteminfo": "uwsm-app hyprsysteminfo &>/dev/null & disown",
-			"wlogout": "wlogout &>/dev/null & disown"
-		}
+		"node-type": "Audio/Source"
 	},
 	"backlight": {
 		"device": "intel_backlight",

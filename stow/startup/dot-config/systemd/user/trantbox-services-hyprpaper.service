@@ -13,7 +13,7 @@ Conflicts=hyprpaper.service
 
 [Service]
 Type=simple
-ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/hyprpaper" ]'
-ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/hyprpaper
+ExecCondition=distrobox-enter trantbox-services -- sh -c 'command -v hyprpaper &>/dev/null'
+ExecStart=distrobox-enter --name trantbox-services -- hyprpaper
 Slice=session.slice
 Restart=on-failure

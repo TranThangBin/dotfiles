@@ -40,13 +40,16 @@ trantbox-desktop() {
         --unshare-groups
         --unshare-ipc
         --unshare-netns
+        --additional-flags "--env DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket"
         --additional-flags "--network host"
+        --volume "/dev/input:/dev/input:ro"
         --volume "$DOTFILES_DIR/stow/WebCord/dot-config/WebCord/Themes:$DISTROBOX_HOME_ROOT/$container_name/.config/WebCord/Themes:ro"
         --volume "$DOTFILES_DIR/stow/btop/dot-config/btop/btop.conf:$DISTROBOX_HOME_ROOT/$container_name/.config/btop/btop.conf:ro"
         --volume "$DOTFILES_DIR/stow/neovide/dot-config/neovide:$DISTROBOX_HOME_ROOT/$container_name/.config/neovide:ro"
         --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim:ro"
         --volume "$DOTFILES_DIR/stow/zellij/dot-config/zellij:$DISTROBOX_HOME_ROOT/$container_name/.config/zellij:ro"
         --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim/lazy-lock.json:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim/lazy-lock.json:rw"
+        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim/nvim-pack-lock.json:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim/nvim-pack-lock.json:rw"
         --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro"
         --volume "$DOTFILES_DIR/stow/opencode/dot-config/opencode/opencode.json:$DISTROBOX_HOME_ROOT/$container_name/.config/opencode/opencode.json:ro"
         --volume "$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro"
@@ -67,15 +70,19 @@ trantbox-games() {
         --unshare-process
         --additional-flags "--env-file $DOTFILES_DIR/misc/distrobox/nvidia.env"
         --additional-flags "--env PROTON_ENABLE_WAYLAND=1"
+        --additional-flags "--env PROTON_USE_WOW64=1"
         --additional-flags "--env MANGOHUD=1"
-        --additional-flags "--network pasta"
-        --additional-packages "steam umu-launcher"
+        --additional-flags "--env DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket"
+        --additional-flags "--network host"
+        --additional-packages "steam"
+        --volume "/dev/input:/dev/input:ro"
         --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/Mangohud:$DISTROBOX_HOME_ROOT/$container_name/.config/Mangohud:ro"
     )
     if have_extra; then
         options+=(
             "--volume" "/extra/$USER/.local/share/Steam:$DISTROBOX_HOME_ROOT/trantbox-games/.local/share/Steam:rw"
             "--volume" "/extra/$USER/Games:$DISTROBOX_HOME_ROOT/trantbox-games/Games:rw"
+            "--volume" "/extra/$USER/Faugus:$DISTROBOX_HOME_ROOT/trantbox-games/Faugus:rw"
         )
     fi
     trantbox-create "${options[@]}"

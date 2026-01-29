@@ -40,6 +40,7 @@ packages=(
     "drawio-desktop"
     "tree-sitter-cli"
     "tor-browser-bin"
+    "teams-for-linux"
     "libreoffice-fresh"
     "neovim-nightly-bin"
 )
@@ -69,6 +70,7 @@ if [ -n "$CONTAINER_ID" ]; then
         "sfxr-qt"
         "drawio"
         "tor-browser"
+        "teams-for-linux"
         "libreoffice"
     )
 

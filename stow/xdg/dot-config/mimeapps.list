@@ -27,8 +27,9 @@ x-scheme-handler/http=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-br
 x-scheme-handler/https=trantbox-desktop-firefox.desktop;trantbox-desktop-brave-browser.desktop;firefox.desktop;brave-browser.desktop;
 x-scheme-handler/mailto=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
 x-scheme-handler/mid=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
-x-scheme-handler/webcal=org.mozilla.Thunderbird.desktop;
-x-scheme-handler/webcals=org.mozilla.Thunderbird.desktop;
+x-scheme-handler/webcal=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
+x-scheme-handler/webcals=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
+x-scheme-handler/unityhub=trantbox-desktop-unityhub.desktop;unityhub.desktop
 
 message/rfc822=trantbox-desktop-org.mozilla.Thunderbird.desktop;org.mozilla.Thunderbird.desktop;
 

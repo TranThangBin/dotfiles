@@ -12,7 +12,7 @@ Conflicts=hyprsunset.service
 
 [Service]
 Type=simple
-ExecCondition=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/sh -c '[ -f "/usr/bin/hyprsunset" ]'
-ExecStart=/usr/bin/distrobox enter --name trantbox-services -- /usr/bin/hyprsunset
+ExecCondition=distrobox-enter trantbox-services -- sh -c 'command -v hyprsunset &>/dev/null'
+ExecStart=distrobox-enter trantbox-services -- hyprsunset
 Slice=session.slice
 Restart=on-failure
