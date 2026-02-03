@@ -26,7 +26,7 @@ trantbox-create() {
         --name "$container_name" \
         --home "$DISTROBOX_HOME_ROOT/$container_name" \
         --additional-packages "yay-bin" \
-        --pre-init-hooks "export SHELL=/usr/bin/fish && $DOTFILES_DIR/scripts/trantbox/arch-mirrorlist-integration.sh" \
+        --pre-init-hooks "export SHELL=/usr/bin/fish && $DOTFILES_DIR/opt/trantbox/arch-mirrorlist-integration.sh" \
         --volume "$container_name-cache:/var/cache/pacman/pkg:rw" \
         --volume "$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/$container_name/.config/fish:ro" \
         "$@"
@@ -114,7 +114,7 @@ trantbox-gremlin() {
 
 setup() {
     local container_name="$1"
-    local post_install_script="$DOTFILES_DIR/scripts/trantbox/$container_name-post_install.sh"
+    local post_install_script="$DOTFILES_DIR/opt/trantbox/$container_name-post_install.sh"
 
     if "$container_name" && [ -f "$post_install_script" ]; then
         distrobox-enter "$container_name" -- "$post_install_script"

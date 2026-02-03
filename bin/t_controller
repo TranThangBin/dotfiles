@@ -8,7 +8,7 @@ SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
 NOTIFY_TIMEOUT=5000
 RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}/$APP_NAME"
 
-UTILS_DIR="$(realpath "$FILE_DIR/../scripts/$APP_NAME")"
+UTILS_DIR="$(realpath "$FILE_DIR/../opt/$APP_NAME")"
 
 terminal() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
