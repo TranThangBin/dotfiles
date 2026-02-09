@@ -1,1 +1,1 @@
-require("tranquangthang")
+require("custom")
