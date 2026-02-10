@@ -45,7 +45,10 @@ vim.lsp.enable({
 	"zls",
 })
 
+local lsp_group = vim.api.nvim_create_augroup("custom/lsp", { clear = true })
+
 vim.api.nvim_create_autocmd("LspAttach", {
+	group = lsp_group,
 	callback = function(e)
 		local ok, telescope_builtin = pcall(require, "telescope.builtin")
 

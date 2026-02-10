@@ -1,6 +1,5 @@
 require("fidget").setup({
 	notification = {
-		align = "top",
 		override_vim_notify = true,
 		window = {
 			align = "top",

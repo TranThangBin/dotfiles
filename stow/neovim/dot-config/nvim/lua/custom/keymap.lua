@@ -18,7 +18,9 @@ set({ "n", "x" }, "<leader>Y", '"+Y')
 set("x", "<leader>d", '"_d')
 set("x", "<leader>p", '"_dP')
 
-set("n", "<leader>rw", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+set("n", "<leader>rw", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", {
+	desc = "[R]eplace [W]ord",
+})
 
 set("n", "<leader>e", function()
 	local filepath = vim.fn.expand("%")
@@ -42,6 +44,4 @@ set("n", "<leader>e", function()
 
 	vim.cmd.Explore()
 	vim.fn.search(file_pattern)
-end, {
-	desc = "[E]xplore",
-})
+end, { desc = "[E]xplore" })
