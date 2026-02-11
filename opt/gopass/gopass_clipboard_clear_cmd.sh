@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 if [ -n "$WAYLAND_DISPLAY" ]; then
     wl-copy --clear

@@ -1,7 +1,8 @@
 require("hardtime").setup({
 	disabled_filetypes = {
-		harpoon = true,
 		git = true,
+		harpoon = true,
 		[""] = true,
+		["nvim-pack"] = true,
 	},
 })

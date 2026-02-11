@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
 
 packages=(
-    "openal"
+    "faugus-launcher"
+    "legacy-launcher"
     "mangohud"
+    "openal"
+    "osu-lazer-bin"
+    "pipewire"
+    "pipewire-alsa"
+    "pipewire-jack"
+    "pipewire-pulse"
     "wine-mono"
     "wireplumber"
-    "faugus-launcher"
-    "osu-lazer-bin"
-    "legacy-launcher"
-    "pipewire"
-    "pipewire-jack"
-    "pipewire-alsa"
-    "pipewire-pulse"
 )
 
 yay -S --needed --noconfirm "${packages[@]}"
 
 if [ -n "$CONTAINER_ID" ]; then
     exported_apps=(
-        "steam"
         "faugus-launcher"
         "legacy-launcher"
         "osu-lazer"
+        "steam"
     )
 
     for app in "${exported_apps[@]}"; do

@@ -5,7 +5,7 @@ FILE_DIR="$(dirname "$FILE_PATH")"
 
 DOTFILES_DIR=$(dirname "$FILE_DIR")
 IMAGE="docker.io/cachyos/cachyos:latest"
-BOX_TAGS=("services" "utils" "gremlin" "desktop" "games")
+BOX_TAGS=("services" "utils" "desktop" "games")
 
 if [ -z "$CONTAINER_ID" ]; then
     DISTROBOX_HOME_ROOT="$HOME/distrobox"
@@ -46,9 +46,8 @@ trantbox-desktop() {
         --volume "$DOTFILES_DIR/stow/WebCord/dot-config/WebCord/Themes:$DISTROBOX_HOME_ROOT/$container_name/.config/WebCord/Themes:ro"
         --volume "$DOTFILES_DIR/stow/btop/dot-config/btop/btop.conf:$DISTROBOX_HOME_ROOT/$container_name/.config/btop/btop.conf:ro"
         --volume "$DOTFILES_DIR/stow/neovide/dot-config/neovide:$DISTROBOX_HOME_ROOT/$container_name/.config/neovide:ro"
-        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim:ro"
         --volume "$DOTFILES_DIR/stow/zellij/dot-config/zellij:$DISTROBOX_HOME_ROOT/$container_name/.config/zellij:ro"
-        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim/lazy-lock.json:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim/lazy-lock.json:rw"
+        --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim:ro"
         --volume "$DOTFILES_DIR/stow/neovim/dot-config/nvim/nvim-pack-lock.json:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim/nvim-pack-lock.json:rw"
         --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro"
         --volume "$DOTFILES_DIR/stow/opencode/dot-config/opencode/opencode.json:$DISTROBOX_HOME_ROOT/$container_name/.config/opencode/opencode.json:ro"
@@ -93,9 +92,8 @@ trantbox-services() {
     trantbox-create \
         --unshare-all \
         --volume "$DOTFILES_DIR/stow/fcitx5/dot-local/share/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.local/share/fcitx5:ro" \
-        --volume "$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.config/fcitx5:rw" \
-        --volume "$DOTFILES_DIR/stow/swaync/dot-config/swaync:$DISTROBOX_HOME_ROOT/$container_name/.config/swaync:ro" \
-        --volume "$DOTFILES_DIR/stow/picom/dot-config/picom:$DISTROBOX_HOME_ROOT/$container_name/.config/picom:ro"
+        --volume "$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.config/fcitx5:ro" \
+        --volume "$DOTFILES_DIR/stow/swaync/dot-config/swaync:$DISTROBOX_HOME_ROOT/$container_name/.config/swaync:ro"
 }
 
 trantbox-utils() {
@@ -106,10 +104,6 @@ trantbox-utils() {
         --volume "$DOTFILES_DIR/stow/fastfetch/dot-config/fastfetch:$DISTROBOX_HOME_ROOT/$container_name/.config/fastfetch:ro" \
         --volume "$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro" \
         --volume "$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro"
-}
-
-trantbox-gremlin() {
-    trantbox-create --unshare-all
 }
 
 setup() {

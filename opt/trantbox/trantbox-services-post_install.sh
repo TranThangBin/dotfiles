@@ -1,35 +1,35 @@
 #!/usr/bin/bash
 
 packages=(
-    "mpv"
+    "awww-git"
+    "cliphist"
+    "fcitx5"
+    "fcitx5-configtool"
+    "fcitx5-unikey"
     "feh"
+    "mpv"
     "picom"
     "swaync"
-    "fcitx5"
-    "cliphist"
-    "wlsunset"
-    "awww-git"
     "wl-clipboard"
-    "fcitx5-unikey"
-    "fcitx5-configtool"
+    "wlsunset"
 )
 
 yay -S --needed --noconfirm "${packages[@]}"
 
 if [ -n "$CONTAINER_ID" ]; then
     exported_apps=(
-        "mpv"
         "fcitx5-configtool"
+        "mpv"
     )
     exported_binaries=(
-        "/usr/bin/feh"
         "/usr/bin/awww"
-        "/usr/bin/picom"
+        "/usr/bin/cliphist"
         "/usr/bin/fcitx5"
+        "/usr/bin/feh"
+        "/usr/bin/picom"
+        "/usr/bin/swaync-client"
         "/usr/bin/wl-copy"
         "/usr/bin/wl-paste"
-        "/usr/bin/cliphist"
-        "/usr/bin/swaync-client"
     )
 
     for app in "${exported_apps[@]}"; do

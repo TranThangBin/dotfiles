@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 if [ -f /run/host/etc/pacman.d/mirrorlist ] &&
     [ -f /etc/pacman.d/mirrorlist ] &&

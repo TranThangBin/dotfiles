@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
+
 FILE_PATH="$(realpath "${BASH_SOURCE[0]}")"
 FILE_DIR="$(dirname "$FILE_PATH")"
-STOW_DIR="$(realpath "$FILE_DIR/../stow")"
-if [ -z "$CONTAINER_ID" ]; then
-    TARGET_DIR="$HOME"
-else
-    TARGET_DIR="$DISTROBOX_HOST_HOME"
-fi
 
-stow --dotfiles --no-folding -d "$STOW_DIR" -t "$TARGET_DIR" "$@"
+STOW_DIR="$(realpath "$FILE_DIR/../stow")"
+export STOW_DIR
+
+if [ -z "$CONTAINER_ID" ]; then
+    exec /usr/bin/stow --dotfiles --no-folding -t "$HOME" "$@"
+else
+    exec distrobox-host-exec -- stow "$@"
+fi

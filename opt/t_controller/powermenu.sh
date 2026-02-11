@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Current Theme
 theme='powermenu'
@@ -39,27 +39,27 @@ confirm_cmd() {
 
 # Ask for confirmation
 confirm_exit() {
-    echo -e "$yes\n$no" | confirm_cmd
+    printf "%s\n%s" "$yes" "$no" | confirm_cmd
 }
 
 # Pass variables to rofi dmenu
 run_rofi() {
-    echo -e "$lock\n$suspend\n$logout\n$reboot\n$shutdown" | rofi_cmd
+    printf "%s\n%s\n%s\n%s\n%s" "$lock" "$suspend" "$logout" "$reboot" "$shutdown" | rofi_cmd
 }
 
 # Execute Command
 run_cmd() {
     selected="$(confirm_exit)"
-    if [[ "$selected" == "$yes" ]]; then
-        if [[ $1 == '--shutdown' ]]; then
+    if [ "$selected" = "$yes" ]; then
+        if [ "$1" = '--shutdown' ]; then
             systemctl poweroff
-        elif [[ $1 == '--reboot' ]]; then
+        elif [ "$1" = '--reboot' ]; then
             systemctl reboot
-        elif [[ $1 == '--suspend' ]]; then
+        elif [ "$1" = '--suspend' ]; then
             systemctl suspend
-        elif [[ $1 == '--logout' ]]; then
+        elif [ "$1" = '--logout' ]; then
             loginctl terminate-user ""
-        elif [[ $1 == '--lock' ]]; then
+        elif [ "$1" = '--lock' ]; then
             loginctl lock-session
         fi
     else
