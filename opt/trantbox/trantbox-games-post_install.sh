@@ -10,6 +10,7 @@ packages=(
     "pipewire-alsa"
     "pipewire-jack"
     "pipewire-pulse"
+    "spacecadetpinball-bin"
     "wine-mono"
     "wireplumber"
 )
@@ -21,6 +22,7 @@ if [ -n "$CONTAINER_ID" ]; then
         "faugus-launcher"
         "legacy-launcher"
         "osu-lazer"
+        "spacecadetpinball"
         "steam"
     )
 

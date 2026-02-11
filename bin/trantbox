@@ -75,7 +75,7 @@ trantbox-games() {
         --additional-flags "--network host"
         --additional-packages "steam"
         --volume "/dev/input:/dev/input:ro"
-        --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/Mangohud:$DISTROBOX_HOME_ROOT/$container_name/.config/Mangohud:ro"
+        --volume "$DOTFILES_DIR/stow/MangoHud/dot-config/MangoHud:$DISTROBOX_HOME_ROOT/$container_name/.config/MangoHud:ro"
     )
     if have_extra; then
         options+=(
