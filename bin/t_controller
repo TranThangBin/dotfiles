@@ -1,14 +1,13 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-FILE_PATH="$(realpath "${BASH_SOURCE[0]}")"
-FILE_DIR="$(dirname "$FILE_PATH")"
+FILE_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-APP_NAME="$(basename "$FILE_PATH")"
+APP_NAME="$(basename "$0")"
 SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
 NOTIFY_TIMEOUT=5000
 RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}/$APP_NAME"
 
-UTILS_DIR="$(realpath "$FILE_DIR/../opt/$APP_NAME")"
+UTILS_DIR="$(cd "$FILE_DIR/../opt/$APP_NAME" && pwd)"
 
 terminal() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
@@ -39,7 +38,7 @@ powermenu() {
 }
 
 color_picker() {
-    local lock_file="$RUNTIME_DIR/color_picker.lock"
+    lock_file="$RUNTIME_DIR/color_picker.lock"
     if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
         flock -n "$lock_file" hyprpicker -a
     fi
@@ -50,16 +49,15 @@ emoji_picker() {
 }
 
 clipboard_picker() {
-    local action="$1"
+    action="$1"
 
     case "$action" in
     pick)
         if [ -n "$WAYLAND_DISPLAY" ]; then
-            local entry_id
             entry_id=$(cliphist list | rofi -dmenu -p "Copy Clipboard Entry" \
                 -theme-str 'entry {placeholder: "Copy Clipboard Entry";}')
             if [ -n "$entry_id" ]; then
-                cliphist decode <<<"$entry_id" | wl-copy
+                printf "%s" "$entry_id" | cliphist decode | wl-copy
             fi
         fi
         ;;
@@ -72,13 +70,12 @@ clipboard_picker() {
         ;;
     wipe)
         if [ -n "$WAYLAND_DISPLAY" ]; then
-            local choice
             choice=$({
                 echo no
                 echo yes
             } | rofi -dmenu -p "Wipe Clipboard" \
                 -theme-str 'entry {placeholder: "Wipe Clipboard";}')
-            if [ "$choice" == "yes" ]; then
+            if [ "$choice" = "yes" ]; then
                 cliphist wipe
             fi
         fi
@@ -87,10 +84,10 @@ clipboard_picker() {
 }
 
 screenshot() {
-    local LOCK_FILE="$RUNTIME_DIR/screenshot.lock"
+    LOCK_FILE="$RUNTIME_DIR/screenshot.lock"
 
-    local action="$1"
-    local method="$2"
+    action="$1"
+    method="$2"
 
     case "$action" in
     save)
@@ -147,7 +144,7 @@ screenshot() {
 }
 
 status_bar() {
-    local action="$1"
+    action="$1"
 
     case "$action" in
     toggle)
@@ -164,13 +161,13 @@ status_bar() {
 }
 
 volume() {
-    local VOLUME_LIMIT=1
+    VOLUME_LIMIT=1
 
-    local action="$1"
-    local audio_device="$2"
-    local value="$3"
+    action="$1"
+    audio_device="$2"
+    value="$3"
 
-    local id="$audio_device"
+    id="$audio_device"
     if [ "$audio_device" = "speaker" ]; then
         id="@DEFAULT_AUDIO_SINK@"
     elif [ "$audio_device" = "microphone" ]; then
@@ -191,9 +188,9 @@ volume() {
 }
 
 brightness() {
-    local action="$1"
-    local value="$2"
-    local device="${3:-"*"}"
+    action="$1"
+    value="$2"
+    device="${3:-"*"}"
 
     if [ "$action" = "set" ]; then
         brightnessctl --device "$device" set "$value"
@@ -201,8 +198,8 @@ brightness() {
 }
 
 player() {
-    local action="$1"
-    local player="$2"
+    action="$1"
+    player="$2"
 
     case "$action" in
     play | pause | play-pause | stop | next | previous)
@@ -227,8 +224,8 @@ lock() {
 }
 
 idle() {
-    local action="$1"
-    local tier="$2"
+    action="$1"
+    tier="$2"
 
     case "$action" in
     before_sleep)
@@ -267,7 +264,10 @@ if [ ! -d "$RUNTIME_DIR" ]; then
 fi
 
 opt="$1"
-shift 1
+
+if [ "$#" -gt 0 ]; then
+    shift 1
+fi
 
 case "$opt" in
 terminal | \
