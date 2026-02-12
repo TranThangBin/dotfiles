@@ -9,4 +9,4 @@ set({ "n", "x" }, "<leader>f", function()
 			vim.lsp.buf.format(conform.default_format_opts)
 		end
 	end)
-end, { desc = "[F]ormat" })
+end, { desc = "Custom: [f]ormat" })

@@ -52,7 +52,13 @@ vim.pack.add({
 	{ src = gh("ThePrimeagen/harpoon"), version = "harpoon2" },
 })
 
+local pack_build_group = vim.api.nvim_create_augroup("custom/pack_build", {
+	clear = true,
+})
+
 vim.api.nvim_create_autocmd("PackChanged", {
+	group = pack_build_group,
+	desc = "Custom: Plugin build stage",
 	callback = function(ev)
 		local name = ev.data.spec.name
 		local kind = ev.data.kind

@@ -18,6 +18,7 @@ local groups = {
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	group = groups.remove_trailing_spaces,
+	desc = "Custom: Remove trailing spaces",
 	callback = function()
 		local pos = vim.fn.getpos(".")
 		vim.cmd("%s/\\s\\+$//e")
@@ -27,6 +28,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = groups.highlight_on_yank,
+	desc = "Custom: Highlight on yank",
 	callback = function()
 		vim.hl.on_yank()
 	end,
@@ -35,6 +37,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd({ "ColorScheme", "OptionSet" }, {
 	group = groups.color,
 	pattern = { "background", "bg", "rose-pine", "tokyonight", "catppuccin" },
+	desc = "Custom: Solid background on light theme",
 	callback = function()
 		if vim.o.background == "light" then
 			utils.set_light_bg()
@@ -45,6 +48,7 @@ vim.api.nvim_create_autocmd({ "ColorScheme", "OptionSet" }, {
 vim.api.nvim_create_autocmd("ColorScheme", {
 	group = groups.color,
 	pattern = { "rose-pine-dawn", "tokyonight-day", "catppuccin-latte" },
+	desc = "Custom: Solid background on light theme",
 	callback = function()
 		if vim.o.background == "light" then
 			utils.set_light_bg()
@@ -57,6 +61,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 vim.api.nvim_create_autocmd("FileType", {
 	group = groups.treesitter,
 	pattern = vim.g._treesitter_enable_filetypes,
+	desc = "Custom: Treesitter",
 	callback = function()
 		vim.treesitter.start()
 	end,

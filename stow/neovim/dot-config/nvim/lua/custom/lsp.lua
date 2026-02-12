@@ -49,6 +49,7 @@ local lsp_group = vim.api.nvim_create_augroup("custom/lsp", { clear = true })
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = lsp_group,
+	desc = "Custom: Lsp keymapping",
 	callback = function(e)
 		local ok, telescope_builtin = pcall(require, "telescope.builtin")
 
