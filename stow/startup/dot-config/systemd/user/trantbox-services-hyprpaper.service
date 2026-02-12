@@ -5,7 +5,6 @@ PartOf=graphical-session.target
 Requires=graphical-session.target
 After=graphical-session.target
 ConditionEnvironment=WAYLAND_DISPLAY
-ConditionPathExists=/usr/bin/distrobox
 
 Requires=distrobox-container@trantbox-services.service
 PartOf=distrobox-container@trantbox-services.service

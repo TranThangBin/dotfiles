@@ -1,20 +1,28 @@
 #!/usr/bin/env bash
 
+_audio_fix() {
+    local packages=(
+        "openal"
+        "pipewire"
+        "pipewire-alsa"
+        "pipewire-jack"
+        "pipewire-pulse"
+        "wireplumber"
+    )
+
+    yay -S --needed --noconfirm "${packages[@]}"
+}
+
 packages=(
     "faugus-launcher"
     "legacy-launcher"
     "mangohud"
-    "openal"
     "osu-lazer-bin"
-    "pipewire"
-    "pipewire-alsa"
-    "pipewire-jack"
-    "pipewire-pulse"
     "spacecadetpinball-bin"
     "wine-mono"
-    "wireplumber"
 )
 
+_audio_fix
 yay -S --needed --noconfirm "${packages[@]}"
 
 if [ -n "$CONTAINER_ID" ]; then

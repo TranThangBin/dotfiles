@@ -45,8 +45,6 @@ packages=(
     "zellij"
 )
 
-imported_binaries=("podman")
-
 yay -S --needed --noconfirm "${packages[@]}"
 yay -S --needed --noconfirm neovide --assume-installed neovim
 mkdir -p "$HOME/.local/share/unity3d"
@@ -73,6 +71,7 @@ if [ -n "$CONTAINER_ID" ]; then
         "unityhub"
         "webcord"
     )
+    imported_binaries=("podman")
 
     for app in "${exported_apps[@]}"; do
         distrobox-export --app "$app"

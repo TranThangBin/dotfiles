@@ -6,7 +6,6 @@ After=graphical-session.target
 # ConditionEnvironment requires systemd v247 to work correctly
 ConditionEnvironment=WAYLAND_DISPLAY
 
-ConditionPathExists=/usr/bin/distrobox
 Requires=distrobox-container@trantbox-services.service
 PartOf=distrobox-container@trantbox-services.service
 Conflicts=swaync.service

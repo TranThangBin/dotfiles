@@ -1,8 +1,8 @@
 [Unit]
 Description=Distrobox container - %i
-ConditionPathExists=/usr/bin/distrobox
+ConditionPathExists=/usr/bin/distrobox-enter
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/distrobox enter %i
+ExecStart=/usr/bin/distrobox-enter %i
 RemainAfterExit=true
