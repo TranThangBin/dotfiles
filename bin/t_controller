@@ -8,29 +8,38 @@ NOTIFY_TIMEOUT=5000
 RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}/$APP_NAME"
 
 UTILS_DIR="$(cd "$FILE_DIR/../opt/$APP_NAME" && pwd)"
+TERMINAL="ghostty"
 
 terminal() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
         exec uwsm-app -T
     elif [ -n "$DISPLAY" ]; then
-        exec ghostty
+        exec "$TERMINAL"
     fi
 }
 
 file_explorer() {
+    rofi -show filebrowser
+}
+
+launch_app() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
-        rofi -config wayland-config.rasi -show filebrowser
+        exec uwsm-app "$@"
     elif [ -n "$DISPLAY" ]; then
-        rofi -config x11-config.rasi -show filebrowser
+        exec "$0" "$@"
+    fi
+}
+
+launch_terminal_app() {
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        exec uwsm-app -T "$@"
+    elif [ -n "$DISPLAY" ]; then
+        exec "$TERMINAL" -e "$0" "$@"
     fi
 }
 
 launcher() {
-    if [ -n "$WAYLAND_DISPLAY" ]; then
-        rofi -config wayland-config.rasi -show
-    elif [ -n "$DISPLAY" ]; then
-        rofi -config x11-config.rasi -show
-    fi
+    rofi -show
 }
 
 powermenu() {
@@ -272,6 +281,8 @@ fi
 case "$opt" in
 terminal | \
     file_explorer | \
+    launch_app | \
+    launch_terminal_app | \
     launcher | \
     powermenu | \
     color_picker | \

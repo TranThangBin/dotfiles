@@ -16,3 +16,4 @@ ExecReload=kill -SIGUSR2 $MAINPID
 Restart=on-failure
 
 Environment=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket
+Environment=XDG_DATA_DIRS=$XDG_DATA_DIRS:%D
