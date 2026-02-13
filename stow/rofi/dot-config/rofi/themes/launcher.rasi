@@ -16,6 +16,7 @@ configuration {
 }
 
 /*****----- Global Properties -----*****/
+@import                          "default.rasi"
 
 * {
     border-colour:               var(selected);

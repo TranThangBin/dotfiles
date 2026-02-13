@@ -1,0 +1,15 @@
+# Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/services/network-manager-applet.nix
+[Unit]
+Description=Network Manager applet
+After=graphical-session.target
+PartOf="graphical-session.target
+
+Requires=distrobox-container@trantbox-services.service
+PartOf=distrobox-container@trantbox-services.service
+Conflicts=network-manager-applet.service
+
+[Service]
+ExecCondition=distrobox-enter trantbox-services -- sh -c 'command -v nm-applet &>/dev/null'
+ExecStart=distrobox-enter trantbox-services -- nm-applet
+
+Environment=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket

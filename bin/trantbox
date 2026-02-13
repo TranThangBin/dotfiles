@@ -95,7 +95,9 @@ trantbox-services() {
         --volume "$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.config/fcitx5:ro" \
         --volume "$DOTFILES_DIR/stow/swaync/dot-config/swaync:$DISTROBOX_HOME_ROOT/$container_name/.config/swaync:ro" \
         --volume "$DOTFILES_DIR/stow/swayidle/dot-config/swayidle:$DISTROBOX_HOME_ROOT/$container_name/.config/swayidle:ro" \
-        --volume "$DOTFILES_DIR/stow/waybar/dot-config/waybar:$DISTROBOX_HOME_ROOT/$container_name/.config/waybar:ro"
+        --volume "$DOTFILES_DIR/stow/waybar/dot-config/waybar:$DISTROBOX_HOME_ROOT/$container_name/.config/waybar:ro" \
+        --volume "$DOTFILES_DIR/stow/easyeffects/dot-local/share/easyeffects/output:$DISTROBOX_HOME_ROOT/$container_name/.local/share/easyeffects/output:ro" \
+        --volume "$DOTFILES_DIR/stow/easyeffects/dot-local/share/easyeffects/irs:$DISTROBOX_HOME_ROOT/$container_name/.local/share/easyeffects/irs:ro"
 }
 
 trantbox-utils() {

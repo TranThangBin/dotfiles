@@ -31,7 +31,8 @@
 			"max-length": 50,
 			"player-icons": {
 				"default": "",
-				"firefox": "🦊"
+				"firefox": "🦊",
+				"brave": "🦁"
 			},
 			"status-icons": {
 				"paused": ""

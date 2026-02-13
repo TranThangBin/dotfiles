@@ -3,6 +3,9 @@ configuration {
     show-icons:                 false;
 }
 
+/*****----- Global Properties -----*****/
+@import                          "default.rasi"
+
 /*****----- Main Window -----*****/
 window {
     /* properties for window widget */

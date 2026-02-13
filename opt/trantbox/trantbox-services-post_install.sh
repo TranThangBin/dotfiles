@@ -2,11 +2,15 @@
 
 packages=(
     "awww-git"
+    "brightnessctl"
     "cliphist"
+    "easyeffects"
     "fcitx5"
     "fcitx5-configtool"
     "fcitx5-unikey"
+    "lsp-plugins"
     "mpv"
+    "network-manager-applet"
     "pipewire"
     "swayidle"
     "swaync"
