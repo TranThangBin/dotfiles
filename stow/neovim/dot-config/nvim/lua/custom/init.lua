@@ -51,6 +51,7 @@ vim.g._treesitter_enable_filetypes = {
 	"markdown",
 	"nix",
 	"python",
+	"qml",
 	"rasi",
 	"rust",
 	"sh",

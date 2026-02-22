@@ -34,6 +34,7 @@ vim.lsp.enable({
 	"lua_ls",
 	"nil_ls",
 	"pyright",
+	"qmlls",
 	"roslyn",
 	"ruff",
 	"rust_analyzer",
