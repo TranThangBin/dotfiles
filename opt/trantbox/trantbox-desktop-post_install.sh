@@ -39,6 +39,7 @@ packages=(
     "tor-browser-bin"
     "tree-sitter-cli"
     "unityhub"
+    "unixodbc"
     "webcord-bin"
     "which"
     "wl-clipboard"
@@ -74,7 +75,7 @@ if [ -n "$CONTAINER_ID" ]; then
     imported_binaries=("podman")
 
     for app in "${exported_apps[@]}"; do
-        distrobox-export --app "$app"
+        distrobox-export --app "$app" --enter-flags "--no-workdir"
     done
     for bin in "${imported_binaries[@]}"; do
         sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"

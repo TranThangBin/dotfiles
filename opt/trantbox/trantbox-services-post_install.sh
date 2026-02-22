@@ -12,6 +12,7 @@ packages=(
     "mpv"
     "network-manager-applet"
     "pipewire"
+    "quickshell"
     "swayidle"
     "swaync"
     "waybar"
@@ -42,10 +43,10 @@ if [ -n "$CONTAINER_ID" ]; then
     )
 
     for app in "${exported_apps[@]}"; do
-        distrobox-export --app "$app"
+        distrobox-export --app "$app" --enter-flags "--no-workdir"
     done
     for bin in "${exported_binaries[@]}"; do
-        distrobox-export --bin "$bin"
+        distrobox-export --bin "$bin" --enter-flags "--no-workdir"
     done
     for bin in "${imported_binaries[@]}"; do
         sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"

@@ -35,6 +35,6 @@ if [ -n "$CONTAINER_ID" ]; then
     )
 
     for app in "${exported_apps[@]}"; do
-        distrobox-export --app "$app"
+        distrobox-export --app "$app" --enter-flags "--no-workdir"
     done
 fi
