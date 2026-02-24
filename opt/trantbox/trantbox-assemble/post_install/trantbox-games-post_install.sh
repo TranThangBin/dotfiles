@@ -16,6 +16,7 @@ _audio_fix() {
 packages=(
     "faugus-launcher"
     "legacy-launcher"
+    "libcanberra"
     "mangohud"
     "osu-lazer-bin"
     "spacecadetpinball-bin"

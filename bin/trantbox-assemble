@@ -1,0 +1,85 @@
+#!/usr/bin/env sh
+
+if [ -n "$CONTAINER_ID" ]; then
+    exec distrobox-host-exec "$0" "$@"
+fi
+
+OLD_IFS="$IFS"
+FILE_DIR="$(cd "$(dirname "$0")" && pwd)"
+DOTFILES_DIR=${DOTFILES_DIR:-$(dirname "$FILE_DIR")}
+
+MANIFEST="$(mktemp)"
+trap 'rm $MANIFEST' EXIT
+"$DOTFILES_DIR/opt/trantbox/trantbox-assemble/utils/generate-assemble.sh" >"$MANIFEST"
+
+container_names=""
+result_command="distrobox-assemble --file $MANIFEST"
+remove=0
+dry_run=0
+for opt in "$@"; do
+    case "$opt" in
+    create)
+        result_command="$result_command $opt"
+        ;;
+    rm)
+        remove=1
+        result_command="$result_command $opt"
+        ;;
+    recreate)
+        result_command="$result_command create --replace"
+        ;;
+    --dry-run | -d)
+        dry_run=1
+        result_command="$result_command $opt"
+        ;;
+    --help | -h)
+        cat <<EOF
+Usage: $0 [create|rm|recreate] [options] [container_names]
+
+Options:
+
+    --dry-run/-d:   only print the container manager command generated
+    --help/-h:      show this message
+
+Available container names:
+
+$(grep "^\[.*\]$" "$MANIFEST" |
+            tr -d "[]" |
+            xargs -I{} printf "    %s\n" "{}")
+EOF
+        exit 0
+        ;;
+    -*)
+        printf "Invalid option: %s\n" "$opt" 1>&2
+        exit 1
+        ;;
+    *)
+        if [ -z "$container_names" ]; then
+            container_names="$opt"
+        else
+            container_names="$container_names:$opt"
+        fi
+        ;;
+    esac
+done
+
+if [ -z "$container_names" ]; then
+    printf "Missing container names\n" 1>&2
+    exit 1
+fi
+
+IFS=":"
+for container_name in $container_names; do
+    if ! eval "$result_command --name ${container_name}"; then
+        continue
+    fi
+    if [ "$remove" -eq 1 ]; then
+        continue
+    fi
+    if [ "$dry_run" -eq 1 ]; then
+        continue
+    fi
+
+    distrobox-enter "$container_name" -- "$DOTFILES_DIR/opt/trantbox/trantbox-assemble/post_install/$container_name-post_install.sh"
+done
+IFS="$OLD_IFS"

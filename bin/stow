@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
 
+if [ -n "$CONTAINER_ID" ]; then
+    exec distrobox-host-exec -- "$0" "$@"
+fi
+
 if [ -z "$STOW_DIR" ]; then
     STOW_DIR="$(cd "$(dirname "$0")/../stow" && pwd)"
 fi
 export STOW_DIR
 
-if [ -z "$CONTAINER_ID" ]; then
-    exec /usr/bin/stow --dotfiles --no-folding -t "$HOME" "$@"
-else
-    exec distrobox-host-exec -- "$0" "$@"
-fi
+exec /usr/bin/stow --dotfiles --no-folding -t "$HOME" "$@"
