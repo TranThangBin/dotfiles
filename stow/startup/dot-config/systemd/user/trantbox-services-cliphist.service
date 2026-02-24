@@ -10,6 +10,6 @@ Conflicts=cliphist.service
 
 [Service]
 Type=simple
-ExecCondition=distrobox-enter trantbox-services -- sh -c 'command -v wl-paste &>/dev/null'
-ExecCondition=distrobox-enter trantbox-services -- sh -c 'command -v cliphist &>/dev/null'
-ExecStart=distrobox-enter trantbox-services -- wl-paste --watch cliphist store
+ExecCondition=distrobox-enter --no-workdir trantbox-services -- sh -c 'command -v wl-paste &>/dev/null'
+ExecCondition=distrobox-enter --no-workdir trantbox-services -- sh -c 'command -v cliphist &>/dev/null'
+ExecStart=distrobox-enter --no-workdir trantbox-services -- wl-paste --watch cliphist store

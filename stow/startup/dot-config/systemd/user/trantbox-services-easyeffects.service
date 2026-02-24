@@ -9,9 +9,9 @@ PartOf=distrobox-container@trantbox-services.service
 Conflicts=easyeffects.service
 
 [Service]
-ExecCondition=distrobox-enter trantbox-services -- sh -c 'command -v easyeffects &>/dev/null'
-ExecStart=distrobox-enter trantbox-services -- easyeffects --hide-window --service-mode
-ExecStop=distrobox-enter trantbox-services -- easyeffects --quit
+ExecCondition=distrobox-enter --no-workdir trantbox-services -- sh -c 'command -v easyeffects &>/dev/null'
+ExecStart=distrobox-enter --no-workdir trantbox-services -- easyeffects --hide-window --service-mode
+ExecStop=distrobox-enter --no-workdir trantbox-services -- easyeffects --quit
 KillMode=mixed
 Restart=on-failure
 RestartSec=5
