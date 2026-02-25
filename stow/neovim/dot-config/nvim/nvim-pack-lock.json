@@ -106,7 +106,7 @@
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-surround": {
-      "rev": "7fa0b922bbe6b0d7f33f2d7fd5e5f44119360231",
+      "rev": "5553dd1fbb3559abb176a8227a12e8f1cab07e93",
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
@@ -122,7 +122,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "nvim-web-devicons": {
-      "rev": "3951747a909ebf19821cdfe28c76bcb88dd98ddc",
+      "rev": "16d919d768b5bc2921bd7d5a4ee76f158f7ea1c0",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
