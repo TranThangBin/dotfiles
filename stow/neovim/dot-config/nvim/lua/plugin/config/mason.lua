@@ -15,7 +15,7 @@ require("mason").setup({
 
 local registry = require("mason-registry")
 
-local lsp_servers = { "lua-language-server" }
+local lsp_servers = { "emmylua_ls" }
 local formatters = { "stylua" }
 local linters = { "luacheck" }
 
