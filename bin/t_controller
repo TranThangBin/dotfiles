@@ -1,14 +1,18 @@
 #!/usr/bin/env sh
 
-FILE_DIR="$(cd "$(dirname "$0")" && pwd)"
-
 APP_NAME="$(basename "$0")"
+
+cd "$(dirname "$0")" || exit
+
 SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+UTILS_DIR="$(pwd)/../opt/$APP_NAME"
 NOTIFY_TIMEOUT=5000
+
 RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}/$APP_NAME"
 
-UTILS_DIR="$(cd "$FILE_DIR/../opt/$APP_NAME" && pwd)"
 TERMINAL="ghostty"
+
+cd - >/dev/null || exit
 
 terminal() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
@@ -34,7 +38,7 @@ launch_terminal_app() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
         exec uwsm-app -T "$@"
     elif [ -n "$DISPLAY" ]; then
-        exec "$TERMINAL" -e "$0" "$@"
+        exec "$TERMINAL" -e "$@"
     fi
 }
 

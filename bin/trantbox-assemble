@@ -4,33 +4,29 @@ if [ -n "$CONTAINER_ID" ]; then
     exec distrobox-host-exec "$0" "$@"
 fi
 
-OLD_IFS="$IFS"
-FILE_DIR="$(cd "$(dirname "$0")" && pwd)"
-DOTFILES_DIR=${DOTFILES_DIR:-$(dirname "$FILE_DIR")}
+cd "$(dirname "$0")" || exit
+
+FILE_DIR="$(pwd)"
+OLDIFS="$IFS"
 
 MANIFEST="$(mktemp)"
 trap 'rm $MANIFEST' EXIT
-"$DOTFILES_DIR/opt/trantbox/trantbox-assemble/utils/generate-assemble.sh" >"$MANIFEST"
+
+cd - >/dev/null || exit
+
+"$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/generate-assemble.sh" >"$MANIFEST"
 
 container_names=""
-result_command="distrobox-assemble --file $MANIFEST"
-remove=0
+mode=""
 dry_run=0
-for opt in "$@"; do
-    case "$opt" in
-    create)
-        result_command="$result_command $opt"
-        ;;
-    rm)
-        remove=1
-        result_command="$result_command $opt"
-        ;;
-    recreate)
-        result_command="$result_command create --replace"
+
+for arg in "$@"; do
+    case "$arg" in
+    create | rm | recreate)
+        mode="$arg"
         ;;
     --dry-run | -d)
         dry_run=1
-        result_command="$result_command $opt"
         ;;
     --help | -h)
         cat <<EOF
@@ -50,14 +46,14 @@ EOF
         exit 0
         ;;
     -*)
-        printf "Invalid option: %s\n" "$opt" 1>&2
+        printf "Invalid option: %s\n" "$arg" 1>&2
         exit 1
         ;;
     *)
         if [ -z "$container_names" ]; then
-            container_names="$opt"
+            container_names="$arg"
         else
-            container_names="$container_names:$opt"
+            container_names="$container_names:$arg"
         fi
         ;;
     esac
@@ -68,18 +64,33 @@ if [ -z "$container_names" ]; then
     exit 1
 fi
 
+set --
+
+case "$mode" in
+create | rm)
+    set -- "$mode"
+    ;;
+recreate)
+    set -- "create" "--replace"
+    ;;
+esac
+
+if [ "$dry_run" -eq 1 ]; then
+    set -- "$@" "--dry-run"
+fi
+
 IFS=":"
 for container_name in $container_names; do
-    if ! eval "$result_command --name ${container_name}"; then
+    if ! distrobox-assemble "$@" --file "$MANIFEST" --name "$container_name"; then
         continue
     fi
-    if [ "$remove" -eq 1 ]; then
+    if [ "$mode" = "rm" ]; then
         continue
     fi
     if [ "$dry_run" -eq 1 ]; then
         continue
     fi
 
-    distrobox-enter "$container_name" -- "$DOTFILES_DIR/opt/trantbox/trantbox-assemble/post_install/$container_name-post_install.sh"
+    distrobox-enter "$container_name" -- "../opt/trantbox/trantbox-assemble/post_install/$container_name-post_install.sh"
 done
-IFS="$OLD_IFS"
+IFS="$OLDIFS"

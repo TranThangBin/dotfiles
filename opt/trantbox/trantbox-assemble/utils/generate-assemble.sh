@@ -4,9 +4,13 @@ if [ -n "$CONTAINER_ID" ]; then
     exec distrobox-host-exec "$0" "$@"
 fi
 
-FILE_DIR="$(cd "$(dirname "$0")" && pwd)"
-DOTFILES_DIR=${DOTFILES_DIR:-$(dirname "$FILE_DIR/../../../..")}
+cd "$(dirname "$0")" || exit
+
+FILE_DIR="$(pwd)"
+DOTFILES_DIR="$(realpath "./dotfiles")"
 DISTROBOX_HOME_ROOT="$HOME/distrobox"
+
+cd - >/dev/null || exit
 
 _have_extra() {
     [ -d "/extra/$USER" ] &&
