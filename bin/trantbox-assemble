@@ -7,20 +7,19 @@ fi
 cd "$(dirname "$0")" || exit
 
 FILE_DIR="$(pwd)"
-OLDIFS="$IFS"
 
 MANIFEST="$(mktemp)"
-trap 'rm $MANIFEST' EXIT
+trap 'rm "$MANIFEST"' EXIT
 
 cd - >/dev/null || exit
 
 "$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/generate-assemble.sh" >"$MANIFEST"
 
-container_names=""
 mode=""
 dry_run=0
 
 for arg in "$@"; do
+    shift
     case "$arg" in
     create | rm | recreate)
         mode="$arg"
@@ -50,37 +49,32 @@ EOF
         exit 1
         ;;
     *)
-        if [ -z "$container_names" ]; then
-            container_names="$arg"
-        else
-            container_names="$container_names:$arg"
-        fi
+        set -- "$@" "$arg"
         ;;
     esac
 done
 
-if [ -z "$container_names" ]; then
+if [ "$#" -le 0 ]; then
     printf "Missing container names\n" 1>&2
     exit 1
 fi
 
-set --
+for container_name in "$@"; do
+    set --
 
-case "$mode" in
-create | rm)
-    set -- "$mode"
-    ;;
-recreate)
-    set -- "create" "--replace"
-    ;;
-esac
+    case "$mode" in
+    create | rm)
+        set -- "$mode"
+        ;;
+    recreate)
+        set -- "create" "--replace"
+        ;;
+    esac
 
-if [ "$dry_run" -eq 1 ]; then
-    set -- "$@" "--dry-run"
-fi
+    if [ "$dry_run" -eq 1 ]; then
+        set -- "$@" "--dry-run"
+    fi
 
-IFS=":"
-for container_name in $container_names; do
     if ! distrobox-assemble "$@" --file "$MANIFEST" --name "$container_name"; then
         continue
     fi
@@ -93,4 +87,3 @@ for container_name in $container_names; do
 
     distrobox-enter "$container_name" -- "../opt/trantbox/trantbox-assemble/post_install/$container_name-post_install.sh"
 done
-IFS="$OLDIFS"

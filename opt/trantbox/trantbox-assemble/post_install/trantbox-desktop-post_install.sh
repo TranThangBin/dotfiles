@@ -1,83 +1,77 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-packages=(
-    "bear"
-    "brave-bin"
-    "btop"
-    "discord"
-    "dotnet-sdk"
-    "drawio-desktop"
-    "fd"
-    "firefox"
-    "gcc"
-    "gimp"
-    "git"
-    "go"
-    "godot"
-    "lazydocker"
-    "libfdk-aac"
-    "libnotify"
-    "libreoffice-fresh"
-    "luarocks"
-    "make"
-    "neovim-nightly-bin"
-    "nodejs"
-    "npm"
-    "obs-studio"
-    "opencode"
-    "postman-bin"
-    "pwvucontrol"
-    "python3"
-    "qt5-wayland"
-    "rider"
-    "ripgrep"
-    "rust"
-    "sfxr-qt-bin"
-    "shotcut"
-    "teams-for-linux"
-    "thunderbird"
-    "tor-browser-bin"
-    "tree-sitter-cli"
-    "unityhub"
-    "unixodbc"
-    "webcord-bin"
-    "which"
-    "wl-clipboard"
+yay -S --needed --noconfirm \
+    "bear" \
+    "brave-bin" \
+    "btop" \
+    "discord" \
+    "dotnet-sdk" \
+    "drawio-desktop" \
+    "fd" \
+    "firefox" \
+    "gcc" \
+    "gimp" \
+    "git" \
+    "go" \
+    "godot" \
+    "lazydocker" \
+    "libfdk-aac" \
+    "libnotify" \
+    "libreoffice-fresh" \
+    "luarocks" \
+    "make" \
+    "neovim-nightly-bin" \
+    "nodejs" \
+    "npm" \
+    "obs-studio" \
+    "opencode" \
+    "postman-bin" \
+    "pwvucontrol" \
+    "python3" \
+    "qt5-wayland" \
+    "rider" \
+    "ripgrep" \
+    "rust" \
+    "sfxr-qt-bin" \
+    "shotcut" \
+    "teams-for-linux" \
+    "thunderbird" \
+    "tor-browser-bin" \
+    "tree-sitter-cli" \
+    "unityhub" \
+    "unixodbc" \
+    "webcord-bin" \
+    "which" \
+    "wl-clipboard" \
     "zellij"
-)
 
-yay -S --needed --noconfirm "${packages[@]}"
 yay -S --needed --noconfirm neovide --assume-installed neovim
 mkdir -p "$HOME/.local/share/unity3d"
 
 if [ -n "$CONTAINER_ID" ]; then
-    exported_apps=(
-        "brave"
-        "btop"
-        "discord"
-        "drawio"
-        "firefox"
-        "gimp"
-        "godot"
-        "libreoffice"
-        "neovide"
-        "obs"
-        "pwvucontrol"
-        "rider"
-        "sfxr-qt"
-        "shotcut"
-        "teams-for-linux"
-        "thunderbird"
-        "tor-browser"
-        "unityhub"
-        "webcord"
-    )
-    imported_binaries=("podman")
+    for app in \
+        "brave" \
+        "btop" \
+        "discord" \
+        "drawio" \
+        "firefox" \
+        "gimp" \
+        "godot" \
+        "libreoffice" \
+        "neovide" \
+        "obs" \
+        "pwvucontrol" \
+        "rider" \
+        "sfxr-qt" \
+        "shotcut" \
+        "teams-for-linux" \
+        "thunderbird" \
+        "tor-browser" \
+        "unityhub" \
+        "webcord"; do
 
-    for app in "${exported_apps[@]}"; do
         distrobox-export --app "$app" --enter-flags "--no-workdir"
     done
-    for bin in "${imported_binaries[@]}"; do
-        sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$bin"
-    done
+
+    sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/podman"
 fi

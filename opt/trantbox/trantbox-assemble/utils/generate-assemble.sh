@@ -6,7 +6,7 @@ fi
 
 cd "$(dirname "$0")" || exit
 
-FILE_DIR="$(pwd)"
+FILE_DIR="$(realpath ".")"
 DOTFILES_DIR="$(realpath "./dotfiles")"
 DISTROBOX_HOME_ROOT="$HOME/distrobox"
 
@@ -27,9 +27,10 @@ home="$DISTROBOX_HOME_ROOT/$container_name"
 image="docker.io/cachyos/cachyos:latest"
 start_now=true
 entry=true
-additional_packages="yay-bin"
+additional_packages="yay-bin dash"
 pre_init_hooks="export SHELL=/usr/bin/fish"
 pre_init_hooks="$FILE_DIR/arch-mirrorlist-integration.sh"
+init_hooks="ln -sf /usr/bin/dash /usr/local/bin/sh"
 volume="$container_name-cache:/var/cache/pacman/pkg:rw"
 volume="$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/$container_name/.config/fish:ro"
 EOF
