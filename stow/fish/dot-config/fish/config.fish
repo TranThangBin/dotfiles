@@ -1,7 +1,7 @@
 set -g fish_greeting ""
 set -g fish_key_bindings fish_vi_key_bindings
 
-if status is-login && test "$(tty)" = /dev/tty1
+if status is-login; and test "$(tty)" = /dev/tty1
     echo "- [W]ayland"
     echo "- [S]elect wayland environment"
     echo "- [R]eboot"
@@ -42,7 +42,7 @@ if status is-interactive
         set -gx EDITOR vim
     end
 
-    abbr dbx distrobox
-    abbr sc systemctl
-    abbr scu "systemctl --user"
+    abbr dbx -- distrobox
+    abbr sc -- systemctl
+    abbr scu -- systemctl --user
 end

@@ -1,4 +1,4 @@
-function mkcd
+function mkcd --wraps mkdir --description "Make directories and navigate to the last created directory"
     set -l literal 0
     set -l last_dir ""
 

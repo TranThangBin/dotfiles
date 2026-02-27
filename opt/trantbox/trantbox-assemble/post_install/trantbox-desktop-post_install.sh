@@ -2,6 +2,7 @@
 
 yay -S --needed --noconfirm \
     "bear" \
+    "blender" \
     "brave-bin" \
     "btop" \
     "discord" \
@@ -18,6 +19,7 @@ yay -S --needed --noconfirm \
     "libfdk-aac" \
     "libnotify" \
     "libreoffice-fresh" \
+    "libresprite" \
     "luarocks" \
     "make" \
     "neovim-nightly-bin" \
@@ -50,6 +52,7 @@ mkdir -p "$HOME/.local/share/unity3d"
 
 if [ -n "$CONTAINER_ID" ]; then
     for app in \
+        "blender" \
         "brave" \
         "btop" \
         "discord" \
@@ -58,6 +61,7 @@ if [ -n "$CONTAINER_ID" ]; then
         "gimp" \
         "godot" \
         "libreoffice" \
+        "libresprite" \
         "neovide" \
         "obs" \
         "pwvucontrol" \
