@@ -5,7 +5,7 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "SchemaStore.nvim": {
-      "rev": "75b5210976cf6e5666ae566418f4f81cab26019e",
+      "rev": "c4177be30087dc0cad7dd9ef2402ee4a42707114",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "cloak.nvim": {
@@ -102,15 +102,15 @@
       "src": "https://github.com/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "ab5139c99df944479e5a26495a37840fcbb1d512",
+      "rev": "f2193125da0bff2e4eae8e0a45e343ec9bca4c72",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-surround": {
-      "rev": "5553dd1fbb3559abb176a8227a12e8f1cab07e93",
+      "rev": "ce4ad4a8909d7f4537803c8f09b79e78c49a6cc4",
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "a8845121f063458ef23df86e73f16bbee71ec67b",
+      "rev": "ae2081cfcd3719d74b600f8377e4a99d1ec19c4a",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -122,7 +122,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "nvim-web-devicons": {
-      "rev": "16d919d768b5bc2921bd7d5a4ee76f158f7ea1c0",
+      "rev": "737cf6c657898d0c697311d79d361288a1343d50",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {

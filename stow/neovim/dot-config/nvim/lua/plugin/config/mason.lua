@@ -1,4 +1,3 @@
----@diagnostic disable-next-line: missing-fields, param-type-mismatch
 require("mason").setup({
 	registries = {
 		"github:mason-org/mason-registry",
@@ -37,7 +36,7 @@ registry.update(function(update_success, _)
 	for _, pkg_name in pairs(pkgs) do
 		local ok, pkg = pcall(registry.get_package, pkg_name)
 
-		if not ok or type(pkg) ~= "table" or pkg:is_installed() then
+		if not ok or pkg:is_installed() then
 			goto continue
 		end
 
