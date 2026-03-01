@@ -2,7 +2,7 @@
 [Unit]
 Description=Network Manager applet
 After=graphical-session.target
-PartOf="graphical-session.target
+PartOf=graphical-session.target
 
 Requires=distrobox-container@%i.service
 PartOf=distrobox-container@%i.service
