@@ -5,7 +5,7 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "SchemaStore.nvim": {
-      "rev": "c4177be30087dc0cad7dd9ef2402ee4a42707114",
+      "rev": "2c2f2d3fb568bbff1a5e1344e87a979b7edf50a8",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "cloak.nvim": {
@@ -94,7 +94,7 @@
       "src": "https://github.com/hrsh7th/nvim-cmp"
     },
     "nvim-colorizer.lua": {
-      "rev": "ae0d66307a5b431c7b633806eb27769334ac5f05",
+      "rev": "773f9ea44e832fbf74f69d20bb85ce7805eae677",
       "src": "https://github.com/catgoose/nvim-colorizer.lua"
     },
     "nvim-lint": {
@@ -102,7 +102,7 @@
       "src": "https://github.com/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "f2193125da0bff2e4eae8e0a45e343ec9bca4c72",
+      "rev": "ead0f5f342d8d323441e7d4b88f0fc436a81ad5f",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-surround": {
@@ -110,7 +110,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "ae2081cfcd3719d74b600f8377e4a99d1ec19c4a",
+      "rev": "6bc51d020a5e06b7e20ea82dbc47196d3d3027c7",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
