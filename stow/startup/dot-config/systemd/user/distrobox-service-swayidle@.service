@@ -6,14 +6,14 @@ ConditionEnvironment=WAYLAND_DISPLAY
 PartOf=graphical-session.target
 After=graphical-session.target
 
-Requires=distrobox-container@trantbox-services.service
-PartOf=distrobox-container@trantbox-services.service
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
 Conflicts=swayidle.service
 
 [Service]
 Type=simple
 Restart=always
-ExecCondition=distrobox-enter --no-workdir trantbox-services -- sh -c 'command -v swayidle &>/dev/null'
-ExecStart=distrobox-enter --no-workdir trantbox-services -- swayidle -w
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v swayidle &>/dev/null'
+ExecStart=distrobox-enter --no-workdir %i -- swayidle -w
 
 Environment=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket

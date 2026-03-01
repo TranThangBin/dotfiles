@@ -6,13 +6,13 @@ Requires=graphical-session.target
 After=graphical-session.target
 ConditionEnvironment=WAYLAND_DISPLAY
 
-Requires=distrobox-container@trantbox-services.service
-PartOf=distrobox-container@trantbox-services.service
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
 Conflicts=hyprsunset.service
 
 [Service]
 Type=simple
-ExecCondition=distrobox-enter --no-workdir trantbox-services -- sh -c 'command -v hyprsunset &>/dev/null'
-ExecStart=distrobox-enter --no-workdir trantbox-services -- hyprsunset
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v hyprsunset &>/dev/null'
+ExecStart=distrobox-enter --no-workdir %i -- hyprsunset
 Slice=session.slice
 Restart=on-failure

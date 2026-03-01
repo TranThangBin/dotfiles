@@ -1,0 +1,4 @@
+[Unit]
+Description=Desktop services for graphical session running with Distrobox container - %i
+Wants=distrobox-service-fcitx5-daemon@trantbox_services.service distrobox-service-easyeffects@trantbox_services.service
+Wants=distrobox-service-network-manager-applet@trantbox_services.service

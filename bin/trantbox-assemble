@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
 if [ -n "$CONTAINER_ID" ]; then
-    exec distrobox-host-exec "$0" "$@"
+    printf "%s" "You must not run $(basename "$0") inside a container!\n" >&2
+    exit 1
 fi
 
 cd "$(dirname "$0")" || exit
@@ -45,7 +46,7 @@ EOF
         exit 0
         ;;
     -*)
-        printf "Invalid option: %s\n" "$arg" 1>&2
+        printf "Invalid option: %s\n" "$arg" >&2
         exit 1
         ;;
     *)
@@ -55,7 +56,7 @@ EOF
 done
 
 if [ "$#" -le 0 ]; then
-    printf "Missing container names\n" 1>&2
+    printf "Missing container names\n" >&2
     exit 1
 fi
 
@@ -85,5 +86,5 @@ for container_name in "$@"; do
         continue
     fi
 
-    distrobox-enter "$container_name" -- "../opt/trantbox/trantbox-assemble/post_install/$container_name-post_install.sh"
+    distrobox-enter "$container_name" -- "$FILE_DIR/../opt/trantbox/trantbox-assemble/post_install/$container_name-post_install.sh"
 done

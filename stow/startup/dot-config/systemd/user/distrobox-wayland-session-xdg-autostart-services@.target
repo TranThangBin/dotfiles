@@ -1,0 +1,4 @@
+[Unit]
+Description=Desktop services for wayland session running with Distrobox container - %i
+Wants=distrobox-service-swayidle@%i.service distrobox-service-waybar@%i.service distrobox-service-awww@%i.service distrobox-service-wlsunset@%i.service
+Wants=distrobox-service-swaync@%i.service distrobox-service-cliphist@%i.service

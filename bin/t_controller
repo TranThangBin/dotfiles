@@ -4,12 +4,12 @@ APP_NAME="$(basename "$0")"
 
 cd "$(dirname "$0")" || exit
 
+XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -ru)"}"
+
 SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
 UTILS_DIR="$(pwd)/../opt/$APP_NAME"
 NOTIFY_TIMEOUT=5000
-
-RUNTIME_DIR="/run/user/$(id -u)/$APP_NAME"
-
+APP_RUNTIME_DIR="$XDG_RUNTIME_DIR/$APP_NAME"
 TERMINAL="ghostty"
 
 cd - >/dev/null || exit
@@ -51,7 +51,7 @@ powermenu() {
 }
 
 color_picker() {
-    lock_file="$RUNTIME_DIR/color_picker.lock"
+    lock_file="$APP_RUNTIME_DIR/color_picker.lock"
     if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
         flock -n "$lock_file" hyprpicker -a
     fi
@@ -95,7 +95,7 @@ clipboard_picker() {
 }
 
 screenshot() {
-    LOCK_FILE="$RUNTIME_DIR/screenshot.lock"
+    LOCK_FILE="$APP_RUNTIME_DIR/screenshot.lock"
 
     action="$1"
     method="$2"
@@ -270,8 +270,8 @@ idle() {
     esac
 }
 
-if [ ! -d "$RUNTIME_DIR" ]; then
-    mkdir "$RUNTIME_DIR"
+if [ ! -d "$APP_RUNTIME_DIR" ]; then
+    mkdir "$APP_RUNTIME_DIR"
 fi
 
 opt="$1"
@@ -303,7 +303,7 @@ type)
     type "$@"
     ;;
 *)
-    printf "Unknown option \"%s\"" "$opt" >&2
+    printf 'Unknown option "%s"\n' "$opt" >&2
     exit 1
     ;;
 esac

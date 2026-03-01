@@ -37,7 +37,8 @@ EOF
 }
 
 _trantbox_desktop() {
-    container_name="trantbox-desktop"
+    container_name="trantbox_desktop"
+    distrobox_home="$DISTROBOX_HOME_ROOT/$container_name"
 
     cat <<EOF
 $(_trantbox_head "$container_name")
@@ -49,15 +50,15 @@ unshare_netns=true
 additional_flags="--env DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket"
 additional_flags="--network host"
 volume="/dev/input:/dev/input:ro"
-volume="$DOTFILES_DIR/stow/WebCord/dot-config/WebCord/Themes:$DISTROBOX_HOME_ROOT/$container_name/.config/WebCord/Themes:ro"
-volume="$DOTFILES_DIR/stow/btop/dot-config/btop/btop.conf:$DISTROBOX_HOME_ROOT/$container_name/.config/btop/btop.conf:ro"
-volume="$DOTFILES_DIR/stow/neovide/dot-config/neovide:$DISTROBOX_HOME_ROOT/$container_name/.config/neovide:ro"
-volume="$DOTFILES_DIR/stow/zellij/dot-config/zellij:$DISTROBOX_HOME_ROOT/$container_name/.config/zellij:ro"
-volume="$DOTFILES_DIR/stow/neovim/dot-config/nvim:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim:ro"
-volume="$DOTFILES_DIR/stow/neovim/dot-config/nvim/nvim-pack-lock.json:$DISTROBOX_HOME_ROOT/$container_name/.config/nvim/nvim-pack-lock.json:rw"
-volume="$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro"
-volume="$DOTFILES_DIR/stow/opencode/dot-config/opencode/opencode.json:$DISTROBOX_HOME_ROOT/$container_name/.config/opencode/opencode.json:ro"
-volume="$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro"
+volume="$DOTFILES_DIR/stow/WebCord/dot-config/WebCord/Themes:$distrobox_home/.config/WebCord/Themes:ro"
+volume="$DOTFILES_DIR/stow/btop/dot-config/btop/btop.conf:$distrobox_home/.config/btop/btop.conf:ro"
+volume="$DOTFILES_DIR/stow/neovide/dot-config/neovide:$distrobox_home/.config/neovide:ro"
+volume="$DOTFILES_DIR/stow/zellij/dot-config/zellij:$distrobox_home/.config/zellij:ro"
+volume="$DOTFILES_DIR/stow/neovim/dot-config/nvim:$distrobox_home/.config/nvim:ro"
+volume="$DOTFILES_DIR/stow/neovim/dot-config/nvim/nvim-pack-lock.json:$distrobox_home/.config/nvim/nvim-pack-lock.json:rw"
+volume="$DOTFILES_DIR/stow/git/dot-config/git:$distrobox_home/.config/git:ro"
+volume="$DOTFILES_DIR/stow/opencode/dot-config/opencode/opencode.json:$distrobox_home/.config/opencode/opencode.json:ro"
+volume="$HOME/.ssh:$distrobox_home/.ssh:ro"
 EOF
 
     if ! _have_extra; then
@@ -65,12 +66,13 @@ EOF
     fi
 
     cat <<EOF
-volume="/extra/$USER/Unity:$DISTROBOX_HOME_ROOT/trantbox-desktop/Unity:rw"
+volume="/extra/$USER/Unity:$distrobox_home/Unity:rw"
 EOF
 }
 
 _trantbox_games() {
-    container_name="trantbox-games"
+    container_name="trantbox_games"
+    distrobox_home="$DISTROBOX_HOME_ROOT/$container_name"
 
     cat <<EOF
 $(_trantbox_head "$container_name")
@@ -87,7 +89,7 @@ additional_flags="--env DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus
 additional_flags="--network host"
 additional_packages="steam"
 volume="/dev/input:/dev/input:ro"
-volume="$DOTFILES_DIR/stow/MangoHud/dot-config/MangoHud:$DISTROBOX_HOME_ROOT/$container_name/.config/MangoHud:ro"
+volume="$DOTFILES_DIR/stow/MangoHud/dot-config/MangoHud:$distrobox_home/.config/MangoHud:ro"
 EOF
 
     if ! _have_extra; then
@@ -95,39 +97,41 @@ EOF
     fi
 
     cat <<EOF
-volume="/extra/$USER/.local/share/Steam:$DISTROBOX_HOME_ROOT/trantbox-games/.local/share/Steam:rw"
-volume="/extra/$USER/Games:$DISTROBOX_HOME_ROOT/trantbox-games/Games:rw"
-volume="/extra/$USER/Faugus:$DISTROBOX_HOME_ROOT/trantbox-games/Faugus:rw"
+volume="/extra/$USER/.local/share/Steam:$distrobox_home/.local/share/Steam:rw"
+volume="/extra/$USER/Games:$distrobox_home/Games:rw"
+volume="/extra/$USER/Faugus:$distrobox_home/Faugus:rw"
 EOF
 }
 
 _trantbox_services() {
-    container_name="trantbox-services"
+    container_name="trantbox_services"
+    distrobox_home="$DISTROBOX_HOME_ROOT/$container_name"
 
     cat <<EOF
 $(_trantbox_head "$container_name")
 unshare_all=true
-volume="$DOTFILES_DIR/stow/fcitx5/dot-local/share/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.local/share/fcitx5:ro"
-volume="$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$DISTROBOX_HOME_ROOT/$container_name/.config/fcitx5:ro"
-volume="$DOTFILES_DIR/stow/swaync/dot-config/swaync:$DISTROBOX_HOME_ROOT/$container_name/.config/swaync:ro"
-volume="$DOTFILES_DIR/stow/swayidle/dot-config/swayidle:$DISTROBOX_HOME_ROOT/$container_name/.config/swayidle:ro"
-volume="$DOTFILES_DIR/stow/waybar/dot-config/waybar:$DISTROBOX_HOME_ROOT/$container_name/.config/waybar:ro"
-volume="$DOTFILES_DIR/stow/quickshell/dot-config/quickshell:$DISTROBOX_HOME_ROOT/$container_name/.config/quickshell:ro"
-volume="$DOTFILES_DIR/stow/easyeffects/dot-local/share/easyeffects/output:$DISTROBOX_HOME_ROOT/$container_name/.local/share/easyeffects/output:ro"
-volume="$DOTFILES_DIR/stow/easyeffects/dot-local/share/easyeffects/irs:$DISTROBOX_HOME_ROOT/$container_name/.local/share/easyeffects/irs:ro"
+volume="$DOTFILES_DIR/stow/fcitx5/dot-local/share/fcitx5:$distrobox_home/.local/share/fcitx5:ro"
+volume="$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$distrobox_home/.config/fcitx5:ro"
+volume="$DOTFILES_DIR/stow/swaync/dot-config/swaync:$distrobox_home/.config/swaync:ro"
+volume="$DOTFILES_DIR/stow/swayidle/dot-config/swayidle:$distrobox_home/.config/swayidle:ro"
+volume="$DOTFILES_DIR/stow/waybar/dot-config/waybar:$distrobox_home/.config/waybar:ro"
+volume="$DOTFILES_DIR/stow/quickshell/dot-config/quickshell:$distrobox_home/.config/quickshell:ro"
+volume="$DOTFILES_DIR/stow/easyeffects/dot-local/share/easyeffects/output:$distrobox_home/.local/share/easyeffects/output:ro"
+volume="$DOTFILES_DIR/stow/easyeffects/dot-local/share/easyeffects/irs:$distrobox_home/.local/share/easyeffects/irs:ro"
 EOF
 }
 
 _trantbox_utils() {
-    container_name="trantbox-utils"
+    container_name="trantbox_utils"
+    distrobox_home="$DISTROBOX_HOME_ROOT/$container_name"
 
     cat <<EOF
 $(_trantbox_head "$container_name")
 unshare_all=true
-volume="$DOTFILES_DIR/stow/rofimoji/dot-config/rofimoji.rc:$DISTROBOX_HOME_ROOT/$container_name/.config/rofimoji.rc:ro"
-volume="$DOTFILES_DIR/stow/fastfetch/dot-config/fastfetch:$DISTROBOX_HOME_ROOT/$container_name/.config/fastfetch:ro"
-volume="$DOTFILES_DIR/stow/git/dot-config/git:$DISTROBOX_HOME_ROOT/$container_name/.config/git:ro"
-volume="$HOME/.ssh:$DISTROBOX_HOME_ROOT/$container_name/.ssh:ro"
+volume="$DOTFILES_DIR/stow/rofimoji/dot-config/rofimoji.rc:$distrobox_home/.config/rofimoji.rc:ro"
+volume="$DOTFILES_DIR/stow/fastfetch/dot-config/fastfetch:$distrobox_home/.config/fastfetch:ro"
+volume="$DOTFILES_DIR/stow/git/dot-config/git:$distrobox_home/.config/git:ro"
+volume="$HOME/.ssh:$distrobox_home/.ssh:ro"
 EOF
 }
 

@@ -17,6 +17,7 @@ yay -S --needed --noconfirm \
     "libcanberra" \
     "mangohud" \
     "osu-lazer-bin" \
+    "proton-cachyos-slr" \
     "spacecadetpinball-bin" \
     "wine-mono"
 

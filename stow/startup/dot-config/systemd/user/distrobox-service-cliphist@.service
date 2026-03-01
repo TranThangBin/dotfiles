@@ -1,0 +1,15 @@
+# Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/services/cliphist.nix
+[Unit]
+Description=Clipboard management daemon
+PartOf=graphical-session.target
+After=graphical-session.target
+
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
+Conflicts=cliphist.service
+
+[Service]
+Type=simple
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v wl-paste &>/dev/null'
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v cliphist &>/dev/null'
+ExecStart=distrobox-enter --no-workdir %i -- wl-paste --watch cliphist store

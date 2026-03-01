@@ -4,13 +4,13 @@ Description=Fcitx5 input method editor
 PartOf=graphical-session.target
 After=graphical-session.target
 
-Requires=distrobox-container@trantbox-services.service
-PartOf=distrobox-container@trantbox-services.service
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
 Conflicts=fcitx5-daemon.service
 
 [Service]
 Type=dbus
 BusName=org.fcitx.Fcitx5
-ExecCondition=distrobox-enter --no-workdir trantbox-services -- sh -c 'command -v fcitx5 &>/dev/null'
-ExecStart=distrobox-enter --no-workdir trantbox-services -- fcitx5
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v fcitx5 &>/dev/null'
+ExecStart=distrobox-enter --no-workdir %i -- fcitx5
 Restart=on-failure

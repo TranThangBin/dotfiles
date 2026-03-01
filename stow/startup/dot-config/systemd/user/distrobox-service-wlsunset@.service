@@ -6,14 +6,14 @@ Requires=graphical-session.target
 After=graphical-session.target
 ConditionEnvironment=WAYLAND_DISPLAY
 
-Requires=distrobox-container@trantbox-services.service
-PartOf=distrobox-container@trantbox-services.service
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
 Conflicts=wlsunset.service
 
 [Service]
 Type=simple
-ExecCondition=distrobox-enter --no-workdir trantbox-services -- sh -c 'command -v wlsunset &>/dev/null'
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v wlsunset &>/dev/null'
 # Vietnam/Ho Chi Minh city
-ExecStart=distrobox-enter --no-workdir trantbox-services -- wlsunset -l 10.7 -L 106.7 -t 5000 -T 6000
+ExecStart=distrobox-enter --no-workdir %i -- wlsunset -l 10.7 -L 106.7 -t 5000 -T 6000
 Slice=session.slice
 Restart=on-failure

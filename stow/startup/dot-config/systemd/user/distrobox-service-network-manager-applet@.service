@@ -4,12 +4,12 @@ Description=Network Manager applet
 After=graphical-session.target
 PartOf="graphical-session.target
 
-Requires=distrobox-container@trantbox-services.service
-PartOf=distrobox-container@trantbox-services.service
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
 Conflicts=network-manager-applet.service
 
 [Service]
-ExecCondition=distrobox-enter --no-workdir trantbox-services -- sh -c 'command -v nm-applet &>/dev/null'
-ExecStart=distrobox-enter --no-workdir trantbox-services -- nm-applet
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v nm-applet &>/dev/null'
+ExecStart=distrobox-enter --no-workdir %i -- nm-applet
 
 Environment=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket
