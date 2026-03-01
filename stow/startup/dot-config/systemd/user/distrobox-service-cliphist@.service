@@ -10,6 +10,6 @@ Conflicts=cliphist.service
 
 [Service]
 Type=simple
-ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v wl-paste &>/dev/null'
-ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v cliphist &>/dev/null'
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v wl-paste >/dev/null 2>&1'
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v cliphist >/dev/null 2>&1'
 ExecStart=distrobox-enter --no-workdir %i -- wl-paste --watch cliphist store

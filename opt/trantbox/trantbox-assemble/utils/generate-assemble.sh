@@ -115,7 +115,6 @@ volume="$DOTFILES_DIR/stow/fcitx5/dot-config/fcitx5:$distrobox_home/.config/fcit
 volume="$DOTFILES_DIR/stow/swaync/dot-config/swaync:$distrobox_home/.config/swaync:ro"
 volume="$DOTFILES_DIR/stow/swayidle/dot-config/swayidle:$distrobox_home/.config/swayidle:ro"
 volume="$DOTFILES_DIR/stow/waybar/dot-config/waybar:$distrobox_home/.config/waybar:ro"
-volume="$DOTFILES_DIR/stow/quickshell/dot-config/quickshell:$distrobox_home/.config/quickshell:ro"
 volume="$DOTFILES_DIR/stow/easyeffects/dot-local/share/easyeffects/output:$distrobox_home/.local/share/easyeffects/output:ro"
 volume="$DOTFILES_DIR/stow/easyeffects/dot-local/share/easyeffects/irs:$distrobox_home/.local/share/easyeffects/irs:ro"
 EOF

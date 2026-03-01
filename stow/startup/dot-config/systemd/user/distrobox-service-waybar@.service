@@ -10,7 +10,7 @@ PartOf=distrobox-container@%i.service
 Conflicts=waybar.service
 
 [Service]
-ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v waybar &>/dev/null'
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v waybar >/dev/null 2>&1'
 ExecStart=distrobox-enter --no-workdir %i -- waybar
 ExecReload=kill -SIGUSR2 $MAINPID
 Restart=on-failure

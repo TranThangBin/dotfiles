@@ -22,6 +22,7 @@ yay -S --needed --noconfirm \
 
 if [ -n "$CONTAINER_ID" ]; then
     for app in \
+        "easyeffects" \
         "fcitx5-configtool" \
         "mpv"; do
 

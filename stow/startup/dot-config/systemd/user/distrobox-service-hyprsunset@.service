@@ -12,7 +12,7 @@ Conflicts=hyprsunset.service
 
 [Service]
 Type=simple
-ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v hyprsunset &>/dev/null'
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v hyprsunset >/dev/null 2>&1'
 ExecStart=distrobox-enter --no-workdir %i -- hyprsunset
 Slice=session.slice
 Restart=on-failure

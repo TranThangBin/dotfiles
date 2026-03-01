@@ -6,7 +6,7 @@ _gremlin_picker_install() {
     SHA256SUM="ab8c554602317014c723110b14812576477f722e885d8192fff60076886d655e"
 
     install_script="$(curl -fsSL "$URL")"
-    checksum="$(printf "%s" "$install_script" | sha256sum | awk '{print $1}')"
+    checksum="$(printf "%s\n" "$install_script" | sha256sum | awk '{print $1}')"
 
     if [ "$SHA256SUM" = "$checksum" ]; then
         yay -S --needed --noconfirm \

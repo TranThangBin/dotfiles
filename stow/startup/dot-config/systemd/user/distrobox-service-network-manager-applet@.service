@@ -9,7 +9,7 @@ PartOf=distrobox-container@%i.service
 Conflicts=network-manager-applet.service
 
 [Service]
-ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v nm-applet &>/dev/null'
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v nm-applet >/dev/null 2>&1'
 ExecStart=distrobox-enter --no-workdir %i -- nm-applet
 
 Environment=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket
