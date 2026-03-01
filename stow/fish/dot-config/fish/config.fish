@@ -31,12 +31,13 @@ if status is-interactive
     fish_config prompt choose arrow
 
     if command -vq podman
+        test -z "$XDG_RUNTIME_DIR"; and set -l XDG_RUNTIME_DIR "/run/user/$(id -ru)"
         set -gx DOCKER_HOST "unix://$XDG_RUNTIME_DIR/podman/podman.sock"
     end
 
     if command -vq nvim
-        alias vim nvim
-        alias vi /usr/bin/vim
+        alias vim "command nvim"
+        alias vi "command -vq vim; and command vim"
         set -gx EDITOR nvim
     else
         set -gx EDITOR vim
