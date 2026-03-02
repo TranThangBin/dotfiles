@@ -1,0 +1,6 @@
+openal
+pipewire
+pipewire-alsa
+pipewire-jack
+pipewire-pulse
+wireplumber
