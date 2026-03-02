@@ -1,10 +1,11 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 yay -S --needed --noconfirm \
     "awww-git" \
     "brightnessctl" \
     "calf" \
     "cliphist" \
+    "dashbinsh" \
     "easyeffects" \
     "fcitx5" \
     "fcitx5-configtool" \

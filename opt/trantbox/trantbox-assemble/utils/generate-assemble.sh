@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 if [ -n "$CONTAINER_ID" ]; then
     exec distrobox-host-exec "$0" "$@"
@@ -27,10 +27,9 @@ home="$DISTROBOX_HOME_ROOT/$container_name"
 image="docker.io/cachyos/cachyos:latest"
 start_now=true
 entry=true
-additional_packages="yay-bin dash"
+additional_packages="yay-bin"
 pre_init_hooks="export SHELL=/usr/bin/fish"
 pre_init_hooks="$FILE_DIR/arch-mirrorlist-integration.sh"
-init_hooks="ln -sf /usr/bin/dash /usr/local/bin/sh"
 volume="$container_name-cache:/var/cache/pacman/pkg:rw"
 volume="$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/$container_name/.config/fish:ro"
 EOF

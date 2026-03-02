@@ -1,10 +1,11 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 yay -S --needed --noconfirm \
     "bear" \
     "blender" \
     "brave-bin" \
     "btop" \
+    "dashbinsh" \
     "discord" \
     "dotnet-sdk" \
     "drawio-desktop" \

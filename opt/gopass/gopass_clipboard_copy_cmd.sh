@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 if [ -n "$WAYLAND_DISPLAY" ]; then
     wl-copy --sensitive

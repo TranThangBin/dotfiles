@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 if [ -n "${CONTAINER_ID}" ]; then
     exec distrobox-host-exec -- "$0" "$@"

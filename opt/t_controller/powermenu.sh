@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 # Current Theme
 theme='powermenu'
@@ -58,7 +58,7 @@ run_cmd() {
         elif [ "$1" = '--suspend' ]; then
             systemctl suspend
         elif [ "$1" = '--logout' ]; then
-            loginctl terminate-user ""
+            loginctl terminate-user "$USER"
         elif [ "$1" = '--lock' ]; then
             loginctl lock-session
         fi

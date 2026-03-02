@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 APP_NAME="$(basename "$0")"
 

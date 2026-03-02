@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 if [ -n "$CONTAINER_ID" ]; then
     printf "%s" "You must not run $(basename "$0") inside a container!\n" >&2

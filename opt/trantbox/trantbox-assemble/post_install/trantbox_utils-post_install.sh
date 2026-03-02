@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 _gremlin_picker_install() {
     PIN="8170d348cd6516c3e56ccf9130e5e128bcdc35eb"
@@ -25,6 +25,7 @@ _gremlin_picker_install() {
 
 yay -S --needed --noconfirm \
     "catimg" \
+    "dashbinsh" \
     "fastfetch" \
     "fd" \
     "git" \

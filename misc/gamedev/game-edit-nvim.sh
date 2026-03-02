@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 # Unity $(File) $(Line)
 # Godot {file} {Line} {col}

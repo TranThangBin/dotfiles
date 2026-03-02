@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 _audio_fix() {
     yay -S --needed --noconfirm \
@@ -12,6 +12,7 @@ _audio_fix() {
 
 _audio_fix
 yay -S --needed --noconfirm \
+    "dashbinsh" \
     "faugus-launcher" \
     "legacy-launcher" \
     "libcanberra" \
