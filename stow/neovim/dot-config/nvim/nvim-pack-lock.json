@@ -33,7 +33,7 @@
       "src": "https://github.com/saadparwaiz1/cmp_luasnip"
     },
     "conform.nvim": {
-      "rev": "e969e302bced7ffb9a0a0323629f31feb0ca35a6",
+      "rev": "40dcec5555f960b0a04340d76eabdf4efe78599d",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "faster.nvim": {
@@ -94,7 +94,7 @@
       "src": "https://github.com/hrsh7th/nvim-cmp"
     },
     "nvim-colorizer.lua": {
-      "rev": "773f9ea44e832fbf74f69d20bb85ce7805eae677",
+      "rev": "13e65a4bf30de5170c3351cd0ee035e3b0fae23d",
       "src": "https://github.com/catgoose/nvim-colorizer.lua"
     },
     "nvim-lint": {
@@ -110,7 +110,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "6bc51d020a5e06b7e20ea82dbc47196d3d3027c7",
+      "rev": "cb2cb74f3c3cbbcc17e79cada2060165d616d849",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
