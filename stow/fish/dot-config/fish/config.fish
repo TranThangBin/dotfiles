@@ -30,17 +30,17 @@ end
 if status is-interactive
     fish_config prompt choose arrow
 
-    if command -vq podman
+    if command -q podman
         test -z "$XDG_RUNTIME_DIR"; and set -l XDG_RUNTIME_DIR "/run/user/$(id -ru)"
         set -gx DOCKER_HOST "unix://$XDG_RUNTIME_DIR/podman/podman.sock"
     end
 
-    if command -vq nvim
+    if command -q nvim
         alias vim "command nvim"
-        alias vi "command -vq vim; and command vim"
-        set -gx EDITOR nvim
-    else
-        set -gx EDITOR vim
+        alias vi "command -q vim; and command vim"
+        set -gx EDITOR (command -s nvim)
+    else if command -q vim
+        set -gx EDITOR (command -s vim)
     end
 
     abbr dbx -- distrobox

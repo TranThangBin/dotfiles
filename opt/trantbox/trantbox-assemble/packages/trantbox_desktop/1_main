@@ -20,6 +20,7 @@ libreoffice-fresh
 libresprite
 luarocks
 make
+neovide
 neovim-nightly-bin
 nodejs
 npm

@@ -1,34 +1,34 @@
 #!/bin/sh
 
-cd "$(dirname "$0")" || exit
-
-EXPORT_DIR="$(pwd)/../export"
-
-cd - >/dev/null || exit
-
 if [ -z "$CONTAINER_ID" ]; then
     printf "%s\n" "You must run $0 inside a container!" 1>&2
     exit 1
 fi
 
-APPS_DIR="$EXPORT_DIR/$CONTAINER_ID/apps"
-BINS_DIR="$EXPORT_DIR/$CONTAINER_ID/bins"
-IMPORTS_DIR="$EXPORT_DIR/$CONTAINER_ID/imports"
+cd "$(dirname "$0")" || exit
 
-if [ -f "$APPS_DIR" ]; then
+EXPORT_DIR="$(pwd)/../export/$CONTAINER_ID"
+
+cd - >/dev/null || exit
+
+APPS_FILE="$EXPORT_DIR/apps"
+BINS_FILE="$EXPORT_DIR/bins"
+IMPORTS_FILE="$EXPORT_DIR/imports"
+
+if [ -f "$APPS_FILE" ]; then
     while IFS= read -r app; do
         distrobox-export --app "$app" --enter-flags "--no-workdir"
-    done <"$APPS_DIR"
+    done <"$APPS_FILE"
 fi
 
-if [ -f "$BINS_DIR" ]; then
+if [ -f "$BINS_FILE" ]; then
     while IFS= read -r bin; do
         distrobox-export --bin "$bin" --enter-flags "--no-workdir"
-    done <"$BINS_DIR"
+    done <"$BINS_FILE"
 fi
 
-if [ -f "$IMPORTS_DIR" ]; then
+if [ -f "$IMPORTS_FILE" ]; then
     while IFS= read -r import; do
         sudo ln -sf "/usr/bin/distrobox-host-exec" "/usr/local/bin/$import"
-    done <"$IMPORTS_DIR"
+    done <"$IMPORTS_FILE"
 fi

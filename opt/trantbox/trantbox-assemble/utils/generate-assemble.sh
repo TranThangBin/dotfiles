@@ -6,8 +6,8 @@ fi
 
 cd "$(dirname "$0")" || exit
 
-FILE_DIR="$(realpath ".")"
-DOTFILES_DIR="$(realpath "./dotfiles")"
+FILE_DIR="$(pwd -P)"
+DOTFILES_DIR="$(cd "../../../.." && pwd -P)"
 DISTROBOX_HOME_ROOT="$HOME/distrobox"
 
 cd - >/dev/null || exit

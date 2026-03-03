@@ -10,7 +10,7 @@ cd "$(dirname "$0")" || exit
 FILE_DIR="$(pwd)"
 
 MANIFEST="$(mktemp)"
-trap 'rm "$MANIFEST"' EXIT
+trap 'rm "$MANIFEST"' EXIT INT TERM
 
 cd - >/dev/null || exit
 
