@@ -59,11 +59,7 @@ set("n", "<leader>e", function()
 
 	if filetype == "link" then
 		file_pattern = file_pattern .. "@"
-	elseif
-		fileperm:sub(3, 3) == "x"
-		or fileperm:sub(6, 6) == "x"
-		or fileperm:sub(9, 9) == "x"
-	then
+	elseif fileperm:sub(3, 3) == "x" or fileperm:sub(6, 6) == "x" or fileperm:sub(9, 9) == "x" then
 		file_pattern = file_pattern .. "\\*"
 	else
 		file_pattern = file_pattern .. "$"

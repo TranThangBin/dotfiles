@@ -1,42 +1,42 @@
 [
-	{
-		"include": [
-			"./groups/misc.jsonc",
-			"./groups/control.jsonc",
-			"./groups/resources.jsonc"
-		],
-		"layer": "top",
-		"position": "right",
-		"modules-left": ["custom/menu", "group/misc"],
-		"modules-center": ["group/control"],
-		"modules-right": ["group/resources"],
-		"custom/menu": {
-			"format": "<big>󰣇</big>",
-			"on-click": "t_controller launcher"
-		}
-	},
-	{
-		"include": ["./groups/compositor.jsonc"],
-		"layer": "top",
-		"modules-left": ["group/compositor"],
-		"modules-center": ["mpris"],
-		"modules-right": ["tray"],
-		"tray": {
-			"icon-size": 21,
-			"spacing": 10
-		},
-		"mpris": {
-			"format": "<big>{player_icon}</big> | <i>{title}</i>",
-			"format-paused": "<big>{status_icon}</big> | {title}",
-			"max-length": 50,
-			"player-icons": {
-				"default": "",
-				"firefox": "🦊",
-				"brave": "🦁"
-			},
-			"status-icons": {
-				"paused": ""
-			}
-		}
-	}
+    {
+        "include": [
+            "./groups/misc.jsonc",
+            "./groups/control.jsonc",
+            "./groups/resources.jsonc"
+        ],
+        "layer": "top",
+        "position": "right",
+        "modules-left": ["custom/menu", "group/misc"],
+        "modules-center": ["group/control"],
+        "modules-right": ["group/resources"],
+        "custom/menu": {
+            "format": "<big>󰣇</big>",
+            "on-click": "t_controller launcher"
+        }
+    },
+    {
+        "include": ["./groups/compositor.jsonc"],
+        "layer": "top",
+        "modules-left": ["group/compositor"],
+        "modules-center": ["mpris"],
+        "modules-right": ["tray"],
+        "tray": {
+            "icon-size": 21,
+            "spacing": 10
+        },
+        "mpris": {
+            "format": "<big>{player_icon}</big> | <i>{title}</i>",
+            "format-paused": "<big>{status_icon}</big> | {title}",
+            "max-length": 50,
+            "player-icons": {
+                "default": "",
+                "firefox": "🦊",
+                "brave": "🦁"
+            },
+            "status-icons": {
+                "paused": ""
+            }
+        }
+    }
 ]

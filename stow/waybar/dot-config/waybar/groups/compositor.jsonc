@@ -1,57 +1,57 @@
 {
-	"group/compositor": {
-		"orientation": "inherit",
-		"modules": [
-			"hyprland/workspaces",
-			"hyprland/window",
-			"niri/workspaces",
-			"niri/window"
-		]
-	},
-	"hyprland/workspaces": {
-		"sort-by-name": true,
-		"format": " <big>{icon}</big> ",
-		"format-icons": {
-			"1": "󰲠",
-			"2": "󰲢",
-			"3": "󰲤",
-			"4": "󰲦",
-			"5": "󰲨",
-			"6": "󰲪",
-			"7": "󰲬",
-			"8": "󰲮",
-			"9": "󰲰",
-			"10": "󰿬",
-			"default": ""
-		}
-	},
-	"hyprland/window": {
-		"icon": true,
-		"rewrite": {
-			"": "🐧"
-		}
-	},
-	"niri/workspaces": {
-		"sort-by-name": true,
-		"format": " <big>{icon}</big> ",
-		"format-icons": {
-			"1": "󰲠",
-			"2": "󰲢",
-			"3": "󰲤",
-			"4": "󰲦",
-			"5": "󰲨",
-			"6": "󰲪",
-			"7": "󰲬",
-			"8": "󰲮",
-			"9": "󰲰",
-			"10": "󰿬",
-			"default": ""
-		}
-	},
-	"niri/window": {
-		"icon": true,
-		"rewrite": {
-			"": "🐧"
-		}
-	}
+    "group/compositor": {
+        "orientation": "inherit",
+        "modules": [
+            "hyprland/workspaces",
+            "hyprland/window",
+            "niri/workspaces",
+            "niri/window"
+        ]
+    },
+    "hyprland/workspaces": {
+        "sort-by-name": true,
+        "format": " <big>{icon}</big> ",
+        "format-icons": {
+            "1": "󰲠",
+            "2": "󰲢",
+            "3": "󰲤",
+            "4": "󰲦",
+            "5": "󰲨",
+            "6": "󰲪",
+            "7": "󰲬",
+            "8": "󰲮",
+            "9": "󰲰",
+            "10": "󰿬",
+            "default": ""
+        }
+    },
+    "hyprland/window": {
+        "icon": true,
+        "rewrite": {
+            "": "🐧"
+        }
+    },
+    "niri/workspaces": {
+        "sort-by-name": true,
+        "format": " <big>{icon}</big> ",
+        "format-icons": {
+            "1": "󰲠",
+            "2": "󰲢",
+            "3": "󰲤",
+            "4": "󰲦",
+            "5": "󰲨",
+            "6": "󰲪",
+            "7": "󰲬",
+            "8": "󰲮",
+            "9": "󰲰",
+            "10": "󰿬",
+            "default": ""
+        }
+    },
+    "niri/window": {
+        "icon": true,
+        "rewrite": {
+            "": "🐧"
+        }
+    }
 }

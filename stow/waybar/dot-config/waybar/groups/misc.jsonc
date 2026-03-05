@@ -1,45 +1,45 @@
 {
-	"group/misc": {
-		"orientation": "inherit",
-		"modules": [
-			"custom/notification",
-			"power-profiles-daemon",
-			"idle_inhibitor"
-		]
-	},
-	"custom/notification": {
-		"format": "<big>{icon}</big>",
-		"format-icons": {
-			"notification": "󱅫",
-			"none": "󰂚",
-			"dnd-notification": "󰂛",
-			"dnd-none": "󰂛",
-			"inhibited-notification": "󱅫",
-			"inhibited-none": "󰂚",
-			"dnd-inhibited-notification": "󰂛",
-			"dnd-inhibited-none": "󰂛"
-		},
-		"return-type": "json",
-		"exec": "swaync-client -swb",
-		"on-click": "swaync-client -t -sw",
-		"on-click-right": "swaync-client -d -sw"
-	},
-	"power-profiles-daemon": {
-		"format": "<big>{icon}</big>",
-		"format-icons": {
-			"performance": "",
-			"balanced": "󰗑",
-			"power-saver": ""
-		}
-	},
-	"idle_inhibitor": {
-		"format": "<big>{icon}</big>",
-		"format-icons": {
-			"activated": "󰒳",
-			"deactivated": "󰒲"
-		},
-		"tooltip-format-activated": "idle inhibitor is active",
-		"tooltip-format-deactivated": "idle inhibitor is inactive",
-		"timeout": 300
-	}
+    "group/misc": {
+        "orientation": "inherit",
+        "modules": [
+            "custom/notification",
+            "power-profiles-daemon",
+            "idle_inhibitor"
+        ]
+    },
+    "custom/notification": {
+        "format": "<big>{icon}</big>",
+        "format-icons": {
+            "notification": "󱅫",
+            "none": "󰂚",
+            "dnd-notification": "󰂛",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󱅫",
+            "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰂛"
+        },
+        "return-type": "json",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw"
+    },
+    "power-profiles-daemon": {
+        "format": "<big>{icon}</big>",
+        "format-icons": {
+            "performance": "",
+            "balanced": "󰗑",
+            "power-saver": ""
+        }
+    },
+    "idle_inhibitor": {
+        "format": "<big>{icon}</big>",
+        "format-icons": {
+            "activated": "󰒳",
+            "deactivated": "󰒲"
+        },
+        "tooltip-format-activated": "idle inhibitor is active",
+        "tooltip-format-deactivated": "idle inhibitor is inactive",
+        "timeout": 300
+    }
 }

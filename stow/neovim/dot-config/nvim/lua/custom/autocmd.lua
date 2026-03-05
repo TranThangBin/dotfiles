@@ -2,18 +2,9 @@ local utils = {}
 
 local groups = {
 	color = vim.api.nvim_create_augroup("custom/color", { clear = true }),
-	highlight_on_yank = vim.api.nvim_create_augroup(
-		"custom/highlight_on_yank",
-		{ clear = true }
-	),
-	remove_trailing_spaces = vim.api.nvim_create_augroup(
-		"custom/remove_trailing_spaces",
-		{ clear = true }
-	),
-	treesitter = vim.api.nvim_create_augroup(
-		"custom/treesitter",
-		{ clear = true }
-	),
+	highlight_on_yank = vim.api.nvim_create_augroup("custom/highlight_on_yank", { clear = true }),
+	remove_trailing_spaces = vim.api.nvim_create_augroup("custom/remove_trailing_spaces", { clear = true }),
+	treesitter = vim.api.nvim_create_augroup("custom/treesitter", { clear = true }),
 }
 
 vim.api.nvim_create_autocmd("BufWritePre", {
