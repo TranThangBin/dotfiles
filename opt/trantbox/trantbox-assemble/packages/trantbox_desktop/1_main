@@ -2,6 +2,7 @@ bear
 blender
 brave-bin
 btop
+code
 dashbinsh
 discord
 dotnet-sdk
@@ -30,7 +31,6 @@ postman-bin
 pwvucontrol
 python3
 qt5-wayland
-rider
 ripgrep
 rust
 sfxr-qt-bin

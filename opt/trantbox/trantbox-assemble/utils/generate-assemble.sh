@@ -20,18 +20,19 @@ _have_extra() {
 
 _trantbox_head() {
     container_name="$1"
+    distrobox_home="$DISTROBOX_HOME_ROOT/$container_name"
 
     cat <<EOF
 [$container_name]
-home="$DISTROBOX_HOME_ROOT/$container_name"
+home="$distrobox_home"
 image="docker.io/cachyos/cachyos:latest"
 start_now=true
 entry=true
-additional_packages="yay-bin"
+additional_packages="yay-bin vim"
 pre_init_hooks="export SHELL=/usr/bin/fish"
 pre_init_hooks="$FILE_DIR/arch-mirrorlist-integration.sh"
-volume="$container_name-cache:/var/cache/pacman/pkg:rw"
-volume="$DOTFILES_DIR/stow/fish/dot-config/fish:$DISTROBOX_HOME_ROOT/$container_name/.config/fish:ro"
+volume="trantbox_box-pacman_cache:/var/cache/pacman/pkg:rw"
+volume="$DOTFILES_DIR/stow/fish/dot-config/fish:$distrobox_home/.config/fish:ro"
 EOF
 }
 
