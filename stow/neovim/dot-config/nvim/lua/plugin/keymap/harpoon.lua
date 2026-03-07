@@ -5,20 +5,20 @@ local ui = harpoon.ui
 local list = harpoon:list()
 
 set("n", "<leader>a", function()
-	list:add()
+    list:add()
 end)
 set("n", "<leader>m", function()
-	ui:toggle_quick_menu(list)
+    ui:toggle_quick_menu(list)
 end)
 set("n", "<C-l>", function()
-	list:next()
+    list:next()
 end)
 set("n", "<C-h>", function()
-	list:prev()
+    list:prev()
 end)
 
 for i = 1, 9 do
-	set("n", "<leader>" .. i, function()
-		list:select(i)
-	end)
+    set("n", "<leader>" .. i, function()
+        list:select(i)
+    end)
 end
