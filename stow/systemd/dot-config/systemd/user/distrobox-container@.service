@@ -4,5 +4,5 @@ ConditionPathExists=/usr/bin/distrobox-enter
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/distrobox-enter %i
+ExecStart=/usr/bin/distrobox-enter --no-workdir --no-tty %i
 RemainAfterExit=true
