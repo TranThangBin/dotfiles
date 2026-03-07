@@ -11,7 +11,7 @@ PartOf=distrobox-container@%i.service
 Conflicts=awww.service
 
 [Service]
-ExecCondition=distrobox-enter --no-workdir --no-tty %i -- sh -c 'command -v awww-daemon >/dev/null 2>&1'
-ExecStart=distrobox-enter --no-workdir --no-tty %i -- awww-daemon
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v awww-daemon >/dev/null 2>&1'
+ExecStart=distrobox-enter --no-workdir %i -- awww-daemon
 Restart=always
 RestartSec=10

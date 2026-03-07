@@ -13,7 +13,7 @@ Conflicts=swayidle.service
 [Service]
 Type=simple
 Restart=always
-ExecCondition=distrobox-enter --no-workdir --no-tty %i -- sh -c 'command -v swayidle >/dev/null 2>&1'
-ExecStart=distrobox-enter --no-workdir --no-tty %i -- swayidle -w
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v swayidle >/dev/null 2>&1'
+ExecStart=distrobox-enter --no-workdir %i -- swayidle -w
 
 Environment=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket

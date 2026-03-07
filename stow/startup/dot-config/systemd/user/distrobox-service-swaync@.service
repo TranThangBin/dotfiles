@@ -13,8 +13,8 @@ Conflicts=swaync.service
 [Service]
 Type=dbus
 BusName=org.freedesktop.Notifications
-ExecCondition=distrobox-enter --no-workdir --no-tty %i -- sh -c 'command -v swaync >/dev/null 2>&1'
-ExecCondition=distrobox-enter --no-workdir --no-tty %i -- sh -c 'command -v swaync-client >/dev/null 2>&1'
-ExecStart=distrobox-enter --no-workdir --no-tty %i -- swaync
-ExecReload=distrobox-enter --no-workdir --no-tty %i -- swaync-client --reload-config ; /usr/bin/swaync-client --reload-css
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v swaync >/dev/null 2>&1'
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v swaync-client >/dev/null 2>&1'
+ExecStart=distrobox-enter --no-workdir %i -- swaync
+ExecReload=distrobox-enter --no-workdir %i -- swaync-client --reload-config ; /usr/bin/swaync-client --reload-css
 Restart=on-failure

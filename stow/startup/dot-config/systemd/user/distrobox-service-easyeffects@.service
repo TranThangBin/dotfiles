@@ -9,9 +9,9 @@ PartOf=distrobox-container@%i.service
 Conflicts=easyeffects.service
 
 [Service]
-ExecCondition=distrobox-enter --no-workdir --no-tty %i -- sh -c 'command -v easyeffects >/dev/null 2>&1'
-ExecStart=distrobox-enter --no-workdir --no-tty %i -- easyeffects --hide-window --service-mode
-ExecStop=distrobox-enter --no-workdir --no-tty %i -- easyeffects --quit
+ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v easyeffects >/dev/null 2>&1'
+ExecStart=distrobox-enter --no-workdir %i -- easyeffects --hide-window --service-mode
+ExecStop=distrobox-enter --no-workdir %i -- easyeffects --quit
 KillMode=mixed
 Restart=on-failure
 RestartSec=5
