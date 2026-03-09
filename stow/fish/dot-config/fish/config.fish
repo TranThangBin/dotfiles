@@ -1,6 +1,3 @@
-set -g fish_greeting ""
-set -g fish_key_bindings fish_vi_key_bindings
-
 if status is-login; and test "$(tty)" = /dev/tty1
     echo "- [W]ayland"
     echo "- [S]elect wayland environment"
