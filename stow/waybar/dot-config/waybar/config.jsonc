@@ -30,12 +30,12 @@
             "format-paused": "<big>{status_icon}</big> | {title}",
             "max-length": 50,
             "player-icons": {
-                "default": "",
+                "default": "▶️",
                 "firefox": "🦊",
                 "brave": "🦁"
             },
             "status-icons": {
-                "paused": ""
+                "paused": "⏸️"
             }
         }
     }
