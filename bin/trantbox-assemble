@@ -1,23 +1,77 @@
 #!/bin/sh
 
-if [ -n "$CONTAINER_ID" ]; then
+set -eu
+
+if [ -n "${CONTAINER_ID:-}" ]; then
     printf "%s\n" "You must not run $(basename "$0") inside a container!" >&2
     exit 1
 fi
 
-cd "$(dirname "$0")" || exit
+cd "$(dirname "$0")"
 
 FILE_DIR="$(pwd)"
 
-MANIFEST="$(mktemp)"
-trap 'rm "$MANIFEST"' EXIT INT TERM
+cd - >/dev/null
 
-cd - >/dev/null || exit
+MANIFEST="$(mktemp)"
+
+trap 'rm "$MANIFEST"' EXIT INT TERM
 
 "$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/generate-assemble.sh" >"$MANIFEST"
 
 mode=""
 dry_run=0
+assemble_all=0
+
+_available_containers() {
+    grep "^\[.*\]$" "$MANIFEST" | tr -d "[]"
+}
+
+_distrobox_assemble() {
+    container_name=""
+    if [ "$#" -gt 0 ]; then
+        container_name="$1"
+    fi
+
+    set --
+
+    case "$mode" in
+    create | rm)
+        set -- "$@" "$mode"
+        ;;
+    recreate)
+        set -- "$@" "create" "--replace"
+        ;;
+    esac
+
+    if [ "$dry_run" -eq 1 ]; then
+        set -- "$@" "--dry-run"
+    fi
+
+    if [ -n "$container_name" ]; then
+        set -- "$@" "--name" "$container_name"
+    fi
+
+    distrobox-assemble "$@" --file "$MANIFEST"
+}
+
+_help() {
+    cat <<EOF
+Usage: $0 [create|rm|recreate] [options] [container_names]
+
+Options:
+
+    --dry-run/-d:   only print the container manager command generated
+    --help/-h:      show this message
+
+Available container names:
+
+EOF
+
+    _available_containers | while IFS= read -r container_name; do
+        printf "    %s\n" "$container_name"
+    done
+}
 
 for arg in "$@"; do
     shift
@@ -29,20 +83,7 @@ for arg in "$@"; do
         dry_run=1
         ;;
     --help | -h)
-        cat <<EOF
-Usage: $0 [create|rm|recreate] [options] [container_names]
-
-Options:
-
-    --dry-run/-d:   only print the container manager command generated
-    --help/-h:      show this message
-
-Available container names:
-
-$(grep "^\[.*\]$" "$MANIFEST" |
-            tr -d "[]" |
-            xargs -I{} printf "    %s\n" "{}")
-EOF
+        _help
         exit 0
         ;;
     -*)
@@ -56,27 +97,19 @@ EOF
 done
 
 if [ "$#" -le 0 ]; then
-    printf "Missing container names\n" >&2
-    exit 1
+    _distrobox_assemble
+
+    while IFS= read -r container_name; do
+        set -- "$@" "$container_name"
+    done <<EOF
+$(_available_containers)
+EOF
+
+    assemble_all=1
 fi
 
 for container_name in "$@"; do
-    set --
-
-    case "$mode" in
-    create | rm)
-        set -- "$mode"
-        ;;
-    recreate)
-        set -- "create" "--replace"
-        ;;
-    esac
-
-    if [ "$dry_run" -eq 1 ]; then
-        set -- "$@" "--dry-run"
-    fi
-
-    if ! distrobox-assemble "$@" --file "$MANIFEST" --name "$container_name"; then
+    if [ "$assemble_all" -eq 0 ] && ! _distrobox_assemble "$container_name"; then
         continue
     fi
     if [ "$mode" = "rm" ]; then
@@ -86,7 +119,7 @@ for container_name in "$@"; do
         continue
     fi
 
-    distrobox-enter "$container_name" -- sh -c "\$0 && \$1 && \$2" \
+    distrobox-enter "$container_name" --no-workdir -- sh -c "\$0 && \$1 && \$2" \
         "$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/1_install-packages.sh" \
         "$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/2_run-post_install.sh" \
         "$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/3_export-packages.sh"

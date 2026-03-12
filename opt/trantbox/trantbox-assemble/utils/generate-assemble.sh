@@ -1,16 +1,18 @@
 #!/bin/sh
 
-if [ -n "$CONTAINER_ID" ]; then
+set -eu
+
+if [ -n "${CONTAINER_ID:-}" ]; then
     exec distrobox-host-exec "$0" "$@"
 fi
 
-cd "$(dirname "$0")" || exit
+cd "$(dirname "$0")"
 
 FILE_DIR="$(pwd -P)"
 DOTFILES_DIR="$(cd "../../../.." && pwd -P)"
 DISTROBOX_HOME_ROOT="$HOME/distrobox"
 
-cd - >/dev/null || exit
+cd - >/dev/null
 
 _have_extra() {
     [ -d "/extra/$USER" ] &&
