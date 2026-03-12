@@ -11,6 +11,6 @@ Conflicts=fcitx5-daemon.service
 [Service]
 Type=dbus
 BusName=org.fcitx.Fcitx5
-ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v fcitx5 >/dev/null 2>&1'
-ExecStart=distrobox-enter --no-workdir %i -- fcitx5
+ExecCondition=distrobox-enter --no-workdir --no-tty %i -- sh -c 'command -v fcitx5 >/dev/null 2>&1'
+ExecStart=distrobox-enter --no-workdir --no-tty %i -- fcitx5
 Restart=on-failure

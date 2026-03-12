@@ -12,7 +12,7 @@ Conflicts=hyprpaper.service
 
 [Service]
 Type=simple
-ExecCondition=distrobox-enter --no-workdir %i -- sh -c 'command -v hyprpaper >/dev/null 2>&1'
-ExecStart=distrobox-enter --no-workdir --name %i -- hyprpaper
+ExecCondition=distrobox-enter --no-workdir --no-tty %i -- sh -c 'command -v hyprpaper >/dev/null 2>&1'
+ExecStart=distrobox-enter --no-workdir --no-tty --name %i -- hyprpaper
 Slice=session.slice
 Restart=on-failure
