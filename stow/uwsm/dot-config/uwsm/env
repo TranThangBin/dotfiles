@@ -3,10 +3,13 @@ export __GLX_VENDOR_LIBRARY_NAME="nvidia"
 export LIBVA_DRIVER_NAME="nvidia"
 export ELECTRON_OZONE_PLATFORM_HINT="auto"
 
-export QT_QPA_PLATFORMTHEME="gtk3"
+export DOTFILES_DIR="$XDG_CONFIG_HOME/uwsm/dotfiles"
+
+export PATH="$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin"
+export XDG_DATA_DIRS="$DOTFILES_DIR/share:$XDG_DATA_DIRS"
 export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS"
 
-export DOTFILES_DIR="$XDG_CONFIG_HOME/uwsm/dotfiles"
-export PATH="$DOTFILES_DIR/bin:$PATH:$HOME/.local/bin"
+export QT_QPA_PLATFORMTHEME="gtk3"
+
 export GOPASS_CLIPBOARD_COPY_CMD="$DOTFILES_DIR/opt/gopass/gopass_clipboard_copy_cmd.sh"
 export GOPASS_CLIPBOARD_CLEAR_CMD="$DOTFILES_DIR/opt/gopass/gopass_clipboard_clear_cmd.sh"
