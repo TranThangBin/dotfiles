@@ -2,4 +2,6 @@ local set = vim.keymap.set
 
 local sidekick_cli = require("sidekick.cli")
 
-set({ "n", "t", "i", "x" }, "<C-.>", sidekick_cli.toggle)
+set({ "n", "t", "i", "x" }, "<C-.>", function()
+    sidekick_cli.toggle({ name = "opencode" })
+end)
