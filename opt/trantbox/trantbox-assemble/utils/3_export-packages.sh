@@ -17,13 +17,13 @@ IMPORTS_FILE="$EXPORT_DIR/imports"
 
 if [ -f "$APPS_FILE" ]; then
     while IFS= read -r app; do
-        distrobox-export --app "$app" --enter-flags "--no-workdir"
+        distrobox-export --app "$(printf "%s" "$app" | envsubst)" --enter-flags "--no-workdir"
     done <"$APPS_FILE"
 fi
 
 if [ -f "$BINS_FILE" ]; then
     while IFS= read -r bin; do
-        distrobox-export --bin "$bin" --enter-flags "--no-workdir"
+        distrobox-export --bin "$(printf "%s" "$bin" | envsubst)" --enter-flags "--no-workdir"
     done <"$BINS_FILE"
 fi
 

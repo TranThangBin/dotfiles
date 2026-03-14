@@ -1,5 +1,5 @@
-faugus-launcher
-legacy-launcher
-osu-lazer
-spacecadetpinball
-steam
+/usr/share/applications/faugus-launcher.desktop
+/usr/share/applications/legacy-launcher.desktop
+/usr/share/applications/osu-lazer.desktop
+/usr/share/applications/spacecadetpinball.desktop
+/usr/share/applications/steam.desktop
