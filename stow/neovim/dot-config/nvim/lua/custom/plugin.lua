@@ -24,7 +24,6 @@ vim.pack.add({
     gh("kylechui/nvim-surround"),
     gh("laytan/cloak.nvim"),
     gh("lewis6991/gitsigns.nvim"),
-    gh("m4xshen/hardtime.nvim"),
     gh("mason-org/mason.nvim"),
     gh("mbbill/undotree"),
     gh("mfussenegger/nvim-lint"),
