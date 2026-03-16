@@ -28,15 +28,15 @@ file_explorer() {
 
 launch_app() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
-        exec uwsm-app "$@"
+        exec uwsm-app -- "$@"
     elif [ -n "$DISPLAY" ]; then
-        exec "$0" "$@"
+        exec "$@"
     fi
 }
 
 launch_terminal_app() {
     if [ -n "$WAYLAND_DISPLAY" ]; then
-        exec uwsm-app -T "$@"
+        exec uwsm-app -T -- "$@"
     elif [ -n "$DISPLAY" ]; then
         exec "$TERMINAL" -e "$@"
     fi

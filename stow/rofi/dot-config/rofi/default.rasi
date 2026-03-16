@@ -10,8 +10,8 @@
 
 configuration {
 	terminal: "t_controller launch_terminal_app";
-  	run-command: "t_controller launch_app -- {cmd}";
-  	run-shell-command: "{terminal} -- {cmd}";
+  	run-command: "t_controller launch_app {cmd}";
+  	run-shell-command: "{terminal} {cmd}";
 
 	kb-primary-paste: "Control+V,Shift+Insert";
 	kb-secondary-paste: "Control+v,Insert";
