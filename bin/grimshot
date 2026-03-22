@@ -78,6 +78,10 @@ parseArgs() {
             fi
             shift
             ;;
+        -z | --freeze)
+            FREEZE=yes
+            shift
+            ;;
         *)                                        # Treat anything else as a positional argument
             POSITIONAL_ARGS="$POSITIONAL_ARGS $1" # Add positional argument to the string
             shift
@@ -99,7 +103,7 @@ parseArgs() {
 
 printUsageMsg() {
     echo "Usage:"
-    echo "  grimshot [--notify] [--cursor] [--wait N] (copy|save) [active|screen|output|area|window|anything] [FILE|-]"
+    echo "  grimshot [--notify] [--cursor] [--wait N] [--freeze] (copy|save) [active|screen|output|area|window|anything] [FILE|-]"
     echo "  grimshot check"
     echo "  grimshot usage"
     echo ""
@@ -157,6 +161,10 @@ die() {
     exit 2
 }
 
+deNotSupported() {
+    die "DE is not supported"
+}
+
 check() {
     COMMAND=$1
     command_exists='command -v "$COMMAND" > /dev/null 2>&1'
@@ -193,10 +201,21 @@ checkRequiredTools() {
     check wl-copy
     check jq
     check notify-send
+    check hyprctl
+    check hyprpicker
     exit
 }
 
+handleFreeze() {
+    hyprpicker -rz &
+    HYPRPICKER_PID="$!"
+    trap 'kill "$HYPRPICKER_PID"' EXIT INT TERM
+    sleep 0.2
+}
+
 selectArea() {
+    freeze_enable='[ "$FREEZE" = "yes" ]'
+    when "$freeze_enable" "handleFreeze"
     GEOM=$(slurp -d)
     geomIsEmpty='[ -z "$GEOM" ]'
     when "$geomIsEmpty" "exit 1"
@@ -204,9 +223,23 @@ selectArea() {
 }
 
 selectActiveWindow() {
-    FOCUSED=$(swaymsg -t get_tree | jq -r 'recurse(.nodes[]?, .floating_nodes[]?) | select(.focused)')
-    GEOM=$(echo "$FOCUSED" | jq -r '.rect | "\(.x),\(.y) \(.width)x\(.height)"')
-    APP_ID=$(echo "$FOCUSED" | jq -r '.app_id')
+    freeze_enable='[ "$FREEZE" = "yes" ]'
+    when "$freeze_enable" "handleFreeze"
+    case "$XDG_CURRENT_DESKTOP" in
+    hyprland | Hyprland)
+        FOCUSED=$(hyprctl activewindow -j)
+        GEOM=$(echo "$FOCUSED" | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
+        APP_ID=$(echo "$FOCUSED" | jq -r '.class')
+        ;;
+    sway | Sway)
+        FOCUSED=$(swaymsg -t get_tree | jq -r 'recurse(.nodes[]?, .floating_nodes[]?) | select(.focused)')
+        GEOM=$(echo "$FOCUSED" | jq -r '.rect | "\(.x),\(.y) \(.width)x\(.height)"')
+        APP_ID=$(echo "$FOCUSED" | jq -r '.app_id')
+        ;;
+    *)
+        deNotSupported
+        ;;
+    esac
     WHAT="$APP_ID window"
 }
 
@@ -217,19 +250,53 @@ selectScreen() {
 
 selectOutput() {
     GEOM=""
-    OUTPUT=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused)' | jq -r '.name')
+    case "$XDG_CURRENT_DESKTOP" in
+    hyprland | Hyprland)
+        OUTPUT=$(hyprctl monitors -j | jq -r '.[] | select(.focused)' | jq -r '.name')
+        ;;
+    sway | Sway)
+        OUTPUT=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused)' | jq -r '.name')
+        ;;
+    *)
+        deNotSupported
+        ;;
+    esac
     WHAT="$OUTPUT"
 }
 
 selectWindow() {
-    GEOM=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -r)
+    freeze_enable='[ "$FREEZE" = "yes" ]'
+    when "$freeze_enable" "handleFreeze"
+    case "$XDG_CURRENT_DESKTOP" in
+    hyprland | Hyprland)
+        GEOM=$(hyprctl clients -j | jq -r '.[] | select(.mapped == true) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | slurp -r)
+        ;;
+    sway | Sway)
+        GEOM=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -r)
+        ;;
+    *)
+        deNotSupported
+        ;;
+    esac
     geomIsEmpty='[ -z "$GEOM" ]'
     when "$geomIsEmpty" "exit 1"
     WHAT="Window"
 }
 
 selectAnything() {
-    GEOM=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -o)
+    freeze_enable='[ "$FREEZE" = "yes" ]'
+    when "$freeze_enable" "handleFreeze"
+    case "$XDG_CURRENT_DESKTOP" in
+    hyprland | Hyprland)
+        GEOM=$(hyprctl clients -j | jq -r '.[] | select(.mapped == true) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | slurp -o)
+        ;;
+    sway | Sway)
+        GEOM=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -o)
+        ;;
+    *)
+        deNotSupported
+        ;;
+    esac
     geomIsEmpty='[ -z "$GEOM" ]'
     when "$geomIsEmpty" "exit 1"
     WHAT="Selection"
