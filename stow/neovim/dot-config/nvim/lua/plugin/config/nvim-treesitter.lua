@@ -4,4 +4,3 @@ for _, ft in pairs(vim.g._treesitter_enable_filetypes) do
 end
 
 require("nvim-treesitter").install(languages):wait(2 * 60 * 1000)
-vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"

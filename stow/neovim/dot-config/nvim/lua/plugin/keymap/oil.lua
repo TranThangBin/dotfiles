@@ -8,4 +8,6 @@ vim.keymap.set("n", "<leader>-", function()
     oil.open_float(nil, nil, function()
         vim.fn.search(file_pattern)
     end)
-end)
+end, {
+    desc = "Custom(oil): <leader>- (oil open)",
+})
