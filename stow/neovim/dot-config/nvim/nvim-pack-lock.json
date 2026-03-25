@@ -5,11 +5,11 @@
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "SchemaStore.nvim": {
-      "rev": "cf2b276dc88696b35d55ea4bd55dfaf7d608c9a2",
+      "rev": "66e53f3316515ac8548b47826f8d273955aa7af1",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
     "catppuccin": {
-      "rev": "50c34a2cf18776a77f770fcf5df777de6fe69e08",
+      "rev": "a7788416689dbefea659d9e9415c87926b0ba5d8",
       "src": "https://github.com/catppuccin/nvim"
     },
     "cloak.nvim": {
@@ -53,7 +53,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "gitsigns.nvim": {
-      "rev": "7c4faa3540d0781a28588cafbd4dd187a28ac6e3",
+      "rev": "0a80125bace82d82847d40bc2c38a22d62c6dc2d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "harpoon": {
@@ -86,7 +86,7 @@
       "src": "https://github.com/hrsh7th/nvim-cmp"
     },
     "nvim-colorizer.lua": {
-      "rev": "85a5e83cd4daa258cf95c3204e277991d6fbe747",
+      "rev": "32fcc38ab7e559f24763f6b3d9c37658ebf407d6",
       "src": "https://github.com/catgoose/nvim-colorizer.lua"
     },
     "nvim-lint": {
@@ -102,11 +102,11 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "e5f65e31a5ec0e8526b2311ff8c7aaea4a581c82",
+      "rev": "6620ae1c44dfa8623b22d0cbf873a9e8d073b849",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
-      "rev": "9a8e39993e3b895601bf8227124a48ea8268149e",
+      "rev": "adf4b6b0420b7be6c717ef0ac7993183d6c201b1",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "nvim-treesitter-textobjects": {
@@ -138,7 +138,7 @@
       "src": "https://github.com/seblyng/roslyn.nvim"
     },
     "sidekick.nvim": {
-      "rev": "8ad0ede3ff9065878a853e4b037ba6ac88231fb0",
+      "rev": "17447a05f9385e5f8372b61530f6f9329cb82421",
       "src": "https://github.com/folke/sidekick.nvim"
     },
     "telescope-fzf-native.nvim": {
@@ -154,7 +154,7 @@
       "src": "https://github.com/folke/todo-comments.nvim"
     },
     "tokyonight.nvim": {
-      "rev": "5da1b76e64daf4c5d410f06bcb6b9cb640da7dfd",
+      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
       "src": "https://github.com/folke/tokyonight.nvim"
     },
     "trouble.nvim": {

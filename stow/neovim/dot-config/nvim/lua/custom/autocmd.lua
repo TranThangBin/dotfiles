@@ -64,17 +64,15 @@ vim.api.nvim_create_autocmd("FileType", {
     desc = "Custom: Treesitter",
     callback = function()
         vim.treesitter.start()
-        if pcall(require, "nvim-treesitter") then
-            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        end
+        -- if pcall(require, "nvim-treesitter") then
+        --     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        -- end
     end,
 })
 
 function utils.set_light_bg(bg_color)
     bg_color = bg_color or "#dddddd"
-
     local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal" })
-
     if not normal_hl.bg then
         vim.api.nvim_set_hl(0, "Normal", { bg = bg_color, fg = normal_hl.fg })
     end
