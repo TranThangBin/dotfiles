@@ -17,7 +17,7 @@ MANIFEST="$(mktemp)"
 
 trap 'rm "$MANIFEST"' EXIT INT TERM
 
-"$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/generate-assemble.sh" >"$MANIFEST"
+"$FILE_DIR/../share/trantbox/trantbox-assemble/utils/generate-assemble.sh" >"$MANIFEST"
 
 mode=""
 dry_run=0
@@ -112,15 +112,27 @@ for container_name in "$@"; do
     if [ "$assemble_all" -eq 0 ] && ! _distrobox_assemble "$container_name"; then
         continue
     fi
+
     if [ "$mode" = "rm" ]; then
         continue
     fi
+
     if [ "$dry_run" -eq 1 ]; then
         continue
     fi
 
-    distrobox-enter "$container_name" --no-workdir -- sh -c "\$0 && \$1 && \$2" \
-        "$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/1_install-packages.sh" \
-        "$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/2_run-post_install.sh" \
-        "$FILE_DIR/../opt/trantbox/trantbox-assemble/utils/3_export-packages.sh"
+    if ! distrobox-enter "$container_name" --no-workdir -- \
+        "$FILE_DIR/../share/trantbox/trantbox-assemble/utils/1_install-packages.sh"; then
+        continue
+    fi
+
+    if ! distrobox-enter "$container_name" --no-workdir -- \
+        "$FILE_DIR/../share/trantbox/trantbox-assemble/utils/2_run-post_install.sh"; then
+        continue
+    fi
+
+    if ! distrobox-enter "$container_name" --no-workdir -- \
+        "$FILE_DIR/../share/trantbox/trantbox-assemble/utils/3_export-packages.sh"; then
+        continue
+    fi
 done

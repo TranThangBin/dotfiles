@@ -1,11 +1,13 @@
 #!/bin/sh
 
-if [ -n "${CONTAINER_ID}" ]; then
+set -eu
+
+if [ -n "${CONTAINER_ID:-}" ]; then
     exec distrobox-host-exec -- "$0" "$@"
 fi
 
-if [ -n "${WAYLAND_DISPLAY}" ] && command -v uwsm-app >/dev/null 2>&1; then
+if [ -n "${WAYLAND_DISPLAY:-}" ] && command -v uwsm-app >/dev/null 2>&1; then
     exec /usr/bin/uwsm-app -- /usr/bin/xdg-open "$@"
-else
-    exec /usr/bin/xdg-open "$@"
 fi
+
+exec /usr/bin/xdg-open "$@"

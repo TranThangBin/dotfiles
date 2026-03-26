@@ -37,17 +37,16 @@
         "format-icons": {
             "default": ["", "", ""]
         },
-        "on-click": "t_controller volume toggle_mute speaker"
+        "on-click": "tutils volume --toggle-mute --device speaker"
     },
     "wireplumber#source": {
         "justify": "center",
         "format": "<big>󰍬</big>\n{volume}%",
         "format-muted": "<s><big>󰍬</big>\n{volume}%</s>",
-        "on-click": "t_controller volume toggle_mute microphone",
+        "on-click": "tutils volume --toggle-mute --device microphone",
         "node-type": "Audio/Source"
     },
     "backlight": {
-        "device": "intel_backlight",
         "justify": "center",
         "format": "{icon}\n{percent}%",
         "format-icons": ["", "", "", "", "", "", "", "", ""]

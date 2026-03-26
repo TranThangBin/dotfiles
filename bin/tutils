@@ -1,0 +1,818 @@
+#!/bin/sh
+
+set -eu
+
+app="$(basename "$0")"
+wayland_display="${WAYLAND_DISPLAY:-}"
+xdg_current_desktop="${XDG_CURRENT_DESKTOP:-}"
+xdg_runtime_dir="${XDG_RUNTIME_DIR:-"/run/user/$(id -ru)"}"
+
+APP_RUNTIME_DIR="$xdg_runtime_dir/$app"
+COLOR_PICKER_FD=3
+COLOR_PICKER_LOCKFILE="$APP_RUNTIME_DIR/color_picker.lock"
+SCREENSHOT_FD=4
+SCREENSHOT_LOCKFILE="$APP_RUNTIME_DIR/screenshot.lock"
+SCREENSHOT_SAVE_DIR="$HOME/Pictures/Screenshots"
+TERMINAL="ghostty"
+
+_lock_fd() {
+    fd="$1"
+    lock_file="$2"
+
+    if command -v flock >/dev/null 2>&1; then
+        eval "exec $fd>\"$lock_file\""
+        trap 'eval "exec $fd>&-"' EXIT INT TERM
+        flock --nonblock "$fd"
+    fi
+}
+
+_mkruntimedir() {
+    if [ ! -d "$APP_RUNTIME_DIR" ]; then
+        mkdir -m "u=rwx,go=" "$APP_RUNTIME_DIR"
+    fi
+}
+
+_print_invalid_option() {
+    printf "Invalid option: %s\n" "$*"
+}
+
+_print_missing_required_option() {
+    printf "Missing required option: %s\n" "$*"
+}
+
+_print_not_enough_argument() {
+    printf "Not enough argument for: %s\n" "$*"
+}
+
+_print_unrecognized_option() {
+    printf "Unrecognized option: %s\n" "$*"
+}
+
+_print_envionment_is_not_supported() {
+    printf "Environment is not supported: %s" "$xdg_current_desktop"
+}
+
+brightness() {
+    device=""
+    class=""
+    save=0
+    restore=0
+    method=""
+    brightness=""
+
+    while [ "$#" -gt 0 ]; do
+        opt="$1"
+        shift
+
+        case "$opt" in
+        --device)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            device="$1"
+            shift
+            ;;
+        --class)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            class="$1"
+            shift
+            ;;
+        --save)
+            save=1
+            ;;
+        --restore)
+            restore=1
+            ;;
+        --inc-percent | --dec-percent | --set-percent)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            method="${opt#--}"
+            brightness="$1"
+            if [ "$brightness" -lt 0 ] || [ "$brightness" -gt 100 ]; then
+                _print_invalid_option "$opt $brightness"
+                return 1
+            fi
+            shift
+            ;;
+        *)
+            _print_unrecognized_option "$opt" >&2
+            return 1
+            ;;
+        esac
+    done
+
+    if [ -z "$device" ]; then
+        _print_missing_required_option "--device" >&2
+        return 1
+    fi
+
+    if [ "$device" = "all" ]; then
+        if [ -z "$class" ]; then
+            _print_missing_required_option "--class" >&2
+            return 1
+        fi
+    fi
+
+    if command -v brightnessctl >/dev/null 2>&1; then
+        if [ "$device" = "all" ]; then
+            device="*"
+        fi
+
+        set -- --quiet --device="$device"
+
+        if [ -n "$class" ]; then
+            set -- "$@" --class="$class"
+        fi
+
+        if [ "$save" -ne 0 ]; then
+            set -- "$@" --save
+        fi
+
+        if [ "$restore" -ne 0 ]; then
+            set -- "$@" --restore
+        fi
+
+        case "$method" in
+        inc-percent)
+            exec brightnessctl "$@" set "$brightness%+"
+            ;;
+        dec-percent)
+            exec brightnessctl "$@" set "$brightness%-"
+            ;;
+        set-percent)
+            exec brightnessctl "$@" set "$brightness%"
+            ;;
+        "")
+            exec brightnessctl "$@"
+            ;;
+        esac
+    fi
+}
+
+clipboard_picker() {
+    action=""
+
+    while [ "$#" -gt 0 ]; do
+        opt="$1"
+        shift
+
+        case "$opt" in
+        --action)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            action="$1"
+            shift
+            ;;
+        *)
+            _print_unrecognized_option "$opt" >&2
+            return 1
+            ;;
+        esac
+    done
+
+    case "$action" in
+    pick)
+        if [ -n "$wayland_display" ]; then
+            entry_id=$(cliphist list | rofi -dmenu -p "Copy Clipboard Entry" \
+                -theme-str 'entry {placeholder: "Copy Clipboard Entry";}')
+            if [ -n "$entry_id" ]; then
+                printf "%s" "$entry_id" | cliphist decode | wl-copy
+            fi
+        fi
+        ;;
+    delete)
+        if [ -n "$wayland_display" ]; then
+            cliphist list | rofi -dmenu -p "Delete Clipboard Entry" \
+                -theme-str 'entry {placeholder: "Delete Clipboard Entry";}' |
+                cliphist delete
+        fi
+        ;;
+    wipe)
+        if [ -n "$wayland_display" ]; then
+            choice=$(printf "%s\n%s" "no" "yes" |
+                rofi -dmenu -p "Wipe Clipboard" \
+                    -theme-str 'entry {placeholder: "Wipe Clipboard";}')
+            if [ "$choice" = "yes" ]; then
+                cliphist wipe
+            fi
+        fi
+        ;;
+    "")
+        _print_missing_required_option "--action" >&2
+        return 1
+        ;;
+    *)
+        _print_invalid_option "--action $action" >&2
+        return 1
+        ;;
+    esac
+}
+
+color_picker() {
+    color_picker_cmd=""
+    lock=0
+
+    while [ "$#" -gt 0 ]; do
+        opt="$1"
+        shift
+
+        case "$opt" in
+        --lock)
+            lock=1
+            ;;
+        *)
+            _print_invalid_option "$opt" >&2
+            return 1
+            ;;
+        esac
+    done
+
+    if [ "$lock" -ne 0 ]; then
+        _mkruntimedir
+        _lock_fd "$COLOR_PICKER_FD" "$COLOR_PICKER_LOCKFILE"
+    fi
+
+    set --
+
+    if [ -n "$wayland_display" ]; then
+        if command -v hyprpicker >/dev/null 2>&1; then
+            color_picker_cmd="hyprpicker"
+        fi
+    fi
+
+    case "$color_picker_cmd" in
+    hyprpicker)
+        set -- --autocopy
+        ;;
+    *)
+        _print_unrecognized_option "color_picker_cmd=$color_picker_cmd" >&2
+        return 1
+        ;;
+    esac
+
+    "$color_picker_cmd" "$@"
+}
+
+emoji_picker() {
+    exec rofimoji
+}
+
+file_explorer() {
+    exec rofi -show filebrowser
+}
+
+idle() {
+    method=""
+    tier=""
+
+    while [ "$#" -gt 0 ]; do
+        opt="$1"
+        shift
+
+        case "$opt" in
+        --before-sleep | --after-resume)
+            method="${opt#--}"
+            ;;
+        --timeout | --resume)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            method="${opt#--}"
+            tier="$1"
+            shift
+            ;;
+        *)
+            _print_invalid_option "$opt" >&2
+            return 1
+            ;;
+        esac
+    done
+
+    case "$method" in
+    before-sleep)
+        idle --timeout 2
+        ;;
+    after-resume)
+        idle --resume 3
+        ;;
+    timeout)
+        if [ "$tier" -eq 1 ]; then
+            brightness --device all --class backlight --set-percent 10 --save
+        elif [ "$tier" -eq 2 ]; then
+            exec loginctl lock-session
+        elif [ "$tier" -eq 3 ]; then
+            case "$xdg_current_desktop" in
+            hyprland | Hyprland)
+                exec hyprctl dispatch dpms off
+                ;;
+            *)
+                _print_envionment_is_not_supported >&2
+                return 1
+                ;;
+            esac
+        elif [ "$tier" -eq 4 ]; then
+            exec systemctl suspend
+        else
+            _print_invalid_option "--timeout $tier" >&2
+            return 1
+        fi
+        ;;
+    resume)
+        if [ "$tier" -eq 1 ]; then
+            brightness --device all --class backlight --restore
+        elif [ "$tier" -eq 3 ]; then
+            case "$xdg_current_desktop" in
+            hyprland | Hyprland)
+                exec hyprctl dispatch dpms on
+                ;;
+            *)
+                _print_envionment_is_not_supported >&2
+                return 1
+                ;;
+            esac
+        else
+            _print_invalid_option "--resume $tier" >&2
+            return 1
+        fi
+        ;;
+    *)
+        _print_missing_required_option \
+            "--before-sleep" "|" \
+            "--after-resume" "|" \
+            "--timeout" "|" \
+            "--resume" "|" \
+            >&2
+        return 1
+        ;;
+    esac
+}
+
+launch() {
+    if [ -n "$wayland_display" ] && command -v uwsm-app >/dev/null 2>&1; then
+        exec uwsm-app -- "$@"
+    fi
+
+    exec "$@"
+}
+
+launcher() {
+    exec rofi -show
+}
+
+lock() {
+    lock_cmd=""
+
+    if [ -n "$WAYLAND_DISPLAY" ]; then
+        if command -v swaylock >/dev/null 2>&1; then
+            set -- --daemonize
+            lock_cmd="swaylock"
+        fi
+    fi
+
+    if pidof "$lock_cmd" >/dev/null; then
+        return 0
+    fi
+
+    player --pause --player all || true
+    volume --mute --device speaker || true
+    volume --mute --device microphone || true
+    exec "$lock_cmd" "$@"
+}
+
+player() {
+    method=""
+    player=""
+
+    while [ "$#" -gt 0 ]; do
+        opt="$1"
+        shift
+
+        case "$opt" in
+        --play | --pause | --play-pause | --stop | --next | --previous)
+            method="${opt#--}"
+            ;;
+        --player)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            player="$1"
+            shift
+            ;;
+        *)
+            _print_invalid_option "$opt" >&2
+            return 1
+            ;;
+        esac
+    done
+
+    if [ -z "$method" ]; then
+        _print_missing_required_option \
+            "--play" "|" \
+            "--pause" "|" \
+            "--play-pause" "|" \
+            "--stop" "|" \
+            "--next" "|" \
+            "--previous" \
+            >&2
+        return 1
+    fi
+
+    if command -v playerctl; then
+        if [ "$player" = "all" ]; then
+            set -- --all-players
+        else
+            set -- --player="$player"
+        fi
+
+        case "$method" in
+        play | pause | play-pause | stop | next | previous)
+            playerctl --no-messages "$@" "$method"
+            ;;
+        esac
+    fi
+}
+
+powermenu() {
+    theme='powermenu'
+
+    uptime="$(uptime -p)"
+    uptime="${uptime#"up "}"
+    host=$(hostnamectl hostname)
+
+    shutdown='󰐥 Shutdown'
+    reboot=' Reboot'
+    lock='󰌾 Lock'
+    suspend='󰒲 Suspend'
+    logout='󰍃 Logout'
+    yes='✔ Yes'
+    no='✘ No'
+
+    cmd="$(printf "%s\n%s\n%s\n%s\n%s" "$lock" "$suspend" "$logout" "$reboot" "$shutdown" |
+        rofi -dmenu \
+            -p " $USER@$host" \
+            -mesg "󱑁 Uptime: $uptime" \
+            -theme "${theme}.rasi")"
+
+    confirm="$(printf "%s\n%s" "$yes" "$no" |
+        rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 350px;}' \
+            -theme-str 'mainbox {orientation: vertical; children: [ "message", "listview" ];}' \
+            -theme-str 'listview {columns: 2; lines: 1;}' \
+            -theme-str 'element-text {horizontal-align: 0.5;}' \
+            -theme-str 'textbox {horizontal-align: 0.5;}' \
+            -dmenu \
+            -p 'Confirmation' \
+            -mesg 'Are you Sure?' \
+            -theme "${theme}.rasi")"
+
+    if [ "$confirm" != "$yes" ]; then
+        return 0
+    fi
+
+    case "$cmd" in
+    "$shutdown")
+        exec systemctl poweroff
+        ;;
+    "$reboot")
+        exec systemctl reboot
+        ;;
+    "$lock")
+        exec loginctl lock-session
+        ;;
+    "$suspend")
+        exec systemctl suspend
+        ;;
+    "$logout")
+        exec loginctl terminate-user "$USER"
+        ;;
+    esac
+}
+
+screenshot() {
+    action=""
+    method=""
+    lock=0
+
+    screenshot_cmd=""
+
+    while [ "$#" -gt 0 ]; do
+        opt="$1"
+        shift
+
+        case "$opt" in
+        --action)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            action="$1"
+            shift
+            ;;
+        --method)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            method="$1"
+            shift
+            ;;
+        --lock)
+            lock=1
+            ;;
+        *)
+            _print_invalid_option "$opt" >&2
+            return 1
+            ;;
+        esac
+    done
+
+    if [ "$lock" -ne 0 ]; then
+        _mkruntimedir
+        _lock_fd "$SCREENSHOT_FD" "$SCREENSHOT_LOCKFILE"
+    fi
+
+    set --
+
+    if [ -n "$wayland_display" ]; then
+        screenshot_cmd="grimshot"
+    fi
+
+    case "$screenshot_cmd" in
+    grimshot)
+        set --
+
+        export XDG_SCREENSHOTS_DIR="$SCREENSHOT_SAVE_DIR"
+
+        case "$action" in
+        save | savecopy | copy)
+            set -- "$@" "$action"
+            ;;
+        "")
+            _print_missing_required_option "--action" >&2
+            return 1
+            ;;
+        *)
+            _print_invalid_option "--action $action" >&2
+            return 1
+            ;;
+        esac
+
+        case "$method" in
+        area | window | output)
+            set -- "$@" "$method"
+            ;;
+        "")
+            _print_missing_required_option "--method" >&2
+            return 1
+            ;;
+        *)
+            _print_invalid_option "--method $method" >&2
+            return 1
+            ;;
+        esac
+        ;;
+    *)
+        _print_unrecognized_option "screenshot_cmd=$screenshot_cmd" >&2
+        return 1
+        ;;
+    esac
+
+    "$screenshot_cmd" "$@"
+}
+
+status_bar() {
+    action=""
+
+    while [ "$#" -gt 0 ]; do
+        opt="$1"
+        shift
+
+        case "$opt" in
+        --action)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            action="$1"
+            shift
+            ;;
+        *)
+            _print_invalid_option "$opt" >&2
+            return 1
+            ;;
+        esac
+    done
+
+    case "$action" in
+    toggle)
+        if [ -n "$wayland_display" ]; then
+            exec killall -SIGUSR1 waybar
+        fi
+        ;;
+    refresh)
+        if [ -n "$wayland_display" ]; then
+            exec killall -SIGUSR2 waybar
+        fi
+        ;;
+    "")
+        _print_missing_required_option "--action" >&2
+        return 1
+        ;;
+    *)
+        _print_invalid_option "--action $action" >&2
+        return 1
+        ;;
+    esac
+}
+
+terminal() {
+    execute=0
+
+    while [ "$#" -gt 0 ]; do
+        opt="$1"
+        shift
+        case "$opt" in
+        --exec)
+            execute=1
+            break
+            ;;
+        *)
+            _print_unrecognized_option "$opt" >&2
+            return 1
+            ;;
+        esac
+    done
+
+    if [ -n "$wayland_display" ] && command -v uwsm-app >/dev/null 2>&1; then
+        if [ "$execute" -eq 0 ]; then
+            exec uwsm-app -T
+        else
+            exec uwsm-app -T -- "$@"
+        fi
+    fi
+
+    if [ "$execute" -eq 0 ]; then
+        exec "$TERMINAL"
+    fi
+
+    exec "$TERMINAL" -e "$@"
+}
+
+volume() {
+    WPCTL_VOLUME_LIMIT=1
+
+    device=""
+    method=""
+    volume=""
+
+    device_id=""
+
+    while [ "$#" -gt 0 ]; do
+        opt="$1"
+        shift
+
+        case "$opt" in
+        --device)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            device="$1"
+            shift
+            ;;
+        --mute | --unmute | --toggle-mute)
+            method="${opt#--}"
+            ;;
+        --inc-percent | --dec-percent | --set-percent)
+            if [ "$#" -le 0 ]; then
+                _print_not_enough_argument "$opt" >&2
+                return 1
+            fi
+            method="${opt#--}"
+            volume="$1"
+            if [ "$volume" -lt 0 ] || [ "$volume" -gt 100 ]; then
+                _print_invalid_option "$opt $volume"
+                return 1
+            fi
+            shift
+            ;;
+        *)
+            _print_unrecognized_option "$opt" >&2
+            return 1
+            ;;
+        esac
+    done
+
+    case "$device" in
+    speaker | microphone) ;;
+    "")
+        _print_missing_required_option "--device" >&2
+        return 1
+        ;;
+    *)
+        _print_invalid_option "--device $device" >&2
+        return 1
+        ;;
+    esac
+
+    if [ -z "$method" ]; then
+        _print_missing_required_option \
+            "--mute" "|" \
+            "--unmute" "|" \
+            "--toggle-mute" "|" \
+            "--inc-percent" "|" \
+            "--dec-percent" "|" \
+            "--set-percent" \
+            >&2
+        return 1
+    fi
+
+    if command -v wpctl >/dev/null 2>&1; then
+        case "$device" in
+        speaker)
+            device_id="@DEFAULT_AUDIO_SINK@"
+            ;;
+        microphone)
+            device_id="@DEFAULT_AUDIO_SOURCE@"
+            ;;
+        esac
+
+        case "$method" in
+        mute)
+            wpctl set-mute "$device_id" 1
+            ;;
+        unmute)
+            wpctl set-mute "$device_id" 0
+            ;;
+        toggle-mute)
+            wpctl set-mute "$device_id" toggle
+            ;;
+        inc-percent)
+            wpctl set-volume --limit "$WPCTL_VOLUME_LIMIT" "$device_id" "$volume%+"
+            ;;
+        dec-percent)
+            wpctl set-volume --limit "$WPCTL_VOLUME_LIMIT" "$device_id" "$volume%-"
+            ;;
+        set-percent)
+            wpctl set-volume --limit "$WPCTL_VOLUME_LIMIT" "$device_id" "$volume%"
+            ;;
+        esac
+    fi
+}
+
+func=""
+verbose=0
+
+while [ "$#" -gt 0 ]; do
+    opt="$1"
+    shift
+
+    case "$opt" in
+    --verbose)
+        verbose=1
+        ;;
+    *)
+        func="$opt"
+        break
+        ;;
+    esac
+done
+
+if [ "$verbose" -ne 0 ]; then
+    set -x
+fi
+
+case "$func" in
+brightness) "$func" "$@" ;;
+clipboard_picker) "$func" "$@" ;;
+color_picker) "$func" "$@" ;;
+emoji_picker) "$func" "$@" ;;
+file_explorer) "$func" "$@" ;;
+idle) "$func" "$@" ;;
+launch) "$func" "$@" ;;
+launcher) "$func" "$@" ;;
+lock) "$func" "$@" ;;
+player) "$func" "$@" ;;
+powermenu) "$func" "$@" ;;
+screenshot) "$func" "$@" ;;
+status_bar) "$func" "$@" ;;
+terminal) "$func" "$@" ;;
+volume) "$func" "$@" ;;
+"")
+    _print_not_enough_argument "$app" >&2
+    exit 1
+    ;;
+*)
+    _print_unrecognized_option "$func" >&2
+    exit 1
+    ;;
+esac

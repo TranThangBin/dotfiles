@@ -11,5 +11,5 @@ export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS"
 
 export QT_QPA_PLATFORMTHEME="gtk3"
 
-export GOPASS_CLIPBOARD_COPY_CMD="$DOTFILES_DIR/opt/gopass/gopass_clipboard_copy_cmd.sh"
-export GOPASS_CLIPBOARD_CLEAR_CMD="$DOTFILES_DIR/opt/gopass/gopass_clipboard_clear_cmd.sh"
+export GOPASS_CLIPBOARD_COPY_CMD="$DOTFILES_DIR/share/gopass/gopass_clipboard_copy_cmd.sh"
+export GOPASS_CLIPBOARD_CLEAR_CMD="$DOTFILES_DIR/share/gopass/gopass_clipboard_clear_cmd.sh"

@@ -1,0 +1,8 @@
+fontconfig
+libxkbcommon
+pipewire
+pipewire-pulse
+python
+qt6-multimedia
+qt6-wayland
+uv

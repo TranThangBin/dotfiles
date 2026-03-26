@@ -32,7 +32,7 @@ start_now=true
 entry=true
 additional_packages="yay-bin vim"
 pre_init_hooks="export SHELL=/usr/bin/fish"
-pre_init_hooks="$FILE_DIR/arch-mirrorlist-integration.sh"
+pre_init_hooks="[ ! -x '$FILE_DIR/arch-mirrorlist-integration.sh' ] || $FILE_DIR/arch-mirrorlist-integration.sh"
 volume="trantbox_box-pacman_cache:/var/cache/pacman/pkg:rw"
 volume="$DOTFILES_DIR/stow/fish/dot-config/fish:$distrobox_home/.config/fish:ro"
 EOF

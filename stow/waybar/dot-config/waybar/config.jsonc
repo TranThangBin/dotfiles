@@ -12,7 +12,7 @@
         "modules-right": ["group/resources"],
         "custom/menu": {
             "format": "<big>󰣇</big>",
-            "on-click": "t_controller launcher"
+            "on-click": "tutils launcher"
         }
     },
     {

@@ -1,0 +1,7 @@
+cuda
+lib32-nvidia-utils
+lib32-opencl-nvidia
+nvidia-open-dkms
+nvidia-utils
+nvtop
+opencl-nvidia
