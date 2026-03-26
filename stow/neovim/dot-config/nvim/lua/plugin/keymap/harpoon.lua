@@ -15,12 +15,12 @@ end, {
     desc = "Custom(harpoon): [m]enu",
 })
 set("n", "<C-l>", function()
-    list:next()
+    list:next({ ui_nav_wrap = true })
 end, {
     desc = "Custom(harpoon): <C-l> (list next entry)",
 })
 set("n", "<C-h>", function()
-    list:prev()
+    list:prev({ ui_nav_wrap = true })
 end, {
     desc = "Custom(harpoon): <C-h> (list prev entry)",
 })
