@@ -24,7 +24,15 @@ dry_run=0
 assemble_all=0
 
 _available_containers() {
-    grep "^\[.*\]$" "$MANIFEST" | tr -d "[]"
+    while IFS= read -r line; do
+        case "$line" in
+        '['*']')
+            line="${line#'['}"
+            line="${line%']'}"
+            printf "%s\n" "$line"
+            ;;
+        esac
+    done <"$MANIFEST"
 }
 
 _distrobox_assemble() {

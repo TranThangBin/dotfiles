@@ -364,7 +364,7 @@ binds {
         toggle-keyboard-shortcuts-inhibit
     }
     Mod+Shift+E {
-        spawn "t_controller" "powermenu"
+        spawn "tutils" "powermenu"
     }
  // Mod+Shift+P { power-off-monitors; }
 }
