@@ -1,19 +1,8 @@
-local catppuccin_mocha = require("custom.colors.catpuccin-mocha")
-
-local surface0 = catppuccin_mocha.surface0.hex
-local surface0Alpha = surface0 .. "e6"
-local pink = catppuccin_mocha.pink.hex
-local flamingoAlpha = catppuccin_mocha.flamingo.hex .. "e6"
-
 hl.config({
     general = {
         layout = "scrolling",
         allow_tearing = false,
         border_size = 2,
-        ["col.active_border"] = pink,
-        ["col.inactive_border"] = surface0Alpha,
-        ["col.nogroup_border"] = surface0,
-        ["col.nogroup_border_active"] = flamingoAlpha,
         gaps_in = 5,
         gaps_out = 5,
         resize_on_border = false,
@@ -32,10 +21,6 @@ hl.config({
             passes = 1,
             size = 3,
             vibrancy = 0.2,
-        },
-        shadow = {
-            color = surface0,
-            color_inactive = surface0Alpha,
         },
         active_opacity = 1,
         inactive_opacity = 0.9,
