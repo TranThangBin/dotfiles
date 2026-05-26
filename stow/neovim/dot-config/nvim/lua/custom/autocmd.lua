@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     group = groups.highlight_on_yank,
     desc = "Custom: Highlight on yank",
     callback = function()
-        vim.hl.on_yank()
+        vim.hl.hl_op()
     end,
 })
 
@@ -62,11 +62,25 @@ vim.api.nvim_create_autocmd("FileType", {
     group = groups.treesitter,
     pattern = vim.g._treesitter_enable_filetypes,
     desc = "Custom: Treesitter",
-    callback = function()
-        vim.treesitter.start()
-        -- if pcall(require, "nvim-treesitter") then
-        --     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        -- end
+    callback = function(e)
+        local buf = e.buf
+        local lang = vim.treesitter.language.get_lang(e.match)
+
+        if lang == nil then
+            return
+        end
+
+        vim.treesitter.start(buf)
+
+        if not pcall(require, "nvim-treesitter") then
+            return
+        end
+
+        if not vim.treesitter.query.get(lang, "indents") then
+            return
+        end
+
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     end,
 })
 
