@@ -8,7 +8,6 @@ vim.pack.add({
     gh("b0o/SchemaStore.nvim"),
     gh("catgoose/nvim-colorizer.lua"),
     gh("eduardo-antunes/plainline"),
-    gh("folke/lazydev.nvim"),
     gh("folke/sidekick.nvim"),
     gh("folke/todo-comments.nvim"),
     gh("folke/tokyonight.nvim"),
