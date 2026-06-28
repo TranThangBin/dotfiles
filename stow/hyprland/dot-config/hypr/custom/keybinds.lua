@@ -120,11 +120,6 @@ if hl.get_config("general.layout") ~= "scrolling" then
     bind("SUPER + H", dsp_focus({ direction = "l" }))
     bind("SUPER + K", dsp_focus({ direction = "u" }))
     bind("SUPER + J", dsp_focus({ direction = "d" }))
-
-    bind("SUPER + SHIFT + L", dsp_window_move({ direction = "r" }))
-    bind("SUPER + SHIFT + H", dsp_window_move({ direction = "l" }))
-    bind("SUPER + SHIFT + K", dsp_window_move({ direction = "u" }))
-    bind("SUPER + SHIFT + J", dsp_window_move({ direction = "d" }))
 else
     bind("SUPER + L", dsp_layout("focus r"))
     bind("SUPER + H", dsp_layout("focus l"))
@@ -137,6 +132,11 @@ else
     binde("SUPER + CTRL + L", dsp_layout("colresize +conf"))
     binde("SUPER + CTRL + H", dsp_layout("colresize -conf"))
 end
+
+bind("SUPER + SHIFT + L", dsp_window_move({ direction = "r" }))
+bind("SUPER + SHIFT + H", dsp_window_move({ direction = "l" }))
+bind("SUPER + SHIFT + K", dsp_window_move({ direction = "u" }))
+bind("SUPER + SHIFT + J", dsp_window_move({ direction = "d" }))
 
 for i = 0, 9 do
     local ws_id = i

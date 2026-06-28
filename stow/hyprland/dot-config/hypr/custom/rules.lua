@@ -1,12 +1,15 @@
-hl.on("monitor.added", function(mon)
+---@param mon HL.Monitor
+local function on_monitor_added(mon)
     for i = 6, 10 do
         hl.workspace_rule({
             workspace = string.format("%d", i),
-            monitor = mon,
+            monitor = mon.name,
             default = true,
         })
     end
-end)
+end
+
+hl.on("monitor.added", on_monitor_added)
 
 ---@type HL.WindowRuleSpec[]
 local window_rules = {
