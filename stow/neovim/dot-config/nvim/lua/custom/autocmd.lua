@@ -1,23 +1,8 @@
-local utils = {}
-
-local groups = {
-    color = vim.api.nvim_create_augroup("custom/color", { clear = true }),
-    highlight_on_yank = vim.api.nvim_create_augroup(
-        "custom/highlight_on_yank",
-        { clear = true }
-    ),
-    remove_trailing_spaces = vim.api.nvim_create_augroup(
+vim.api.nvim_create_autocmd("BufWritePre", {
+    group = vim.api.nvim_create_augroup(
         "custom/remove_trailing_spaces",
         { clear = true }
     ),
-    treesitter = vim.api.nvim_create_augroup(
-        "custom/treesitter",
-        { clear = true }
-    ),
-}
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-    group = groups.remove_trailing_spaces,
     desc = "Custom: Remove trailing spaces",
     callback = function()
         local pos = vim.fn.getpos(".")
@@ -27,67 +12,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-    group = groups.highlight_on_yank,
+    group = vim.api.nvim_create_augroup(
+        "custom/highlight_on_yank",
+        { clear = true }
+    ),
     desc = "Custom: Highlight on yank",
     callback = function()
         vim.hl.hl_op()
     end,
 })
-
-vim.api.nvim_create_autocmd({ "ColorScheme", "OptionSet" }, {
-    group = groups.color,
-    pattern = { "background", "bg", "rose-pine", "tokyonight", "catppuccin" },
-    desc = "Custom: Solid background on light theme",
-    callback = function()
-        if vim.o.background == "light" then
-            utils.set_light_bg()
-        end
-    end,
-})
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-    group = groups.color,
-    pattern = { "rose-pine-dawn", "tokyonight-day", "catppuccin-latte" },
-    desc = "Custom: Solid background on light theme",
-    callback = function()
-        if vim.o.background == "light" then
-            utils.set_light_bg()
-        else
-            vim.o.background = "light"
-        end
-    end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-    group = groups.treesitter,
-    pattern = vim.g._treesitter_enable_filetypes,
-    desc = "Custom: Treesitter",
-    callback = function(e)
-        local buf = e.buf
-        local lang = vim.treesitter.language.get_lang(e.match)
-
-        if lang == nil then
-            return
-        end
-
-        vim.treesitter.start(buf)
-
-        if not pcall(require, "nvim-treesitter") then
-            return
-        end
-
-        if not vim.treesitter.query.get(lang, "indents") then
-            return
-        end
-
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    end,
-})
-
-function utils.set_light_bg(bg_color)
-    bg_color = bg_color or "#dddddd"
-    local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal" })
-    if not normal_hl.bg then
-        vim.api.nvim_set_hl(0, "Normal", { bg = bg_color, fg = normal_hl.fg })
-    end
-end

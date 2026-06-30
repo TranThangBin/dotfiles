@@ -26,9 +26,6 @@ vim.o.wrap = false
 vim.opt.completeopt = { "menu", "menuone", "noinsert" }
 
 vim.g.mapleader = " "
-vim.g.netrw_banner = 0
-vim.g.netrw_browse_split = 0
-vim.g.netrw_winsize = 25
 
 vim.g._treesitter_enable_filetypes = {
     "bash",
@@ -61,6 +58,10 @@ vim.g._treesitter_enable_filetypes = {
     "yaml",
     "zig",
 }
+
+require("custom.dir")
+require("custom.color")
+require("custom.treesitter")
 
 require("custom.autocmd")
 require("custom.keymap")
