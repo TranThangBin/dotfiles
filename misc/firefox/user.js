@@ -10,6 +10,7 @@ user_pref(
     "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines",
     "DuckDuckGo"
 );
+user_pref("browser.newtabpage.activity-stream.widgets.enabled", false);
 user_pref("browser.urlbar.placeholderName", "DuckDuckGo");
 user_pref("browser.urlbar.placeholderName.private", "DuckDuckGo");
 

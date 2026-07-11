@@ -1,0 +1,6 @@
+enable fumon.service
+enable hyprpolkitagent.service
+enable pipewire-pulse.service
+enable pipewire.service
+enable wireplumber.service
+disable *

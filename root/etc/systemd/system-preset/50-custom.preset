@@ -1,0 +1,12 @@
+enable NetworkManager.service
+enable bluetooth.service
+enable getty@.service tty1 tty2 tty3 tty4 tty5 tty6
+enable nvidia-hibernate.service
+enable nvidia-resume.service
+enable nvidia-suspend.service
+enable reflector.timer
+enable smartd.service
+enable systemd-timesyncd.service
+enable tuned-ppd.service
+enable ufw.service
+disable *

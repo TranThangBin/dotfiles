@@ -1,0 +1,81 @@
+[trantbox]
+image="ghcr.io/tranthangbin/trantbox:latest"
+start_now=true
+entry=true
+pre_init_hooks="export SHELL=/usr/bin/fish"
+volume="trantbox-pacman_cache:/var/cache/pacman/pkg:rw"
+{{ if stat "/etc/pacman.d/mirrorlist" }}
+volume="/etc/pacman.d/mirrorlist:/etc/pacman.d/mirrorlist:ro"
+{{ end }}
+
+[trantbox-nvidia]
+include=trantbox
+{{ if and (lookPath "nvidia-smi") (exec "nvidia-smi") }}
+nvidia=true
+{{ end }}
+
+[trantbox-desktop]
+include=trantbox-nvidia
+home={{ joinPath .chezmoi.homeDir "distrobox" "trantbox-desktop" | quote }}
+unshare_devsys=true
+unshare_groups=true
+unshare_ipc=true
+unshare_netns=true
+additional_flags="--env DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket"
+additional_flags="--network host"
+additional_packages="bear blender brave-bin btop code discord dotnet-sdk"
+additional_packages="drawio-desktop fd firefox gcc gimp git go godot lazydocker"
+additional_packages="libfdk-aac libnotify libreoffice-fresh libresprite lmms"
+additional_packages="luarocks make neovide neovim-nightly-bin nodejs npm"
+additional_packages="obs-studio opencode python3 qt5-wayland ripgrep rust"
+additional_packages="shotcut thunderbird torbrowser-launcher tree-sitter-cli"
+additional_packages="unixodbc webcord which wl-clipboard zellij"
+exported_apps="blender brave btop code-oss obs discord"
+exported_apps="drawio firefox gimp webcord"
+exported_apps="libreoffice libresprite lmms neovide godot"
+exported_apps="thunderbird shotcut torbrowser-launcher"
+init_hooks="ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman"
+volume="/dev/input:/dev/input:ro"
+
+[trantbox-games]
+include=trantbox-nvidia
+home={{ joinPath .chezmoi.homeDir "distrobox" "trantbox-games" | quote }}
+unshare_devsys=true
+unshare_groups=true
+unshare_netns=true
+unshare_process=true
+additional_flags="--env-file {{ .chezmoi.homeDir }}/.config/distrobox/nvidia.env"
+additional_flags="--env-file {{ .chezmoi.homeDir }}/.config/distrobox/trantbox-games.env"
+additional_flags="--env DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket"
+additional_flags="--network host"
+additional_packages="openal pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber"
+additional_packages="extremetuxracer faugus-launcher joyutils steam"
+additional_packages="mangohud wine-mono libcanberra"
+exported_apps="faugus-launcher steam"
+volume="/dev/input:/dev/input:ro"
+
+[trantbox-services]
+include=trantbox
+home={{ joinPath .chezmoi.homeDir "distrobox" "trantbox-services" | quote }}
+unshare_all=true
+additional_packages="calf cliphist easyeffects fcitx5 fcitx5-configtool fcitx5-unikey"
+additional_packages="lsp-plugins mpv wl-clipboard"
+init_hooks="ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rofi"
+exported_apps="easyeffects fcitx5-configtool mpv"
+exported_bins="/usr/bin/cliphist /usr/bin/wl-copy /usr/bin/wl-paste"
+
+[trantbox-utils]
+include=trantbox
+home={{ joinPath .chezmoi.homeDir "distrobox" "trantbox-utils" | quote }}
+unshare_all=true
+additional_packages="catimg fastfetch fd git gopass pwvucontrol ripgrep rofimoji"
+additional_packages="trash-cli unrar unzip yt-dlp zip"
+init_hooks="ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/rofi"
+exported_apps="pwvucontrol"
+exported_bins="/usr/bin/catimg /usr/bin/fastfetch /usr/bin/fd"
+exported_bins="/usr/bin/gopass /usr/bin/rg /usr/bin/rofimoji"
+exported_bins="/usr/bin/trash /usr/bin/trash-empty /usr/bin/trash-list"
+exported_bins="/usr/bin/trash-restore /usr/bin/trash-rm"
+exported_bins="/usr/bin/unrar /usr/bin/unzip /usr/bin/zip"
+
+# vim: set ft=dosini :

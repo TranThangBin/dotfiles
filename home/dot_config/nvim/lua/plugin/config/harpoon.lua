@@ -1,0 +1,5 @@
+local extensions = require("harpoon.extensions")
+local harpoon = require("harpoon")
+harpoon:setup()
+harpoon:extend(extensions.builtins.navigate_with_number())
+harpoon:extend(extensions.builtins.highlight_current_file())

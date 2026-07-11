@@ -1,0 +1,197 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+
+color = "auto"
+format = "json"
+interactive = false
+lessInteractive = false
+mode = "file"
+pager = ""
+persistentState = ""
+progress = "auto"
+safe = true
+scriptTempDir = ""
+umask = 18
+useBuiltinAge = "auto"
+useBuiltinGit = "auto"
+verbose = false
+encryption = ""
+
+[data]
+dotfilesDir = {{ joinPath .chezmoi.sourceDir ".." | quote }}
+email = {{ $email | quote }}
+
+[gitHub]
+refreshPeriod = "1m"
+
+[interpreters.bat]
+command = ""
+
+[interpreters.cmd]
+command = ""
+
+[interpreters.com]
+command = ""
+
+[interpreters.exe]
+command = ""
+
+[interpreters.nu]
+command = "nu"
+
+[interpreters.pl]
+command = "perl"
+
+[interpreters.ps1]
+command = ""
+
+[interpreters.py]
+command = "python3"
+
+[interpreters.rb]
+command = "ruby"
+
+[pinentry]
+command = ""
+options = ["allow-external-password-cache"]
+
+[template]
+options = ["missingkey=error"]
+
+[warnings]
+configFileTemplateHasChanged = true
+
+[awsSecretsManager]
+region = ""
+profile = ""
+
+[azureKeyVault]
+defaultVault = ""
+
+[bitwarden]
+command = "bw"
+unlock = false
+
+[bitwardenSecrets]
+command = "bws"
+
+[dashlane]
+command = "dcli"
+
+[doppler]
+command = "doppler"
+project = ""
+config = ""
+
+[ejson]
+keyDir = "/opt/ejson/keys"
+key = ""
+
+[gopass]
+command = "gopass"
+mode = ""
+
+[keepassxc]
+command = "keepassxc-cli"
+database = ""
+mode = "cache-password"
+prompt = true
+
+[keeper]
+command = "keeper"
+
+[lastpass]
+command = "lpass"
+
+[onepassword]
+command = "op"
+prompt = true
+mode = "account"
+
+[pass]
+command = "pass"
+
+[passhole]
+command = "ph"
+prompt = true
+
+[protonPass]
+command = "pass-cli"
+
+[rbw]
+command = "rbw"
+
+[secret]
+command = ""
+
+[vault]
+command = "vault"
+
+[age]
+useBuiltin = false
+command = "age"
+identity = ""
+passphrase = false
+recipient = ""
+recipientsFile = ""
+suffix = ".age"
+symmetric = false
+
+[gpg]
+command = "gpg"
+recipient = ""
+symmetric = false
+suffix = ".asc"
+
+[add]
+encrypt = false
+secrets = "warning"
+templateSymlinks = false
+
+[cd]
+command = ""
+
+[completion]
+custom = false
+
+[docker]
+command = "docker"
+
+[diff]
+command = ""
+exclude = []
+pager = "\u0000"
+reverse = false
+scriptContents = true
+
+[edit]
+command = ""
+hardlink = true
+minDuration = "1s"
+watch = false
+apply = false
+
+[git]
+command = "git"
+autoadd = false
+autocommit = false
+autopush = false
+commitMessageTemplate = ""
+commitMessageTemplateFile = ""
+lfs = false
+
+[merge]
+command = "vimdiff"
+
+[status]
+exclude = []
+pathStyle = "relative"
+
+[update]
+command = ""
+apply = true
+recurseSubmodules = true
+
+[verify]
+exclude = []
+
+# vim: set ft=toml :

@@ -1,0 +1,5 @@
+**/Session.vim
+kdlfmt.kdl
+stylua.toml
+
+# vim: set ft=gitignore :
