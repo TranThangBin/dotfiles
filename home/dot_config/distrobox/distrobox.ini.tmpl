@@ -17,10 +17,7 @@ nvidia=true
 [trantbox-desktop]
 include=trantbox-nvidia
 home={{ joinPath .chezmoi.homeDir "distrobox" "trantbox-desktop" | quote }}
-unshare_devsys=true
-unshare_groups=true
-unshare_ipc=true
-unshare_netns=true
+unshare_all=true
 additional_flags="--env DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket"
 additional_flags="--network host"
 additional_packages="bear blender brave-bin code discord dotnet-sdk"
