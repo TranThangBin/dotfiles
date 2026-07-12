@@ -1,0 +1,10 @@
+[Unit]
+Description=Distrobox container - %i
+
+[Service]
+Type=oneshot
+ExecStart=distrobox enter --no-workdir --no-tty %i
+RemainAfterExit=true
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,21 @@
+[Unit]
+Description=Highly customizable Wayland bar for Sway and Wlroots based compositors
+Documentation=https://github.com/Alexays/Waybar/wiki/
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
+Conflicts=waybar.service
+
+[Service]
+ExecStart=distrobox enter --no-workdir --no-tty %i -- waybar
+ExecReload=kill -SIGUSR2 $MAINPID
+Restart=on-failure
+
+Environment=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket
+Environment=XDG_DATA_DIRS=$XDG_DATA_DIRS:%D
+
+[Install]
+WantedBy=wayland-session-xdg-autostart@hyprland.desktop.target

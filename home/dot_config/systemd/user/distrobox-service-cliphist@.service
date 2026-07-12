@@ -1,0 +1,16 @@
+# Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/services/cliphist.nix
+[Unit]
+Description=Clipboard management daemon
+PartOf=graphical-session.target
+After=graphical-session.target
+
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
+Conflicts=cliphist.service
+
+[Service]
+Type=simple
+ExecStart=distrobox enter --no-workdir --no-tty %i -- wl-paste --watch cliphist store
+
+[Install]
+WantedBy=wayland-session-xdg-autostart@hyprland.desktop.target

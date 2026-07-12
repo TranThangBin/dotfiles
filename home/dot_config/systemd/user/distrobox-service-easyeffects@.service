@@ -1,0 +1,20 @@
+# Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/services/easyeffects.nix
+[Unit]
+Description=Easyeffects daemon
+PartOf=graphical-session.target
+After=graphical-session.target
+
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
+Conflicts=easyeffects.service
+
+[Service]
+ExecStart=distrobox enter --no-workdir --no-tty %i -- easyeffects --hide-window --service-mode
+ExecStop=distrobox enter --no-workdir --no-tty %i -- easyeffects --quit
+KillMode=mixed
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=10
+
+[Install]
+WantedBy=graphical-session.target

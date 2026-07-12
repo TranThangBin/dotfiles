@@ -1,0 +1,18 @@
+# Reference from https://github.com/nix-community/home-manager/blob/release-25.05/modules/i18n/input-method/fcitx5.nix
+[Unit]
+Description=Fcitx5 input method editor
+PartOf=graphical-session.target
+After=graphical-session.target
+
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
+Conflicts=fcitx5-daemon.service
+
+[Service]
+Type=dbus
+BusName=org.fcitx.Fcitx5
+ExecStart=distrobox enter --no-workdir --no-tty %i -- fcitx5
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

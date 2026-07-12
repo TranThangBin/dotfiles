@@ -1,0 +1,20 @@
+[Unit]
+Description=An application to enable a blue-light filter on Hyprland.
+Documentation=https://wiki.hyprland.org/Hypr-Ecosystem/hyprsunset/
+PartOf=graphical-session.target
+Requires=graphical-session.target
+After=graphical-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+Requires=distrobox-container@%i.service
+PartOf=distrobox-container@%i.service
+Conflicts=hyprsunset.service
+
+[Service]
+Type=simple
+ExecStart=distrobox enter --no-workdir --no-tty %i -- hyprsunset
+Slice=session.slice
+Restart=on-failure
+
+[Install]
+WantedBy=wayland-session-xdg-autostart@hyprland.desktop.target

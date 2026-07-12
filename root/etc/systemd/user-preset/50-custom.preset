@@ -1,6 +1,10 @@
+enable distrobox-container@.service trantbox-services trantbox-utils
+enable distrobox-service-easyeffects@.service trantbox-services
+enable distrobox-service-fcitx5-daemon@.service trantbox-services
 enable fumon.service
 enable hyprpolkitagent.service
 enable pipewire-pulse.service
 enable pipewire.service
 enable wireplumber.service
+enable distrobox-service-network-manager-applet@.service trantbox-services
 disable *
