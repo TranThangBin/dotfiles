@@ -15,7 +15,5 @@ Type=simple
 Restart=always
 ExecStart=distrobox enter --no-workdir --no-tty %i -- swayidle -w
 
-Environment=DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/var/run/dbus/system_bus_socket
-
 [Install]
 WantedBy=wayland-session-xdg-autostart@hyprland.desktop.target

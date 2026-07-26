@@ -1,7 +1,7 @@
-source = {{ .dotfilesDir }}/misc/hypr/hyprcat.conf
+source = {{ joinPath .dotfilesDir "misc" "hypr" "hyprcat.conf" | quote }}
 
-$hyprlockBg={{ .dotfilesDir }}/Pictures/Wallpapers/Mountain_Sunset.png
-$hyprlockImg={{ .dotfilesDir }}/Pictures/Images/Go_Gopher.webp
+$hyprlockBg={{ joinPath .dotfilesDir "Pictures" "Wallpapers" "Mountain_Sunset.png" | quote }}
+$hyprlockImg={{ joinPath .dotfilesDir "Pictures" "Images" "Go_Gopher.webp" | quote }}
 
  {
   monitor=

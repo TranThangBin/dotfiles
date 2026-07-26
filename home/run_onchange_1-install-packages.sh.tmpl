@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if [ -n "$CONTAINER_ID" ]; then
+    exit 0
+fi
+
+{{ if lookPath "pacman" }}
+sudo pacman -S --needed - <<EOF
+{{ range .packages.archlinux.pacman }}
+{{ . }}
+{{ end }}
+EOF
+{{ end }}
+
+{{ if lookPath "yay" }}
+yay -S --needed - <<EOF
+{{ range .packages.archlinux.aur }}
+{{ . }}
+{{ end }}
+EOF
+{{ end }}

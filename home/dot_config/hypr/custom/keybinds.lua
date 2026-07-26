@@ -1,6 +1,7 @@
 local dsp_exec_cmd = hl.dsp.exec_cmd
 local dsp_layout = hl.dsp.layout
-local dsp_window_move = hl.dsp.window.move
+local dsp_window = hl.dsp.window
+local dsp_window_move = dsp_window.move
 local dsp_focus = hl.dsp.focus
 local dispatch = hl.dispatch
 
@@ -36,7 +37,7 @@ bind("SUPER + SHIFT + C", function()
     })
     for _, win in pairs(win_in_ws) do
         if win.focus_history_id ~= 0 then
-            dispatch(hl.dsp.window.close({ window = win }))
+            dispatch(dsp_window.close({ window = win }))
         end
     end
 end)
@@ -111,15 +112,52 @@ bindl("XF86AudioPause", dsp_exec_cmd("tutils player --play-pause"))
 bindl("XF86AudioPlay", dsp_exec_cmd("tutils player --play-pause"))
 bindl("XF86AudioPrev", dsp_exec_cmd("tutils player --previous"))
 
-bind("SUPER + F", hl.dsp.window.fullscreen())
-bind("SUPER + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
-bind("SUPER + SHIFT + Q", hl.dsp.window.close())
+bind("SUPER + F", dsp_window.fullscreen())
+bind("SUPER + SHIFT + F", dsp_window.float({ action = "toggle" }))
+bind("SUPER + SHIFT + Q", dsp_window.close())
 
 if hl.get_config("general.layout") ~= "scrolling" then
     bind("SUPER + L", dsp_focus({ direction = "r" }))
     bind("SUPER + H", dsp_focus({ direction = "l" }))
     bind("SUPER + K", dsp_focus({ direction = "u" }))
     bind("SUPER + J", dsp_focus({ direction = "d" }))
+
+    binde("SUPER + CTRL + L", function()
+        local win = hl.get_active_window()
+        if win then
+            dispatch(dsp_window.resize({
+                x = win.size.x + 10,
+                y = win.size.y,
+            }))
+        end
+    end)
+    binde("SUPER + CTRL + H", function()
+        local win = hl.get_active_window()
+        if win then
+            dispatch(dsp_window.resize({
+                x = win.size.x - 10,
+                y = win.size.y,
+            }))
+        end
+    end)
+    binde("SUPER + CTRL + J", function()
+        local win = hl.get_active_window()
+        if win then
+            dispatch(dsp_window.resize({
+                x = win.size.x,
+                y = win.size.y - 10,
+            }))
+        end
+    end)
+    binde("SUPER + CTRL + K", function()
+        local win = hl.get_active_window()
+        if win then
+            dispatch(dsp_window.resize({
+                x = win.size.x,
+                y = win.size.y + 10,
+            }))
+        end
+    end)
 else
     bind("SUPER + L", dsp_layout("focus r"))
     bind("SUPER + H", dsp_layout("focus l"))
@@ -128,9 +166,48 @@ else
 
     bind("SUPER + ALT + L", dsp_layout("swapcol r"))
     bind("SUPER + ALT + H", dsp_layout("swapcol l"))
+    bind("SUPER + ALT + F", dsp_layout("fit_into_view"))
 
-    binde("SUPER + CTRL + L", dsp_layout("colresize +conf"))
-    binde("SUPER + CTRL + H", dsp_layout("colresize -conf"))
+    binde("SUPER + CTRL + L", function()
+        local win = hl.get_active_window()
+        if win and win.floating then
+            dispatch(dsp_window.resize({
+                x = win.size.x + 10,
+                y = win.size.y,
+            }))
+            return
+        end
+        dispatch(dsp_layout("colresize +conf"))
+    end)
+    binde("SUPER + CTRL + H", function()
+        local win = hl.get_active_window()
+        if win and win.floating then
+            dispatch(dsp_window.resize({
+                x = win.size.x - 10,
+                y = win.size.y,
+            }))
+            return
+        end
+        dispatch(dsp_layout("colresize -conf"))
+    end)
+    binde("SUPER + CTRL + J", function()
+        local win = hl.get_active_window()
+        if win then
+            dispatch(dsp_window.resize({
+                x = win.size.x,
+                y = win.size.y - 10,
+            }))
+        end
+    end)
+    binde("SUPER + CTRL + K", function()
+        local win = hl.get_active_window()
+        if win then
+            dispatch(dsp_window.resize({
+                x = win.size.x,
+                y = win.size.y + 10,
+            }))
+        end
+    end)
 end
 
 bind("SUPER + SHIFT + L", dsp_window_move({ direction = "r" }))
@@ -178,11 +255,11 @@ end)
 
 bind("SUPER + tab", dsp_focus({ workspace = "previous" }))
 bind("SUPER + SHIFT + tab", dsp_window_move({ workspace = "previous" }))
-bind("ALT + tab", hl.dsp.window.cycle_next())
-bind("ALT + SHIFT + tab", hl.dsp.window.cycle_next({ next = "prev" }))
+bind("ALT + tab", dsp_window.cycle_next())
+bind("ALT + SHIFT + tab", dsp_window.cycle_next({ next = "prev" }))
 
-bind("SUPER + SHIFT + mouse:272", hl.dsp.window.drag(), { mouse = true })
-bind("SUPER + SHIFT + mouse:273", hl.dsp.window.resize(), { mouse = true })
+bind("SUPER + SHIFT + mouse:272", dsp_window.drag(), { mouse = true })
+bind("SUPER + SHIFT + mouse:273", dsp_window.resize(), { mouse = true })
 
 -- bindc=Caps_Lock, Caps_Lock, exec, swayosd-client --caps-lock
 -- bindc=Mod2     , Num_Lock , exec, swayosd-client --num-lock

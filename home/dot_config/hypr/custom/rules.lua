@@ -45,10 +45,21 @@ local window_rules = {
     },
     {
         name = "Linux desktop gremlins",
-        match = { title = "ilgwg_desktop_gremlins.py" },
+        match = { title = "^ilgwg_desktop_gremlins.py$" },
         no_blur = true,
         no_shadow = true,
         border_size = 0,
+        opacity = "1 override",
+    },
+    {
+        name = "Picture in Picture",
+        match = {
+            title = "^Picture-in-Picture$",
+            class = "^firefox$",
+            float = true,
+        },
+        no_blur = true,
+        no_shadow = true,
         opacity = "1 override",
     },
 }

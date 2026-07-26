@@ -1,0 +1,55 @@
+{{ $container_id := env "CONTAINER_ID" }}
+{{ $unignore_all := int (env "UNIGNORE_ALL") }}
+
+dconf.ini
+run_onchange_0-dconf-load.sh.tmpl
+run_onchange_1-install-packages.sh.tmpl
+
+.config/*
+.local/share/*
+
+!.config/fish/
+!.config/git/
+
+{{ if ne $unignore_all 0 }}
+!.config/*
+!.local/share/*
+
+{{ else if eq $container_id "trantbox-desktop" }}
+!.config/WebCord/
+!.config/neovide/
+!.config/nvim/
+!.config/opencode/
+!.config/zellij/
+
+{{ else if eq $container_id "trantbox-games" }}
+!.config/MangoHud/
+
+{{ else if eq $container_id "trantbox-services" }}
+!.config/fcitx5/
+!.local/share/easyeffects/
+!.local/share/fcitx5/
+
+{{ else if eq $container_id "trantbox-utils" }}
+!.config/rofimoji.rc
+!.local/share/gopass
+
+{{ else }}
+!.config/btop/
+!.config/distrobox/
+!.config/fastfetch/
+!.config/ghostty/
+!.config/gtk-3.0/
+!.config/hypr/
+!.config/kitty/
+!.config/mimeapps.list
+!.config/niri/
+!.config/quickshell/
+!.config/systemd/
+!.config/uwsm/
+!.config/xdg-terminals.list
+!.local/share/gopass/
+
+{{ end }}
+
+# vim: set ft=gitignore :
