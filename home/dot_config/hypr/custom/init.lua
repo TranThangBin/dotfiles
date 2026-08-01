@@ -32,7 +32,7 @@ hl.config({
         },
         follow_mouse = 1,
         kb_layout = "us",
-        sensitivity = 0,
+        sensitivity = 0.0,
     },
     ecosystem = {
         enforce_permissions = true,
